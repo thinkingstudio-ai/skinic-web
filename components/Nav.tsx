@@ -29,7 +29,7 @@ export default function Nav() {
             API Explorer
           </a>
           <a
-            href="#contact"
+            href="/signup"
             className="text-sm px-4 py-2 rounded-lg bg-violet-600 hover:bg-violet-500 text-white font-medium transition-colors"
           >
             Get API Key
@@ -55,7 +55,7 @@ export default function Nav() {
           <a href="#ai-stack" onClick={() => setOpen(false)} className="hover:text-white">AI Stack</a>
           <a href="#pricing" onClick={() => setOpen(false)} className="hover:text-white">Pricing</a>
           <a href="https://api.skinic.app/docs" target="_blank" rel="noreferrer" className="hover:text-white">Docs</a>
-          <a href="#contact" onClick={() => setOpen(false)} className="px-4 py-2 rounded-lg bg-violet-600 text-white text-center font-medium">Get API Key</a>
+          <a href="/signup" onClick={() => setOpen(false)} className="px-4 py-2 rounded-lg bg-violet-600 text-white text-center font-medium">Get API Key</a>
         </div>
       )}
     </nav>

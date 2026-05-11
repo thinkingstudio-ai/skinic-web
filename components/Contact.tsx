@@ -6,54 +6,45 @@ export default function Contact() {
         <h2 className="text-3xl md:text-5xl font-bold mb-5">
           Ready to integrate?
         </h2>
-        <p className="text-white/40 text-lg mb-10">
-          Tell us about your use case and we&apos;ll set you up with an API key and onboarding call.
+        <p className="text-white/40 text-lg mb-10 max-w-xl mx-auto">
+          Get a free API key instantly. No credit card required for Free tier.
+          Enterprise clients — contact us for custom onboarding.
         </p>
 
-        <div className="card-glass rounded-2xl p-8">
-          <div className="space-y-4">
-            <div className="grid sm:grid-cols-2 gap-4">
-              <input
-                type="text"
-                placeholder="Your name"
-                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/25 text-sm focus:outline-none focus:border-violet-500/50 transition-colors"
-              />
-              <input
-                type="text"
-                placeholder="Company"
-                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/25 text-sm focus:outline-none focus:border-violet-500/50 transition-colors"
-              />
-            </div>
-            <input
-              type="email"
-              placeholder="Work email"
-              className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/25 text-sm focus:outline-none focus:border-violet-500/50 transition-colors"
-            />
-            <select className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white/60 text-sm focus:outline-none focus:border-violet-500/50 transition-colors appearance-none">
-              <option value="" className="bg-[#0a0a0f]">Interested tier</option>
-              <option value="free" className="bg-[#0a0a0f]">Free</option>
-              <option value="starter" className="bg-[#0a0a0f]">Starter — $29/mo</option>
-              <option value="pro" className="bg-[#0a0a0f]">Pro — $99/mo</option>
-              <option value="enterprise" className="bg-[#0a0a0f]">Enterprise — $499/mo</option>
-            </select>
-            <textarea
-              rows={3}
-              placeholder="Briefly describe your use case (e.g. clinic app, beauty e-commerce, health platform)"
-              className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/25 text-sm focus:outline-none focus:border-violet-500/50 transition-colors resize-none"
-            />
-            <a
-              href="mailto:hello@skinic.app?subject=API Access Request"
-              className="block w-full py-3.5 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-semibold text-base text-center transition-all hover:shadow-lg hover:shadow-violet-500/25"
-            >
-              Send Request
-            </a>
-            <p className="text-white/25 text-xs text-center">
-              Or email us directly at{" "}
-              <a href="mailto:hello@skinic.app" className="text-violet-400 hover:text-violet-300">
-                hello@skinic.app
-              </a>
-            </p>
-          </div>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+          <a
+            href="/signup"
+            className="px-8 py-3.5 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-semibold text-base transition-all hover:shadow-lg hover:shadow-violet-500/25"
+          >
+            Get Free API Key →
+          </a>
+          <a
+            href="mailto:hello@skinic.app?subject=Enterprise API Inquiry"
+            className="px-8 py-3.5 rounded-xl border border-white/10 hover:border-white/20 text-white/70 hover:text-white font-medium text-base transition-all"
+          >
+            Contact for Enterprise
+          </a>
+        </div>
+
+        <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-white/30">
+          <span className="flex items-center gap-2">
+            <svg className="w-3.5 h-3.5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+            </svg>
+            Free tier — no credit card
+          </span>
+          <span className="flex items-center gap-2">
+            <svg className="w-3.5 h-3.5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+            </svg>
+            Key generated instantly
+          </span>
+          <span className="flex items-center gap-2">
+            <svg className="w-3.5 h-3.5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+            </svg>
+            Full 3-layer AI access
+          </span>
         </div>
       </div>
     </section>
