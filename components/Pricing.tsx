@@ -144,7 +144,7 @@ export default function Pricing() {
 
         <p className="text-center text-white/25 text-sm mt-8">
           All prices in USD. &nbsp;·&nbsp; Need higher volume or custom SLA?{" "}
-          <a href="mailto:hello@skinic.app" className="text-violet-400 hover:text-violet-300">Contact us for Enterprise</a>.
+          <a href="mailto:skinic@thinkingstudio.ai" className="text-violet-400 hover:text-violet-300">Contact us for Enterprise</a>.
         </p>
       </div>
     </section>
