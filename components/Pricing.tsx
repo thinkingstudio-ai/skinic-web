@@ -30,8 +30,8 @@ const tiers = [
       "Email support",
       "Usage dashboard",
     ],
-    cta: "Request Access",
-    ctaHref: "#contact",
+    cta: "Get Starter",
+    ctaHref: "https://skink.lemonsqueezy.com/checkout/buy/784a9628-967d-4cd5-bec5-47ea5c04f53e",
     popular: false,
   },
   {
@@ -44,13 +44,11 @@ const tiers = [
     recommend_rpm: "100 recommend/min",
     features: [
       "Everything in Starter",
-      "Priority support",
-
       "Postman collection",
       "Priority email support",
     ],
-    cta: "Request Access",
-    ctaHref: "#contact",
+    cta: "Get Pro",
+    ctaHref: "https://skink.lemonsqueezy.com/checkout/buy/da6efa06-373b-44eb-97fa-64eb0feeff45",
     popular: true,
   },
   {
@@ -130,6 +128,8 @@ export default function Pricing() {
 
               <a
                 href={tier.ctaHref}
+                target={tier.ctaHref.startsWith("http") ? "_blank" : undefined}
+                rel={tier.ctaHref.startsWith("http") ? "noopener noreferrer" : undefined}
                 className={`text-center text-sm font-semibold py-2.5 rounded-xl transition-all ${
                   tier.popular
                     ? "bg-violet-600 hover:bg-violet-500 text-white"
