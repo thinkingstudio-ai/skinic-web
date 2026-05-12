@@ -13,7 +13,7 @@ const tiers = [
       "Docs & self-service only",
     ],
     cta: "Get Started",
-    ctaHref: "#contact",
+    ctaHref: "/signup",
     popular: false,
   },
   {
