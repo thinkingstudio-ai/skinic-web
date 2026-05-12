@@ -48,7 +48,7 @@ const tiers = [
       "Priority support",
       "SLA guarantee",
       "Postman collection",
-      "Dedicated onboarding",
+      "Priority email support",
     ],
     cta: "Request Access",
     ctaHref: "#contact",
