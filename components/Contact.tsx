@@ -19,7 +19,7 @@ export default function Contact() {
             Get Free API Key →
           </a>
           <a
-            href="mailto:hello@skinic.app?subject=Enterprise API Inquiry"
+            href="mailto:skinic@thinkingstudio.ai?subject=Enterprise%20API%20Inquiry%20%E2%80%94%20skinic.app"
             className="px-8 py-3.5 rounded-xl border border-white/10 hover:border-white/20 text-white/70 hover:text-white font-medium text-base transition-all"
           >
             Contact for Enterprise
