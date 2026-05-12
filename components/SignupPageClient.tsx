@@ -25,7 +25,6 @@ export default function SignupPageClient() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<SignupResult | null>(null);
   const [error, setError] = useState("");
-  const [copied, setCopied] = useState(false);
   const [upgradeTier, setUpgradeTier] = useState("");
 
   useEffect(() => {
@@ -59,12 +58,6 @@ export default function SignupPageClient() {
     setLoading(false);
   }
 
-  function copyKey() {
-    if (!result) return;
-    navigator.clipboard.writeText(result.api_key);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  }
 
   if (result) {
     return (
