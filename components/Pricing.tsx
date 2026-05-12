@@ -72,6 +72,7 @@ const tiers = [
     ],
     cta: "Contact Sales",
     ctaHref: "#contact",
+    hidden: true,
     popular: false,
   },
 ];
@@ -88,8 +89,8 @@ export default function Pricing() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
-          {tiers.map((tier) => (
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {tiers.filter((t) => !("hidden" in t && t.hidden)).map((tier) => (
             <div
               key={tier.name}
               className={`rounded-2xl p-6 flex flex-col relative ${
@@ -143,8 +144,8 @@ export default function Pricing() {
         </div>
 
         <p className="text-center text-white/25 text-sm mt-8">
-          All prices in USD. Need a custom plan?{" "}
-          <a href="#contact" className="text-violet-400 hover:text-violet-300">Contact us</a>.
+          All prices in USD. &nbsp;·&nbsp; Need higher volume or custom SLA?{" "}
+          <a href="mailto:hello@skinic.app" className="text-violet-400 hover:text-violet-300">Contact us for Enterprise</a>.
         </p>
       </div>
     </section>
