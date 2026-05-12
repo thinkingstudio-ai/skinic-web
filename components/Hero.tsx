@@ -26,10 +26,10 @@ export default function Hero() {
 
         <div className="fade-up-delay-3 flex flex-col sm:flex-row items-center justify-center gap-4">
           <a
-            href="#contact"
+            href="/signup"
             className="px-8 py-3.5 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-semibold text-base transition-all hover:shadow-lg hover:shadow-violet-500/25"
           >
-            Request API Access
+            Get Free API Key
           </a>
           <a
             href="https://api.skinic.app/docs"
