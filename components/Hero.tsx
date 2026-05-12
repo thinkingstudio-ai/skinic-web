@@ -11,7 +11,7 @@ export default function Hero() {
       <div className="relative max-w-4xl mx-auto text-center">
         <div className="fade-up inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-violet-500/30 bg-violet-500/10 text-violet-300 text-xs font-medium mb-8">
           <span className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse" />
-          API v1.3 — Production Ready
+          API v1.6 — Production Ready
         </div>
 
         <h1 className="fade-up-delay-1 text-5xl md:text-7xl font-bold leading-tight tracking-tight mb-6">
