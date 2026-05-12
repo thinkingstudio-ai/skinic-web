@@ -9,9 +9,8 @@ const tiers = [
     recommend_rpm: "10 recommend/min",
     features: [
       "Full 3-layer AI analysis",
-      "Ingredient recommendations",
-      "JSON response",
-      "Community support",
+      "Basic ingredient recommendations",
+      "Docs & self-service only",
     ],
     cta: "Get Started",
     ctaHref: "#contact",
