@@ -5,12 +5,12 @@ const PAID_TIERS = [
   {
     value: "starter",
     label: "Starter — $29/mo",
-    href: "https://skink.lemonsqueezy.com/checkout/buy/784a9628-967d-4cd5-bec5-47ea5c04f53e",
+    href: "https://skinic.lemonsqueezy.com/checkout/buy/784a9628-967d-4cd5-bec5-47ea5c04f53e",
   },
   {
     value: "pro",
     label: "Pro — $99/mo",
-    href: "https://skink.lemonsqueezy.com/checkout/buy/da6efa06-373b-44eb-97fa-64eb0feeff45",
+    href: "https://skinic.lemonsqueezy.com/checkout/buy/da6efa06-373b-44eb-97fa-64eb0feeff45",
   },
 ];
 
