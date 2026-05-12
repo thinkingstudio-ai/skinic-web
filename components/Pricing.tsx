@@ -138,6 +138,14 @@ export default function Pricing() {
               >
                 {tier.cta}
               </a>
+              {tier.ctaHref.startsWith("http") && (
+                <p className="text-center text-white/20 text-xs mt-2">
+                  <a href="/signup" className="text-violet-400/60 hover:text-violet-400 transition-colors">
+                    Get free key first →
+                  </a>{" "}
+                  use same email at checkout
+                </p>
+              )}
             </div>
           ))}
         </div>

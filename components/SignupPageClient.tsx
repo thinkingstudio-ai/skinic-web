@@ -190,7 +190,7 @@ export default function SignupPageClient() {
 
       {/* Paid tier cards */}
       <div>
-        <p className="text-center text-white/30 text-xs uppercase tracking-widest mb-3">Need more calls?</p>
+        <p className="text-center text-white/30 text-xs uppercase tracking-widest mb-3">Ready to upgrade? Sign up above first, then checkout with the same email.</p>
         <div className="grid grid-cols-2 gap-3">
           {PAID_TIERS.map((t) => (
             <a
