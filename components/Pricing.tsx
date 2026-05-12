@@ -31,7 +31,7 @@ const tiers = [
       "Usage dashboard",
     ],
     cta: "Get Starter",
-    ctaHref: "https://skink.lemonsqueezy.com/checkout/buy/784a9628-967d-4cd5-bec5-47ea5c04f53e",
+    ctaHref: "/signup?upgrade=starter",
     popular: false,
   },
   {
@@ -48,7 +48,7 @@ const tiers = [
       "Priority email support",
     ],
     cta: "Get Pro",
-    ctaHref: "https://skink.lemonsqueezy.com/checkout/buy/da6efa06-373b-44eb-97fa-64eb0feeff45",
+    ctaHref: "/signup?upgrade=pro",
     popular: true,
   },
   {
@@ -138,14 +138,6 @@ export default function Pricing() {
               >
                 {tier.cta}
               </a>
-              {tier.ctaHref.startsWith("http") && (
-                <p className="text-center text-white/20 text-xs mt-2">
-                  <a href="/signup" className="text-violet-400/60 hover:text-violet-400 transition-colors">
-                    Get free key first →
-                  </a>{" "}
-                  use same email at checkout
-                </p>
-              )}
             </div>
           ))}
         </div>

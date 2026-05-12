@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const PAID_TIERS = [
   {
@@ -26,6 +26,13 @@ export default function SignupPageClient() {
   const [result, setResult] = useState<SignupResult | null>(null);
   const [error, setError] = useState("");
   const [copied, setCopied] = useState(false);
+  const [upgradeTier, setUpgradeTier] = useState("");
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const upgrade = params.get("upgrade") || "";
+    if (upgrade) setUpgradeTier(upgrade);
+  }, []);
 
   const set = (k: string, v: string) => setForm((f) => ({ ...f, [k]: v }));
 
@@ -190,29 +197,44 @@ export default function SignupPageClient() {
 
       {/* Paid tier cards */}
       <div>
-        <p className="text-center text-white/30 text-xs uppercase tracking-widest mb-3">Ready to upgrade? Sign up above first, then checkout with the same email.</p>
-        <div className="grid grid-cols-2 gap-3">
-          {PAID_TIERS.map((t) => (
-            <a
-              key={t.value}
-              href={t.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="card-glass rounded-xl p-4 text-center border border-white/5 hover:border-violet-500/30 transition-all group"
-            >
-              <p className="text-white/60 text-sm font-semibold group-hover:text-white transition-colors capitalize">{t.value}</p>
-              <p className="text-violet-400 text-xs mt-1">{t.label}</p>
-              <p className="text-white/25 text-xs mt-2">Checkout →</p>
-            </a>
-          ))}
+        <div className="flex items-center gap-3 mb-3">
+          <div className="flex-1 h-px bg-white/5" />
+          <p className="text-white/25 text-xs uppercase tracking-widest whitespace-nowrap">
+            {upgradeTier ? `Step 2 — Upgrade to ${upgradeTier.charAt(0).toUpperCase() + upgradeTier.slice(1)}` : "Need more calls?"}
+          </p>
+          <div className="flex-1 h-px bg-white/5" />
         </div>
-        <p className="text-center text-white/20 text-xs mt-3">
-          After payment, use{" "}
-          <a href="https://api.skinic.app/key/retrieve" target="_blank" rel="noreferrer" className="text-violet-400">
-            /key/retrieve
-          </a>{" "}
-          with your email to get your upgraded key.
-        </p>
+        {upgradeTier && (
+          <p className="text-center text-amber-400/70 text-xs mb-3">
+            Sign up above first, then click checkout with the same email.
+          </p>
+        )}
+        <div className="grid grid-cols-2 gap-3">
+          {PAID_TIERS.map((t) => {
+            const isHighlighted = upgradeTier === t.value;
+            return (
+              <a
+                key={t.value}
+                href={t.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`rounded-xl p-4 text-center border transition-all group ${
+                  isHighlighted
+                    ? "border-violet-500/50 bg-violet-500/10 shadow-lg shadow-violet-500/10"
+                    : "card-glass border-white/5 hover:border-violet-500/30"
+                }`}
+              >
+                <p className={`text-sm font-semibold capitalize transition-colors ${isHighlighted ? "text-white" : "text-white/60 group-hover:text-white"}`}>
+                  {t.value}
+                </p>
+                <p className="text-violet-400 text-xs mt-1">{t.label}</p>
+                <p className={`text-xs mt-2 ${isHighlighted ? "text-violet-300" : "text-white/25"}`}>
+                  {isHighlighted ? "Checkout here →" : "Checkout →"}
+                </p>
+              </a>
+            );
+          })}
+        </div>
       </div>
 
       <p className="text-center text-white/25 text-xs">
