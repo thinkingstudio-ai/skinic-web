@@ -61,26 +61,35 @@ export default function ApiKeysClient() {
     setError("");
     const { data: { user } } = await supabase.auth.getUser();
     const { data: { session } } = await supabase.auth.getSession();
-    if (!user || !session) return;
-
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dashboard/keys`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${session.access_token}`,
-      },
-      body: JSON.stringify({ name: newKeyName.trim() }),
-    });
-    const data = await res.json();
-    if (!res.ok) {
-      setError(data.detail || "Failed to create key");
-    } else {
-      setNewKeyResult({ api_key: data.api_key, name: data.name });
-      setNewKeyName("");
-      setShowCreate(false);
-      fetchKeys();
+    if (!user || !session) {
+      setError("Session expired. Please sign in again.");
+      setCreating(false);
+      return;
     }
-    setCreating(false);
+
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dashboard/keys`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${session.access_token}`,
+        },
+        body: JSON.stringify({ name: newKeyName.trim() }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.detail || "Failed to create key");
+      } else {
+        setNewKeyResult({ api_key: data.api_key, name: data.name });
+        setNewKeyName("");
+        setShowCreate(false);
+        fetchKeys();
+      }
+    } catch {
+      setError("Network error. Please try again.");
+    } finally {
+      setCreating(false);
+    }
   }
 
   async function deleteKey(id: string) {
