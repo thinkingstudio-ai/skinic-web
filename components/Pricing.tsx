@@ -46,7 +46,7 @@ const tiers = [
     features: [
       "Everything in Starter",
       "Priority support",
-      "SLA guarantee",
+
       "Postman collection",
       "Priority email support",
     ],
