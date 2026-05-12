@@ -15,9 +15,9 @@ const PAID_TIERS = [
 ];
 
 type SignupResult = {
-  api_key: string;
-  tier: string;
-  rate_limits: { analyze_rpm: number; recommend_rpm: number };
+  pending_verification: boolean;
+  email_sent: boolean;
+  message: string;
 };
 
 export default function SignupPageClient() {
@@ -69,53 +69,35 @@ export default function SignupPageClient() {
   if (result) {
     return (
       <div className="w-full max-w-lg">
-        <div className="card-glass rounded-2xl p-8 border border-emerald-500/20 bg-emerald-500/5">
-          <div className="flex items-center gap-2 mb-5">
-            <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center">
-              <svg className="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
-            <p className="text-emerald-400 font-semibold text-sm">API key generated!</p>
+        <div className="card-glass rounded-2xl p-8 border border-violet-500/20 bg-violet-500/5 text-center">
+          <div className="w-14 h-14 rounded-full bg-violet-500/20 flex items-center justify-center mx-auto mb-5">
+            <svg className="w-7 h-7 text-violet-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
           </div>
 
-          <p className="text-white/50 text-sm mb-3">
-            Save this key immediately — it will never be shown again.
+          <h2 className="text-xl font-bold text-white mb-2">Check your email</h2>
+          <p className="text-white/50 text-sm mb-5 leading-relaxed">
+            We sent a verification link to <span className="text-white/80 font-medium">{form.email}</span>.<br />
+            Click the link to confirm and get your API key.
           </p>
 
-          <div className="bg-black/30 border border-emerald-500/20 rounded-xl p-4 font-mono text-sm text-emerald-300 break-all mb-3">
-            {result.api_key}
+          <div className="bg-white/5 rounded-xl p-4 text-left space-y-2 text-xs text-white/40 mb-5">
+            <p>✓ Check your inbox and spam folder</p>
+            <p>✓ Link expires in 24 hours</p>
+            <p>✓ Your API key will be shown after verification</p>
           </div>
 
-          <button
-            onClick={copyKey}
-            className="w-full py-2.5 rounded-xl border border-violet-500/30 bg-violet-500/10 text-violet-300 text-sm font-medium hover:bg-violet-500/20 transition-colors mb-6"
-          >
-            {copied ? "Copied!" : "Copy API Key"}
-          </button>
-
-          <div className="space-y-2 text-sm text-white/40">
-            <div className="flex justify-between">
-              <span>Tier</span>
-              <span className="text-white/70 capitalize">{result.tier}</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Analyze limit</span>
-              <span className="text-white/70">{result.rate_limits.analyze_rpm} calls/min</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Recommend limit</span>
-              <span className="text-white/70">{result.rate_limits.recommend_rpm} calls/min</span>
-            </div>
-          </div>
-
-          <div className="mt-6 p-4 bg-white/3 rounded-xl border border-white/5 text-xs text-white/35 space-y-1">
-            <p className="font-semibold text-white/50 mb-2">Next steps:</p>
-            <p>1. Include <code className="text-violet-300">X-API-Key: your_key</code> in every request</p>
-            <p>2. POST to <code className="text-violet-300">https://api.skinic.app/analyze</code></p>
-            <p>3. Check your usage: GET <code className="text-violet-300">/usage</code></p>
-            <p>4. Read the docs: <a href="https://api.skinic.app/docs" target="_blank" rel="noreferrer" className="text-violet-400">api.skinic.app/docs</a></p>
-          </div>
+          <p className="text-white/25 text-xs">
+            Didn't receive it?{" "}
+            <button onClick={() => setResult(null)} className="text-violet-400 hover:text-violet-300 transition-colors">
+              Try again
+            </button>
+            {" "}·{" "}
+            <a href="mailto:helloskinic@thinkingstudio.ai" className="text-violet-400 hover:text-violet-300 transition-colors">
+              Contact support
+            </a>
+          </p>
         </div>
       </div>
     );
