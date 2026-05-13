@@ -5,12 +5,12 @@ const PAID_TIERS = [
   {
     value: "starter",
     label: "Starter — $29/mo",
-    href: "https://skinic.lemonsqueezy.com/checkout/buy/784a9628-967d-4cd5-bec5-47ea5c04f53e",
+    href: "https://skinic.lemonsqueezy.com/checkout/buy/784a9628-967d-4cd5-bec5-47ea5c04f53e?checkout[success_url]=https%3A%2F%2Fskinic.app%2Fdashboard%2Fplan%3Fupgraded%3Dstarter",
   },
   {
     value: "pro",
     label: "Pro — $99/mo",
-    href: "https://skinic.lemonsqueezy.com/checkout/buy/da6efa06-373b-44eb-97fa-64eb0feeff45",
+    href: "https://skinic.lemonsqueezy.com/checkout/buy/da6efa06-373b-44eb-97fa-64eb0feeff45?checkout[success_url]=https%3A%2F%2Fskinic.app%2Fdashboard%2Fplan%3Fupgraded%3Dpro",
   },
 ];
 
