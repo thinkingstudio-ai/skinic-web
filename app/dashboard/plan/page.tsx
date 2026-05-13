@@ -2,7 +2,23 @@ import { createClient } from "@/lib/supabase/server";
 import { Suspense } from "react";
 import PlanUpgradeBanner from "@/components/PlanUpgradeBanner";
 
-const TIERS = [
+const LS_PRODUCTS: Record<string, string> = {
+  starter: "784a9628-967d-4cd5-bec5-47ea5c04f53e",
+  pro: "da6efa06-373b-44eb-97fa-64eb0feeff45",
+};
+
+function buildCheckoutUrl(tier: "starter" | "pro", userId: string, userEmail: string): string {
+  const productId = LS_PRODUCTS[tier];
+  const successUrl = `https://skinic.app/dashboard/plan?upgraded=${tier}`;
+  const params = new URLSearchParams();
+  params.set("checkout[success_url]", successUrl);
+  params.set("checkout[email]", userEmail);
+  params.set("checkout[custom][user_id]", userId);
+  params.set("checkout[custom][tier]", tier);
+  return `https://skinic.lemonsqueezy.com/checkout/buy/${productId}?${params.toString()}`;
+}
+
+const TIER_META = [
   {
     id: "free",
     name: "Free",
@@ -12,7 +28,6 @@ const TIERS = [
     analyze: "5 analyze/min",
     recommend: "10 recommend/min",
     ai: false,
-    checkoutUrl: null,
     color: "border-white/10",
     badge: "text-white/50 bg-white/5",
   },
@@ -25,7 +40,6 @@ const TIERS = [
     analyze: "20 analyze/min",
     recommend: "30 recommend/min",
     ai: true,
-    checkoutUrl: "https://skinic.lemonsqueezy.com/checkout/buy/784a9628-967d-4cd5-bec5-47ea5c04f53e?checkout[success_url]=https%3A%2F%2Fskinic.app%2Fdashboard%2Fplan%3Fupgraded%3Dstarter",
     color: "border-blue-500/20",
     badge: "text-blue-300 bg-blue-500/10",
   },
@@ -38,11 +52,10 @@ const TIERS = [
     analyze: "60 analyze/min",
     recommend: "100 recommend/min",
     ai: true,
-    checkoutUrl: "https://skinic.lemonsqueezy.com/checkout/buy/da6efa06-373b-44eb-97fa-64eb0feeff45?checkout[success_url]=https%3A%2F%2Fskinic.app%2Fdashboard%2Fplan%3Fupgraded%3Dpro",
     color: "border-violet-500/30",
     badge: "text-violet-300 bg-violet-500/10",
   },
-];
+] as const;
 
 export default async function PlanPage() {
   const supabase = await createClient();
@@ -54,6 +67,13 @@ export default async function PlanPage() {
     .limit(1);
 
   const currentTier = keys?.[0]?.tier || "free";
+
+  const TIERS = TIER_META.map((t) => ({
+    ...t,
+    checkoutUrl: t.id === "starter" || t.id === "pro"
+      ? buildCheckoutUrl(t.id, user!.id, user!.email || "")
+      : null,
+  }));
 
   return (
     <div className="space-y-6 max-w-3xl">
