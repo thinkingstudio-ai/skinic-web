@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { createClient, createAdminClient } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -6,8 +6,9 @@ export const revalidate = 0;
 export default async function UsagePage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
+  const admin = createAdminClient();
 
-  const { data: keys } = await supabase
+  const { data: keys } = await admin
     .from("api_keys")
     .select("name, tier, total_calls, monthly_calls, month_start, created_at, last_used")
     .eq("supabase_user_id", user!.id)

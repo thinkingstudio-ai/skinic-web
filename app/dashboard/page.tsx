@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { createClient, createAdminClient } from "@/lib/supabase/server";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
@@ -21,9 +21,10 @@ const TIER_COLORS: Record<string, string> = {
 export default async function DashboardOverview() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
+  const admin = createAdminClient();
 
-  // Fetch user's API keys from backend table
-  const { data: keys } = await supabase
+  // Fetch user's API keys using service role (bypasses RLS)
+  const { data: keys } = await admin
     .from("api_keys")
     .select("tier, total_calls, monthly_calls, is_active, created_at")
     .eq("supabase_user_id", user!.id)

@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { Suspense } from "react";
 import PlanUpgradeBanner from "@/components/PlanUpgradeBanner";
 
@@ -63,7 +63,8 @@ const TIER_META = [
 export default async function PlanPage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
-  const { data: keys } = await supabase
+  const admin = createAdminClient();
+  const { data: keys } = await admin
     .from("api_keys")
     .select("tier")
     .eq("supabase_user_id", user!.id)
