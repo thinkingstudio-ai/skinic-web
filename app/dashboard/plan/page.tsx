@@ -2,6 +2,9 @@ import { createClient } from "@/lib/supabase/server";
 import { Suspense } from "react";
 import PlanUpgradeBanner from "@/components/PlanUpgradeBanner";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 const LS_PRODUCTS: Record<string, string> = {
   starter: "784a9628-967d-4cd5-bec5-47ea5c04f53e",
   pro: "da6efa06-373b-44eb-97fa-64eb0feeff45",

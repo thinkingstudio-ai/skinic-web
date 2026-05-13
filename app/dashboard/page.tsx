@@ -1,6 +1,9 @@
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 const TIER_LIMITS: Record<string, { monthly: number | null; analyze_rpm: number; recommend_rpm: number; ai: boolean }> = {
   free:       { monthly: 100,   analyze_rpm: 5,   recommend_rpm: 10,  ai: false },
   starter:    { monthly: 2000,  analyze_rpm: 20,  recommend_rpm: 30,  ai: true  },
