@@ -73,9 +73,12 @@ export default function ApiKeysClient() {
     }
 
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://api.skinic.app";
+    const url = `${apiUrl}/dashboard/keys`;
+    const tokenPreview = session.access_token ? `${session.access_token.slice(0, 12)}...len=${session.access_token.length}` : "EMPTY";
     try {
-      const res = await fetch(`${apiUrl}/dashboard/keys`, {
+      const res = await fetch(url, {
         method: "POST",
+        mode: "cors",
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${session.access_token}`,
@@ -95,7 +98,7 @@ export default function ApiKeysClient() {
       }
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Unknown error";
-      setError(`Network error: ${msg}`);
+      setError(`Fetch failed → URL: ${url} | Token: ${tokenPreview} | Error: ${msg}`);
     } finally {
       setCreating(false);
     }
