@@ -82,17 +82,20 @@ export default function ApiKeysClient() {
         },
         body: JSON.stringify({ name: newKeyName.trim() }),
       });
-      const data = await res.json();
+      const text = await res.text();
+      let data: { api_key?: string; name?: string; detail?: string } = {};
+      try { data = JSON.parse(text); } catch { /* non-json response */ }
       if (!res.ok) {
-        setError(data.detail || "Failed to create key");
+        setError(data.detail || `Error ${res.status}: ${text.slice(0, 80) || "Request failed"}`);
       } else {
-        setNewKeyResult({ api_key: data.api_key, name: data.name });
+        setNewKeyResult({ api_key: data.api_key || "", name: data.name || "" });
         setNewKeyName("");
         setShowCreate(false);
         fetchKeys();
       }
-    } catch {
-      setError("Network error. Please try again.");
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "Unknown error";
+      setError(`Network error: ${msg}`);
     } finally {
       setCreating(false);
     }
