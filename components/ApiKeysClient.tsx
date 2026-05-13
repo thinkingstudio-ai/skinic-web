@@ -104,6 +104,51 @@ export default function ApiKeysClient() {
     }
   }
 
+  async function runDiagnostic() {
+    setError("");
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://api.skinic.app";
+    const lines: string[] = [];
+    lines.push(`API URL: ${apiUrl}`);
+    // Test 1: GET no-auth ping
+    try {
+      const r = await fetch(`${apiUrl}/dashboard/_ping`);
+      lines.push(`GET ping: ${r.status} ${r.ok ? "OK" : "FAIL"}`);
+    } catch (e) {
+      lines.push(`GET ping: THREW — ${e instanceof Error ? e.message : "?"}`);
+    }
+    // Test 2: POST no-auth ping
+    try {
+      const r = await fetch(`${apiUrl}/dashboard/_ping`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ test: 1 }),
+      });
+      lines.push(`POST ping (no auth): ${r.status} ${r.ok ? "OK" : "FAIL"}`);
+    } catch (e) {
+      lines.push(`POST ping (no auth): THREW — ${e instanceof Error ? e.message : "?"}`);
+    }
+    // Test 3: POST with auth header
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session) {
+      try {
+        const r = await fetch(`${apiUrl}/dashboard/_ping`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${session.access_token}`,
+          },
+          body: JSON.stringify({ test: 2 }),
+        });
+        lines.push(`POST ping (with auth): ${r.status} ${r.ok ? "OK" : "FAIL"}`);
+      } catch (e) {
+        lines.push(`POST ping (with auth): THREW — ${e instanceof Error ? e.message : "?"}`);
+      }
+    } else {
+      lines.push("POST ping (with auth): SKIPPED no session");
+    }
+    setError(lines.join(" | "));
+  }
+
   async function deleteKey(id: string) {
     setDeletingId(id);
     const { data: { session } } = await supabase.auth.getSession();
@@ -131,12 +176,21 @@ export default function ApiKeysClient() {
           <h2 className="text-lg font-semibold text-white">API Keys</h2>
           <p className="text-white/40 text-sm mt-0.5">Create and manage your API keys. Each key is shown once.</p>
         </div>
-        <button
-          onClick={() => setShowCreate(true)}
-          className="px-4 py-2 rounded-xl bg-violet-600 hover:bg-violet-500 text-white text-sm font-semibold transition-all"
-        >
-          + New Key
-        </button>
+        <div className="flex gap-2">
+          <button
+            onClick={runDiagnostic}
+            className="px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white/60 text-xs font-medium transition-all"
+            title="Run network diagnostic"
+          >
+            🔧 Diagnose
+          </button>
+          <button
+            onClick={() => setShowCreate(true)}
+            className="px-4 py-2 rounded-xl bg-violet-600 hover:bg-violet-500 text-white text-sm font-semibold transition-all"
+          >
+            + New Key
+          </button>
+        </div>
       </div>
 
       {/* New key result — shown once */}
