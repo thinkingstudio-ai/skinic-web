@@ -42,14 +42,20 @@ export default function ApiKeysClient() {
   }
 
   const fetchKeys = useCallback(async () => {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return;
-    const { data } = await supabase
-      .from("api_keys")
-      .select("id, name, tier, is_active, total_calls, monthly_calls, created_at, last_used")
-      .eq("supabase_user_id", user.id)
-      .order("created_at", { ascending: false });
-    setKeys(data || []);
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) { setLoading(false); return; }
+    try {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://api.skinic.app";
+      const res = await fetch(`${apiUrl}/dashboard/keys`, {
+        headers: { "Authorization": `Bearer ${session.access_token}` },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setKeys(data.keys || []);
+      }
+    } catch {
+      // silently ignore fetch errors on load
+    }
     setLoading(false);
   }, [supabase]);
 
@@ -59,16 +65,16 @@ export default function ApiKeysClient() {
     if (!newKeyName.trim()) return;
     setCreating(true);
     setError("");
-    const { data: { user } } = await supabase.auth.getUser();
     const { data: { session } } = await supabase.auth.getSession();
-    if (!user || !session) {
+    if (!session) {
       setError("Session expired. Please sign in again.");
       setCreating(false);
       return;
     }
 
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://api.skinic.app";
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dashboard/keys`, {
+      const res = await fetch(`${apiUrl}/dashboard/keys`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -95,10 +101,13 @@ export default function ApiKeysClient() {
   async function deleteKey(id: string) {
     setDeletingId(id);
     const { data: { session } } = await supabase.auth.getSession();
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dashboard/keys/${id}`, {
-      method: "DELETE",
-      headers: { "Authorization": `Bearer ${session!.access_token}` },
-    });
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://api.skinic.app";
+    if (session) {
+      await fetch(`${apiUrl}/dashboard/keys/${id}`, {
+        method: "DELETE",
+        headers: { "Authorization": `Bearer ${session.access_token}` },
+      });
+    }
     setKeys((prev) => prev.filter((k) => k.id !== id));
     setDeletingId("");
   }
