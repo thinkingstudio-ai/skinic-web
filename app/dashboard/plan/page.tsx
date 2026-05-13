@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
-import Link from "next/link";
+import { Suspense } from "react";
+import PlanUpgradeBanner from "@/components/PlanUpgradeBanner";
 
 const TIERS = [
   {
@@ -60,6 +61,10 @@ export default async function PlanPage() {
         <h2 className="text-lg font-semibold text-white">Plan & Billing</h2>
         <p className="text-white/40 text-sm mt-0.5">Manage your subscription and upgrade your plan.</p>
       </div>
+
+      <Suspense fallback={null}>
+        <PlanUpgradeBanner initialTier={currentTier} />
+      </Suspense>
 
       {/* Current plan banner */}
       <div className="card-glass rounded-2xl p-5 border border-violet-500/20 bg-violet-500/5">
