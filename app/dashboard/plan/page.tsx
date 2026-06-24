@@ -1,25 +1,15 @@
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { Suspense } from "react";
 import PlanUpgradeBanner from "@/components/PlanUpgradeBanner";
+import PaddleCheckoutButton from "@/components/PaddleCheckoutButton";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-const LS_PRODUCTS: Record<string, string> = {
-  starter: "784a9628-967d-4cd5-bec5-47ea5c04f53e",
-  pro: "da6efa06-373b-44eb-97fa-64eb0feeff45",
+const PADDLE_PRICES: Record<string, string> = {
+  starter: process.env.PADDLE_PRICE_STARTER || "pri_01kvxcyj7skk9we9tpbzecfhnh",
+  pro: process.env.PADDLE_PRICE_PRO || "pri_01kvxd35mqf8eqkgrv8sw1cj5n",
 };
-
-function buildCheckoutUrl(tier: "starter" | "pro", userId: string, userEmail: string): string {
-  const productId = LS_PRODUCTS[tier];
-  const successUrl = `https://skinic.app/dashboard/plan?upgraded=${tier}`;
-  const params = new URLSearchParams();
-  params.set("checkout[success_url]", successUrl);
-  params.set("checkout[email]", userEmail);
-  params.set("checkout[custom][user_id]", userId);
-  params.set("checkout[custom][tier]", tier);
-  return `https://skinic.lemonsqueezy.com/checkout/buy/${productId}?${params.toString()}`;
-}
 
 const TIER_META = [
   {
@@ -74,9 +64,7 @@ export default async function PlanPage() {
 
   const TIERS = TIER_META.map((t) => ({
     ...t,
-    checkoutUrl: t.id === "starter" || t.id === "pro"
-      ? buildCheckoutUrl(t.id, user!.id, user!.email || "")
-      : null,
+    priceId: t.id === "starter" || t.id === "pro" ? PADDLE_PRICES[t.id] : null,
   }));
 
   return (
@@ -130,15 +118,14 @@ export default async function PlanPage() {
               </ul>
               {isCurrent ? (
                 <div className="text-center text-xs text-white/30 py-2">Your current plan</div>
-              ) : tier.checkoutUrl ? (
-                <a
-                  href={tier.checkoutUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block text-center py-2.5 rounded-xl bg-violet-600 hover:bg-violet-500 text-white text-sm font-semibold transition-all"
-                >
-                  Upgrade to {tier.name}
-                </a>
+              ) : tier.priceId && (tier.id === "starter" || tier.id === "pro") ? (
+                <PaddleCheckoutButton
+                  priceId={tier.priceId}
+                  tier={tier.id}
+                  userId={user!.id}
+                  userEmail={user!.email || ""}
+                  label={`Upgrade to ${tier.name}`}
+                />
               ) : null}
             </div>
           );
