@@ -121,12 +121,15 @@ export default function TermsPage() {
         </div>
 
         <div className="space-y-4">
-          {sections.map((s) => (
-            <div key={s.title} className="card-glass rounded-2xl p-6">
-              <p className="text-white font-semibold text-sm mb-3">{s.title}</p>
-              <div className="text-white/45 text-sm leading-relaxed whitespace-pre-line">{s.body}</div>
-            </div>
-          ))}
+          {sections.map((s) => {
+            const anchor = s.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+            return (
+              <div key={s.title} id={anchor} className="card-glass rounded-2xl p-6 scroll-mt-20">
+                <p className="text-white font-semibold text-sm mb-3">{s.title}</p>
+                <div className="text-white/45 text-sm leading-relaxed whitespace-pre-line">{s.body}</div>
+              </div>
+            );
+          })}
         </div>
 
         <div className="card-glass rounded-2xl p-5 border border-white/5 text-center mt-6">
