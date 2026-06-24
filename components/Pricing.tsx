@@ -7,7 +7,7 @@ const tiers = [
     limits: [
       { label: "Monthly calls", value: "100 calls", tooltip: "Total API calls allowed per month across all endpoints" },
       { label: "Skin analysis", value: "5 req/min", tooltip: "Max /analyze requests per minute — each call processes one skin image" },
-      { label: "AI recommendations", value: "10 req/min", tooltip: "Static ingredient list only — AI-powered recommendations not included in Free tier. Upgrade to Starter for full AI responses." },
+      { label: "AI recommendations", value: "—", tooltip: "Not included in Free tier. Upgrade to Starter for full AI-powered ingredient recommendations." },
     ],
     features: [
       "Full 3-layer AI skin analysis",
@@ -122,15 +122,18 @@ export default function Pricing() {
               </div>
 
               <div className="mb-5 space-y-1.5">
-                {tier.limits.map((limit) => (
-                  <div key={limit.label} className="flex items-center justify-between bg-white/5 rounded-lg px-3 py-2 group relative">
-                    <span className="text-xs text-white/40">{limit.label}</span>
-                    <span className="text-xs font-mono text-white/60 font-medium">{limit.value}</span>
-                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-56 bg-zinc-800 border border-white/10 rounded-lg px-3 py-2 text-xs text-white/60 leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 shadow-xl">
-                      {limit.tooltip}
+                {tier.limits.map((limit) => {
+                  const isDisabled = limit.value === "—";
+                  return (
+                    <div key={limit.label} className={`flex items-center justify-between rounded-lg px-3 py-2 group relative ${isDisabled ? "bg-white/2 opacity-40" : "bg-white/5"}`}>
+                      <span className={`text-xs ${isDisabled ? "text-white/30 line-through" : "text-white/40"}`}>{limit.label}</span>
+                      <span className={`text-xs font-mono font-medium ${isDisabled ? "text-white/25" : "text-white/60"}`}>{limit.value}</span>
+                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-56 bg-zinc-800 border border-white/10 rounded-lg px-3 py-2 text-xs text-white/60 leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 shadow-xl">
+                        {limit.tooltip}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
 
               <ul className="space-y-2 mb-6 flex-1">
