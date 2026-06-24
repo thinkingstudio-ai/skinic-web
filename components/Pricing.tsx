@@ -7,12 +7,15 @@ const tiers = [
     limits: [
       { label: "Monthly calls", value: "100 calls", tooltip: "Total API calls allowed per month across all endpoints" },
       { label: "Skin analysis", value: "5 req/min", tooltip: "Max /analyze requests per minute — each call processes one skin image" },
-      { label: "AI recommendations", value: "10 req/min", tooltip: "Max /recommend requests per minute — AI-powered ingredient suggestions" },
+      { label: "AI recommendations", value: "10 req/min", tooltip: "Static ingredient list only — AI-powered recommendations not included in Free tier. Upgrade to Starter for full AI responses." },
     ],
     features: [
-      "Full 3-layer AI analysis",
-      "Basic ingredient recommendations",
+      "Full 3-layer AI skin analysis",
+      "Static ingredient list (no AI)",
       "Docs & self-service only",
+    ],
+    disabledFeatures: [
+      "AI-powered recommendations",
     ],
     cta: "Get Started",
     ctaHref: "/signup",
@@ -135,6 +138,14 @@ export default function Pricing() {
                   <li key={f} className="flex items-center gap-2 text-sm text-white/60">
                     <svg className="w-3.5 h-3.5 text-emerald-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                    </svg>
+                    {f}
+                  </li>
+                ))}
+                {"disabledFeatures" in tier && tier.disabledFeatures?.map((f) => (
+                  <li key={f} className="flex items-center gap-2 text-sm text-white/25 line-through">
+                    <svg className="w-3.5 h-3.5 text-white/20 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                     </svg>
                     {f}
                   </li>
