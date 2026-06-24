@@ -75,8 +75,28 @@ const sections = [
     body: `These Terms are governed by the laws of the State of Delaware, United States, without regard to conflict of law principles. Any dispute arising from or relating to these Terms shall first be attempted to be resolved through good-faith negotiation. If unresolved within 30 days, disputes shall be submitted to binding arbitration under the rules of the American Arbitration Association. Each party waives the right to a jury trial and to participate in class action proceedings.`,
   },
   {
-    title: "18. General Provisions",
-    body: `These Terms constitute the entire agreement between you and Thinking Studio LLC regarding the SKINIC service and supersede all prior agreements. If any provision is found unenforceable, the remaining provisions remain in full effect. Our failure to enforce any right or provision shall not constitute a waiver. You may not assign your rights under these Terms without our written consent. We may assign our rights to a successor entity in connection with a merger or acquisition.`,
+    title: "18. AI Output Accuracy Disclaimer",
+    body: `SKINIC's AI models are trained on large datasets but may produce inaccurate, incomplete, or inappropriate outputs including but not limited to:\n\n• Misclassification of skin conditions\n• Incorrect ingredient recommendations\n• False positives or false negatives in screening results\n• Outputs that vary across similar inputs (model non-determinism)\n\nWE MAKE NO REPRESENTATIONS OR WARRANTIES REGARDING THE ACCURACY, RELIABILITY, COMPLETENESS, OR SUITABILITY OF ANY AI-GENERATED OUTPUT. YOU ASSUME ALL RISK ASSOCIATED WITH RELIANCE ON SKINIC OUTPUTS. Thinking Studio LLC shall have no liability for any harm, decision, or action taken in reliance on AI outputs, regardless of whether such outputs were accurate or inaccurate.`,
+  },
+  {
+    title: "19. Force Majeure",
+    body: `Thinking Studio LLC shall not be liable for any failure or delay in performance of its obligations under these Terms arising from causes beyond our reasonable control, including but not limited to:\n\n• Acts of God, natural disasters, pandemics, or public health emergencies\n• Failure or interruption of third-party infrastructure (including Supabase, Railway, Paddle, Cloudflare, AWS, or other service providers)\n• Cyberattacks, DDoS attacks, or malicious intrusions beyond our reasonable security measures\n• Internet or telecommunications outages\n• Government actions, sanctions, or regulatory changes\n• Labour disputes or shortages\n\nIn such events, our obligations shall be suspended for the duration of the force majeure event. We will notify affected users as soon as practicable.`,
+  },
+  {
+    title: "20. Third-Party Services Disclaimer",
+    body: `The SKINIC platform relies on third-party service providers including Supabase (database), Railway (hosting), Paddle (payments), and Cloudflare (network). We are not responsible for:\n\n• Outages, data loss, or service degradation caused by these third parties\n• Billing errors or disputes initiated by Paddle as Merchant of Record\n• Security incidents originating from third-party infrastructure\n• Changes to third-party APIs or services that affect SKINIC functionality\n\nYour use of Paddle's payment services is additionally governed by Paddle's own Terms of Service and Privacy Policy. We recommend reviewing these before subscribing.`,
+  },
+  {
+    title: "21. Feedback & Testimonials",
+    body: `If you submit feedback, bug reports, feature suggestions, or testimonials regarding the SKINIC service ("Feedback"), you grant Thinking Studio LLC a perpetual, irrevocable, worldwide, royalty-free licence to use, reproduce, modify, and incorporate such Feedback into our products and services without compensation or attribution. You represent that any Feedback you provide does not infringe any third-party rights.`,
+  },
+  {
+    title: "22. Beta Features & Experimental Endpoints",
+    body: `From time to time, we may offer access to beta features, experimental endpoints, or early-access functionality (collectively "Beta Features"). Beta Features are provided "AS IS" without any warranty and may be modified, suspended, or discontinued at any time without notice. We accept no liability for any data loss, errors, or damages arising from your use of Beta Features. Beta Features must not be used in production environments serving end users without our express written consent.`,
+  },
+  {
+    title: "23. General Provisions",
+    body: `These Terms constitute the entire agreement between you and Thinking Studio LLC regarding the SKINIC service and supersede all prior agreements. If any provision is found unenforceable, the remaining provisions remain in full effect. Our failure to enforce any right or provision shall not constitute a waiver of that right. You may not assign your rights under these Terms without our written consent. We may assign our rights to a successor entity in connection with a merger, acquisition, or sale of substantially all assets. Any notice to us must be sent to skinic@thinkingstudio.ai and will be effective upon our written acknowledgement.`,
   },
 ];
 

@@ -63,7 +63,15 @@ const sections = [
     body: `We may update this Privacy Policy from time to time to reflect changes in our practices, legal requirements, or service features. We will notify you of material changes via email to your registered address or via an in-dashboard notice at least 14 days before the changes take effect. The "Last updated" date at the top of this page reflects the most recent revision.`,
   },
   {
-    title: "15. Contact Us",
+    title: "15. AI Model Data",
+    body: `We may use aggregated, anonymised, and de-identified usage statistics (such as endpoint call frequency, response time distributions, and error rate patterns) to improve the performance and accuracy of our AI models. This data contains no personal identifiers and cannot be used to identify individual users or their submitted images.\n\nWe will never use personally identifiable submitted images for model training without explicit, separate written consent from the submitting client. No individual skin images are retained beyond the API session under any circumstances.`,
+  },
+  {
+    title: "16. Limitation of Our Privacy Liability",
+    body: `To the fullest extent permitted by applicable law, our liability for any privacy breach, data loss, or unauthorised disclosure of your personal data shall be limited to the greater of (a) the total fees paid by you in the three months preceding the incident or (b) USD $100.\n\nWe are not liable for privacy breaches originating from:\n• Your failure to secure your API keys or account credentials\n• Unauthorised access resulting from your application's security vulnerabilities\n• Actions of your end users or third parties beyond our reasonable control\n• Force majeure events as defined in our Terms of Service`,
+  },
+  {
+    title: "17. Contact Us",
     body: `For any privacy-related questions, data requests, or concerns:\n\nThinking Studio LLC\nEmail: skinic@thinkingstudio.ai\nWebsite: https://skinic.app\nResponse time: Within 3 business days for general enquiries; within 30 days for formal data subject requests.`,
   },
 ];
