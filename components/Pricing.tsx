@@ -4,9 +4,11 @@ const tiers = [
     price: "$0",
     period: "/month",
     description: "Try SKINIC for personal projects and prototypes.",
-    calls: "100 calls/month",
-    analyze_rpm: "5 analyze/min",
-    recommend_rpm: "10 recommend/min",
+    limits: [
+      { label: "Monthly calls", value: "100 calls", tooltip: "Total API calls allowed per month across all endpoints" },
+      { label: "Skin analysis", value: "5 req/min", tooltip: "Max /analyze requests per minute — each call processes one skin image" },
+      { label: "AI recommendations", value: "10 req/min", tooltip: "Max /recommend requests per minute — AI-powered ingredient suggestions" },
+    ],
     features: [
       "Full 3-layer AI analysis",
       "Basic ingredient recommendations",
@@ -21,11 +23,14 @@ const tiers = [
     price: "$29",
     period: "/month",
     description: "For indie apps and small-scale integrations.",
-    calls: "2,000 calls/month",
-    analyze_rpm: "20 analyze/min",
-    recommend_rpm: "30 recommend/min",
+    limits: [
+      { label: "Monthly calls", value: "2,000 calls", tooltip: "Total API calls allowed per month — resets on the 1st of each month" },
+      { label: "Skin analysis", value: "20 req/min", tooltip: "Max /analyze requests per minute — suitable for up to ~20 concurrent users" },
+      { label: "AI recommendations", value: "30 req/min", tooltip: "Max /recommend requests per minute — full DeepSeek AI-powered responses" },
+    ],
     features: [
       "Everything in Free",
+      "Full AI ingredient recommendations",
       "Higher rate limits",
       "Email support",
       "Usage dashboard",
@@ -39,9 +44,11 @@ const tiers = [
     price: "$99",
     period: "/month",
     description: "For growing platforms and clinic management systems.",
-    calls: "10,000 calls/month",
-    analyze_rpm: "60 analyze/min",
-    recommend_rpm: "100 recommend/min",
+    limits: [
+      { label: "Monthly calls", value: "10,000 calls", tooltip: "Total API calls allowed per month — resets on the 1st of each month" },
+      { label: "Skin analysis", value: "60 req/min", tooltip: "Max /analyze requests per minute — suitable for up to ~60 concurrent users" },
+      { label: "AI recommendations", value: "100 req/min", tooltip: "Max /recommend requests per minute — suitable for high-traffic platforms" },
+    ],
     features: [
       "Everything in Starter",
       "Postman collection",
@@ -56,9 +63,11 @@ const tiers = [
     price: "$499",
     period: "/month",
     description: "For hospital networks, large beauty platforms, and insurers.",
-    calls: "Unlimited",
-    analyze_rpm: "200 analyze/min",
-    recommend_rpm: "500 recommend/min",
+    limits: [
+      { label: "Monthly calls", value: "Unlimited", tooltip: "No monthly call cap" },
+      { label: "Skin analysis", value: "200 req/min", tooltip: "Custom limits available on request" },
+      { label: "AI recommendations", value: "500 req/min", tooltip: "Custom limits available on request" },
+    ],
     features: [
       "Everything in Pro",
       "Custom rate limits",
@@ -110,9 +119,15 @@ export default function Pricing() {
               </div>
 
               <div className="mb-5 space-y-1.5">
-                <div className="text-xs font-mono text-white/30 bg-white/5 rounded-lg px-3 py-2">{tier.calls}</div>
-                <div className="text-xs font-mono text-white/30 bg-white/5 rounded-lg px-3 py-2">{tier.analyze_rpm}</div>
-                <div className="text-xs font-mono text-white/30 bg-white/5 rounded-lg px-3 py-2">{tier.recommend_rpm}</div>
+                {tier.limits.map((limit) => (
+                  <div key={limit.label} className="flex items-center justify-between bg-white/5 rounded-lg px-3 py-2 group relative">
+                    <span className="text-xs text-white/40">{limit.label}</span>
+                    <span className="text-xs font-mono text-white/60 font-medium">{limit.value}</span>
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-56 bg-zinc-800 border border-white/10 rounded-lg px-3 py-2 text-xs text-white/60 leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 shadow-xl">
+                      {limit.tooltip}
+                    </div>
+                  </div>
+                ))}
               </div>
 
               <ul className="space-y-2 mb-6 flex-1">
