@@ -80,7 +80,7 @@ const tiers = [
       "Custom contract",
     ],
     cta: "Contact Sales",
-    ctaHref: "#contact",
+    ctaHref: "/enterprise",
     hidden: true,
     popular: false,
   },

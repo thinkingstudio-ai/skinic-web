@@ -1,180 +1,191 @@
 "use client";
+
 import { useState } from "react";
-import Link from "next/link";
 
 const USE_CASES = [
-  "Beauty & Skincare App",
-  "Cosmetics / Skincare Brand",
-  "E-commerce / Retail",
-  "Beauty & Wellness Platform",
-  "Research / Academia",
+  "Beauty brand / DTC skincare",
+  "E-commerce platform",
+  "Clinic or dermatology practice",
+  "Mobile app / consumer product",
+  "In-store / kiosk deployment",
+  "B2B SaaS / reseller",
   "Other",
 ];
 
 const VOLUMES = [
-  "10,000 – 50,000 calls/month",
-  "50,000 – 200,000 calls/month",
-  "200,000 – 1M calls/month",
-  "1M+ calls/month",
+  "< 10,000 scans/month",
+  "10,000 – 50,000 scans/month",
+  "50,000 – 200,000 scans/month",
+  "> 200,000 scans/month",
   "Not sure yet",
 ];
 
 export default function EnterprisePage() {
   const [form, setForm] = useState({
-    name: "",
-    email: "",
-    company: "",
-    useCase: "",
-    volume: "",
-    details: "",
+    name: "", company: "", email: "", website: "",
+    useCase: "", volume: "", message: "",
   });
-  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState("");
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  }
+  };
 
-  async function handleSubmit(e: React.FormEvent) {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setStatus("sending");
+    setStatus("loading");
+    setErrorMsg("");
     try {
-      const body = [
-        `Name: ${form.name}`,
-        `Email: ${form.email}`,
-        `Company: ${form.company}`,
-        `Use Case: ${form.useCase}`,
-        `Monthly Volume: ${form.volume}`,
-        `Details: ${form.details}`,
-      ].join("\n");
-
-      const mailto = `mailto:skinic@thinkingstudio.ai?subject=${encodeURIComponent("Enterprise Inquiry — " + form.company)}&body=${encodeURIComponent(body)}`;
-      window.location.href = mailto;
-      setStatus("sent");
-    } catch {
+      const res = await fetch("/api/enterprise", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || "Something went wrong.");
+      }
+      setStatus("success");
+    } catch (err: unknown) {
       setStatus("error");
+      setErrorMsg(err instanceof Error ? err.message : "Something went wrong. Please email hello@skinic.app directly.");
     }
-  }
+  };
 
   return (
-    <main className="min-h-screen px-6 py-20">
-      <div className="max-w-2xl mx-auto">
+    <main className="min-h-screen bg-black text-white">
+      <div className="max-w-2xl mx-auto px-6 py-24">
+
         {/* Header */}
-        <div className="mb-10">
-          <Link href="/" className="inline-flex items-center gap-2 mb-8 text-white/40 hover:text-white/70 text-sm transition-colors">
-            ← Back to skinic.app
-          </Link>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/20 text-violet-400 text-xs font-medium mb-4">
-            Enterprise
-          </div>
-          <h1 className="text-3xl font-bold text-white mb-3">Let's talk about your use case</h1>
-          <p className="text-white/40 text-base leading-relaxed">
-            Tell us about your project and we'll put together a custom plan — dedicated limits, SLA, white-label options, and priority support.
+        <div className="mb-12">
+          <a href="/" className="text-violet-400 hover:text-violet-300 text-sm font-medium mb-8 inline-block">
+            ← Back to SKINIC
+          </a>
+          <p className="text-amber-400 text-xs font-semibold tracking-widest uppercase mb-3">Enterprise</p>
+          <h1 className="text-3xl md:text-4xl font-bold mb-4">
+            Let&apos;s build something together
+          </h1>
+          <p className="text-white/55 text-base leading-relaxed">
+            Tell us about your integration. We&apos;ll review your requirements and get back within 1 business day
+            with a tailored setup — including white-label branding, custom limits, and a Paddle payment link.
           </p>
         </div>
 
-        {/* Benefits */}
+        {/* What you get */}
         <div className="grid grid-cols-2 gap-3 mb-10">
           {[
-            { icon: "⚡", label: "Custom rate limits", desc: "No hard caps — scale to your volume" },
-            { icon: "🛡️", label: "SLA guarantee", desc: "99.9% uptime commitment" },
-            { icon: "🏷️", label: "White-label option", desc: "Brand the API as your own" },
-            { icon: "🤝", label: "Priority support", desc: "Dedicated Slack channel" },
-          ].map((b) => (
-            <div key={b.label} className="card-glass rounded-xl p-4 border border-white/5">
-              <div className="text-xl mb-2">{b.icon}</div>
-              <div className="text-sm font-semibold text-white">{b.label}</div>
-              <div className="text-xs text-white/40 mt-0.5">{b.desc}</div>
+            ["White-label branding", "Your brand name in all API responses — no SKINIC mentions"],
+            ["Custom rate limits", "Analyze and recommend limits tuned to your traffic pattern"],
+            ["Direct engineer access", "Slack or email thread with the SKINIC team"],
+            ["Contract & DPA", "MSA, Data Processing Agreement, custom SLA on request"],
+          ].map(([title, desc]) => (
+            <div key={title} className="rounded-xl p-4 bg-white/[0.04] border border-white/8">
+              <p className="text-sm font-semibold text-white mb-1">{title}</p>
+              <p className="text-xs text-white/45 leading-relaxed">{desc}</p>
             </div>
           ))}
         </div>
 
         {/* Form */}
-        <div className="card-glass rounded-2xl p-8 border border-white/5">
-          {status === "sent" ? (
-            <div className="text-center py-8">
-              <div className="text-4xl mb-4">✅</div>
-              <h2 className="text-xl font-bold text-white mb-2">Inquiry sent!</h2>
-              <p className="text-white/40 text-sm">We'll get back to you within 1 business day.</p>
-              <Link href="/" className="inline-block mt-6 text-violet-400 hover:text-violet-300 text-sm">← Back to home</Link>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs text-white/40 mb-1.5 font-medium">Full Name *</label>
-                  <input
-                    required name="name" value={form.name} onChange={handleChange}
-                    placeholder="Ahmad Razif"
-                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/20 text-sm focus:outline-none focus:border-violet-500/50 transition-colors"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs text-white/40 mb-1.5 font-medium">Work Email *</label>
-                  <input
-                    required type="email" name="email" value={form.email} onChange={handleChange}
-                    placeholder="ahmad@company.com"
-                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/20 text-sm focus:outline-none focus:border-violet-500/50 transition-colors"
-                  />
-                </div>
-              </div>
-
+        {status === "success" ? (
+          <div className="rounded-2xl p-8 bg-emerald-500/10 border border-emerald-500/20 text-center">
+            <div className="text-4xl mb-4">✓</div>
+            <h2 className="text-xl font-bold mb-2">Inquiry received</h2>
+            <p className="text-white/55 text-sm">
+              We&apos;ll review your requirements and reply to <span className="text-white/80">{form.email}</span> within 1 business day.
+            </p>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs text-white/40 mb-1.5 font-medium">Company / Organisation *</label>
+                <label className="block text-xs text-white/50 mb-1.5 font-medium">Full name <span className="text-red-400">*</span></label>
                 <input
-                  required name="company" value={form.company} onChange={handleChange}
-                  placeholder="Acme Skincare Sdn Bhd"
-                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/20 text-sm focus:outline-none focus:border-violet-500/50 transition-colors"
+                  name="name" required value={form.name} onChange={handleChange}
+                  placeholder="Jane Smith"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-violet-500/50 transition"
                 />
               </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs text-white/40 mb-1.5 font-medium">Use Case *</label>
-                  <select
-                    required name="useCase" value={form.useCase} onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-violet-500/50 transition-colors appearance-none"
-                  >
-                    <option value="" disabled className="bg-zinc-900">Select one…</option>
-                    {USE_CASES.map((u) => <option key={u} value={u} className="bg-zinc-900">{u}</option>)}
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-xs text-white/40 mb-1.5 font-medium">Expected Monthly Volume *</label>
-                  <select
-                    required name="volume" value={form.volume} onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-violet-500/50 transition-colors appearance-none"
-                  >
-                    <option value="" disabled className="bg-zinc-900">Select range…</option>
-                    {VOLUMES.map((v) => <option key={v} value={v} className="bg-zinc-900">{v}</option>)}
-                  </select>
-                </div>
-              </div>
-
               <div>
-                <label className="block text-xs text-white/40 mb-1.5 font-medium">Tell us more about your project</label>
-                <textarea
-                  name="details" value={form.details} onChange={handleChange}
-                  rows={4}
-                  placeholder="Describe your product, integration needs, timeline, or any specific requirements…"
-                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/20 text-sm focus:outline-none focus:border-violet-500/50 transition-colors resize-none"
+                <label className="block text-xs text-white/50 mb-1.5 font-medium">Company <span className="text-red-400">*</span></label>
+                <input
+                  name="company" required value={form.company} onChange={handleChange}
+                  placeholder="Glow Cosmetics Sdn Bhd"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-violet-500/50 transition"
                 />
               </div>
+            </div>
 
-              <button
-                type="submit"
-                disabled={status === "sending"}
-                className="w-full py-3.5 rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 disabled:opacity-50 text-white font-semibold text-sm transition-all hover:shadow-lg hover:shadow-violet-500/25"
-              >
-                {status === "sending" ? "Opening email…" : "Send Inquiry →"}
-              </button>
+            <div>
+              <label className="block text-xs text-white/50 mb-1.5 font-medium">Work email <span className="text-red-400">*</span></label>
+              <input
+                name="email" type="email" required value={form.email} onChange={handleChange}
+                placeholder="jane@glowcosmetics.com"
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-violet-500/50 transition"
+              />
+            </div>
 
-              <p className="text-center text-white/20 text-xs">
-                We respond within 1 business day. Or email us directly at{" "}
-                <a href="mailto:skinic@thinkingstudio.ai" className="text-violet-400/70 hover:text-violet-400">skinic@thinkingstudio.ai</a>
+            <div>
+              <label className="block text-xs text-white/50 mb-1.5 font-medium">Website or app URL</label>
+              <input
+                name="website" value={form.website} onChange={handleChange}
+                placeholder="https://glowcosmetics.com"
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-violet-500/50 transition"
+              />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs text-white/50 mb-1.5 font-medium">Use case <span className="text-red-400">*</span></label>
+                <select
+                  name="useCase" required value={form.useCase} onChange={handleChange}
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-violet-500/50 transition appearance-none"
+                >
+                  <option value="" disabled className="bg-zinc-900">Select a use case</option>
+                  {USE_CASES.map((u) => <option key={u} value={u} className="bg-zinc-900">{u}</option>)}
+                </select>
+              </div>
+              <div>
+                <label className="block text-xs text-white/50 mb-1.5 font-medium">Estimated monthly scans</label>
+                <select
+                  name="volume" value={form.volume} onChange={handleChange}
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-violet-500/50 transition appearance-none"
+                >
+                  <option value="" className="bg-zinc-900">Not sure</option>
+                  {VOLUMES.map((v) => <option key={v} value={v} className="bg-zinc-900">{v}</option>)}
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-xs text-white/50 mb-1.5 font-medium">Additional requirements</label>
+              <textarea
+                name="message" value={form.message} onChange={handleChange} rows={4}
+                placeholder="White-label brand name, custom domain needs, SLA requirements, integration timeline..."
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-violet-500/50 transition resize-none"
+              />
+            </div>
+
+            {status === "error" && (
+              <p className="text-sm text-red-400 bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3">
+                {errorMsg}
               </p>
-            </form>
-          )}
-        </div>
+            )}
+
+            <button
+              type="submit" disabled={status === "loading"}
+              className="w-full py-3 rounded-xl bg-violet-600 hover:bg-violet-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold text-sm transition shadow-lg shadow-violet-500/20"
+            >
+              {status === "loading" ? "Sending..." : "Send Enterprise Inquiry"}
+            </button>
+
+            <p className="text-center text-xs text-white/30">
+              We reply within 1 business day. Or email us directly at{" "}
+              <a href="mailto:hello@skinic.app" className="text-violet-400 hover:text-violet-300">hello@skinic.app</a>
+            </p>
+          </form>
+        )}
       </div>
     </main>
   );
