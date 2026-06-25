@@ -140,7 +140,7 @@ export default async function PlanPage() {
             <p className="text-white/40 text-xs">Unlimited calls, custom rate limits, white-label, priority compliance support, dedicated support.</p>
           </div>
           <a
-            href="mailto:skinic@thinkingstudio.ai?subject=Enterprise%20API%20Inquiry%20%E2%80%94%20Dashboard"
+            href="/enterprise"
             className="px-4 py-2 rounded-xl border border-amber-500/30 text-amber-300 text-sm font-medium hover:bg-amber-500/10 transition-all whitespace-nowrap ml-4"
           >
             Contact Sales
