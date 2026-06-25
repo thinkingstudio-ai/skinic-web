@@ -49,7 +49,7 @@ export default function EnterprisePage() {
       setStatus("success");
     } catch (err: unknown) {
       setStatus("error");
-      setErrorMsg(err instanceof Error ? err.message : "Something went wrong. Please email hello@skinic.app directly.");
+      setErrorMsg(err instanceof Error ? err.message : "Something went wrong. Please email admin.thinkingstudio@gmail.com directly.");
     }
   };
 
@@ -182,7 +182,7 @@ export default function EnterprisePage() {
 
             <p className="text-center text-xs text-white/30">
               We reply within 1 business day. Or email us directly at{" "}
-              <a href="mailto:hello@skinic.app" className="text-violet-400 hover:text-violet-300">hello@skinic.app</a>
+              <a href="mailto:admin.thinkingstudio@gmail.com" className="text-violet-400 hover:text-violet-300">admin.thinkingstudio@gmail.com</a>
             </p>
           </form>
         )}

@@ -44,6 +44,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: true });
   } catch (err) {
     console.error("Enterprise inquiry error:", err);
-    return NextResponse.json({ error: "Failed to send inquiry. Please email hello@skinic.app directly." }, { status: 500 });
+    return NextResponse.json({ error: "Failed to send inquiry. Please email admin.thinkingstudio@gmail.com directly." }, { status: 500 });
   }
 }

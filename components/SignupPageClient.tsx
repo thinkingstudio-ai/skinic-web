@@ -87,7 +87,7 @@ export default function SignupPageClient() {
               Try again
             </button>
             {" "}·{" "}
-            <a href="mailto:helloskinic@thinkingstudio.ai" className="text-violet-400 hover:text-violet-300 transition-colors">
+            <a href="mailto:admin.thinkingstudio@gmail.com" className="text-violet-400 hover:text-violet-300 transition-colors">
               Contact support
             </a>
           </p>
@@ -212,7 +212,7 @@ export default function SignupPageClient() {
 
       <p className="text-center text-white/25 text-xs">
         Need Enterprise?{" "}
-        <a href="mailto:skinic@thinkingstudio.ai?subject=Enterprise%20API%20Inquiry%20%E2%80%94%20skinic.app" className="text-violet-400 hover:text-violet-300">
+        <a href="/enterprise" className="text-violet-400 hover:text-violet-300">
           Contact us
         </a>
       </p>

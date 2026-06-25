@@ -95,7 +95,7 @@ export default function PlanUpgradeBanner({ initialTier }: Props) {
           <p className="text-sm font-semibold text-amber-300">Upgrade pending</p>
           <p className="text-xs text-white/40 mt-0.5">
             Your payment was received but the plan hasn&apos;t activated yet. Try refreshing in a minute, or
-            <a href="mailto:skinic@thinkingstudio.ai?subject=Upgrade%20pending%20on%20dashboard" className="text-violet-400 ml-1">contact support</a>.
+            <a href="mailto:admin.thinkingstudio@gmail.com?subject=Upgrade%20pending%20on%20dashboard" className="text-violet-400 ml-1">contact support</a>.
           </p>
         </div>
       </div>

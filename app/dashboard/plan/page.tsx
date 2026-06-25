@@ -150,7 +150,7 @@ export default async function PlanPage() {
 
       <p className="text-white/20 text-xs">
         After upgrading, your tier updates automatically via webhook within seconds.
-        Need help? <a href="mailto:skinic@thinkingstudio.ai" className="text-violet-400">Contact support</a>
+        Need help? <a href="mailto:admin.thinkingstudio@gmail.com" className="text-violet-400">Contact support</a>
       </p>
     </div>
   );
