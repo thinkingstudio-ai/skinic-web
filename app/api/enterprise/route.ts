@@ -13,8 +13,8 @@ export async function POST(req: NextRequest) {
     }
 
     await resend.emails.send({
-      from: "SKINIC Enterprise <hello@skinic.app>",
-      to: ["hello@skinic.app"],
+      from: "SKINIC Enterprise <onboarding@resend.dev>",
+      to: ["admin.thinkingstudio@gmail.com"],
       replyTo: email,
       subject: `Enterprise Inquiry — ${company}`,
       html: `
