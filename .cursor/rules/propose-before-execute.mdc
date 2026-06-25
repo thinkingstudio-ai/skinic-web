@@ -1,0 +1,52 @@
+---
+description: Agent must propose and get explicit approval before writing or changing any code
+alwaysApply: true
+---
+
+# Propose Before Execute
+
+Before writing, editing, or deleting any code, the agent MUST propose the plan and wait for explicit user approval.
+
+## Required Flow
+
+```
+1. UNDERSTAND — read relevant files and understand the full scope
+2. PROPOSE — describe clearly what you plan to do and which files will be affected
+3. WAIT — stop and wait for user approval
+4. EXECUTE — only proceed after user confirms with any of the signals below
+```
+
+## Approval Signals
+
+Proceed only after the user responds with an explicit green light, such as:
+
+> "ok", "ya", "boleh", "proceed", "go ahead", "buat", "yes", "do it", "lakukan", "teruskan", "ok buat"
+
+If the user's response is a question, clarification, or correction — address it first before proceeding.
+
+## What to Include in a Proposal
+
+- What problem you are solving
+- Which files you will change (list every file)
+- A brief summary of the approach (not full code — just the plan)
+- Any risks or trade-offs if relevant
+
+## Exceptions — No Approval Needed
+
+These minor actions do not require approval:
+- Reading files
+- Searching the codebase
+- Running diagnostic commands (e.g. `git status`, `ls`)
+- Fixing a lint or type error introduced by your own edit in the same session
+
+## Example
+
+✅ CORRECT:
+> "I plan to update `TIER_LIMITS` in `main.py` and sync `Pricing.tsx` in `skinic-web`. This will affect the free tier monthly call limit. Shall I proceed?"
+> 
+> User: "ok"
+> 
+> *Agent proceeds*
+
+❌ WRONG:
+> *Agent immediately edits 3 files without proposing first*
