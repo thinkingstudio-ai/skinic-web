@@ -113,7 +113,7 @@ export default async function PlanPage() {
                 <li>{tier.analyze}</li>
                 <li>{tier.recommend}</li>
                 <li className={tier.ai ? "text-emerald-400" : "text-white/25 line-through"}>
-                  SKINIC AI recommendations
+                  SKINIC AI ingredient guide
                 </li>
               </ul>
               {isCurrent ? (

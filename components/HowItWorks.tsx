@@ -14,7 +14,7 @@ const steps = [
   {
     number: "03",
     title: "Receive Structured JSON",
-    description: "Get a detailed JSON response with condition labels, confidence scores, ingredient recommendations, and cross-validation results.",
+    description: "Get a detailed JSON response with skin type, concern scores, and a tailored ingredient guide.",
     color: "text-emerald-400",
   },
   {

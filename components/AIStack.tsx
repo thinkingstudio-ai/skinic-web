@@ -87,7 +87,7 @@ export default function AIStack() {
           <div className="flex-1">
             <p className="text-sm font-semibold text-white/80 mb-1">RAG — Ingredient Knowledge Base</p>
             <p className="text-sm text-white/40">
-              Recommendations are grounded in 500+ ingredients from INCIDecoder, CosDNA, and EWG Skin Deep,
+              Ingredient guidance is grounded in 500+ ingredients from INCIDecoder, CosDNA, and EWG Skin Deep,
               then enriched by SKINIC AI for natural language output.
             </p>
           </div>

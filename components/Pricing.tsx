@@ -7,7 +7,7 @@ const tiers = [
     limits: [
       { label: "Monthly calls", value: "100 calls", tooltip: "Total API calls allowed per month across all endpoints" },
       { label: "Skin analysis", value: "5 req/min", tooltip: "Max /analyze requests per minute — each call processes one skin image" },
-      { label: "AI recommendations", value: "—", tooltip: "Not available on Free. Upgrade to Starter to unlock full AI-powered ingredient recommendations." },
+      { label: "AI ingredient guide", value: "—", tooltip: "Not available on Free. Upgrade to Starter to unlock the full AI-powered ingredient guide." },
     ],
     features: [
       "Full 3-layer AI skin analysis",
@@ -15,7 +15,7 @@ const tiers = [
       "Interactive API docs included",
     ],
     disabledFeatures: [
-      "AI-powered recommendations",
+      "AI-powered ingredient guide",
     ],
     cta: "Get Started",
     ctaHref: "/signup",
@@ -25,15 +25,15 @@ const tiers = [
     name: "Starter",
     price: "$29",
     period: "/month",
-    description: "Ship real products with full AI recommendations and priority support.",
+    description: "Ship real products with a full AI ingredient guide and priority support.",
     limits: [
       { label: "Monthly calls", value: "2,000 calls", tooltip: "Total API calls allowed per month — resets on the 1st of each month" },
       { label: "Skin analysis", value: "20 req/min", tooltip: "Max /analyze requests per minute — suitable for up to ~20 concurrent users" },
-      { label: "AI recommendations", value: "30 req/min", tooltip: "Max /recommend requests per minute — full SKINIC AI-powered ingredient responses" },
+      { label: "AI ingredient guide", value: "30 req/min", tooltip: "Max /recommend requests per minute — full SKINIC AI-powered ingredient responses" },
     ],
     features: [
       "Everything in Free",
-      "Full AI ingredient recommendations",
+      "Full AI ingredient guide",
       "4× higher throughput",
       "Email support",
       "Real-time usage dashboard",
@@ -50,7 +50,7 @@ const tiers = [
     limits: [
       { label: "Monthly calls", value: "10,000 calls", tooltip: "Total API calls allowed per month — resets on the 1st of each month" },
       { label: "Skin analysis", value: "60 req/min", tooltip: "Max /analyze requests per minute — suitable for up to ~60 concurrent users" },
-      { label: "AI recommendations", value: "100 req/min", tooltip: "Max /recommend requests per minute — suitable for high-traffic platforms" },
+      { label: "AI ingredient guide", value: "100 req/min", tooltip: "Max /recommend requests per minute — suitable for high-traffic platforms" },
     ],
     features: [
       "Everything in Starter",
@@ -69,7 +69,7 @@ const tiers = [
     limits: [
       { label: "Monthly calls", value: "Unlimited", tooltip: "No monthly call cap" },
       { label: "Skin analysis", value: "200 req/min", tooltip: "Custom limits available on request" },
-      { label: "AI recommendations", value: "500 req/min", tooltip: "Custom limits available on request" },
+      { label: "AI ingredient guide", value: "500 req/min", tooltip: "Custom limits available on request" },
     ],
     features: [
       "Everything in Pro",
