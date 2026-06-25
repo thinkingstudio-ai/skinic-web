@@ -20,8 +20,8 @@ export default function Hero() {
         </h1>
 
         <p className="fade-up-delay-2 text-lg md:text-xl text-white/50 max-w-2xl mx-auto mb-10 leading-relaxed">
-          Enterprise-grade skin analysis API. Integrate 3-layer AI — cosmetic classification,
-          medical screening, and Google Derm Foundation embeddings — into your app in minutes.
+          Enterprise-grade skin analysis API. Integrate multi-layer AI — skin-type analysis,
+          aesthetic concern detection, and deep skin embeddings — into your app in minutes.
         </p>
 
         <div className="fade-up-delay-3 flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -52,7 +52,7 @@ export default function Hero() {
           </span>
           <span className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-violet-400" />
-            Google Derm Foundation
+            Deep Skin Embeddings
           </span>
           <span className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-amber-400" />

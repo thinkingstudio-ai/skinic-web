@@ -7,8 +7,8 @@ const steps = [
   },
   {
     number: "02",
-    title: "3-Layer AI Analysis",
-    description: "Our stack runs cosmetic classification, medical condition screening, and Google Derm Foundation deep embeddings in parallel.",
+    title: "Multi-Layer AI Analysis",
+    description: "Our stack runs skin-type classification, aesthetic concern detection, and deep skin embeddings in parallel.",
     color: "text-blue-400",
   },
   {

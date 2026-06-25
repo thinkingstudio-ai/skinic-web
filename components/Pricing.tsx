@@ -10,7 +10,7 @@ const tiers = [
       { label: "AI ingredient guide", value: "—", tooltip: "Not available on Free. Upgrade to Starter to unlock the full AI-powered ingredient guide." },
     ],
     features: [
-      "Full 3-layer AI skin analysis",
+      "Full multi-layer AI skin analysis",
       "Static ingredient matching",
       "Interactive API docs included",
     ],
@@ -46,7 +46,7 @@ const tiers = [
     name: "Pro",
     price: "$99",
     period: "/month",
-    description: "Built for production-scale apps, clinics, and multi-brand platforms.",
+    description: "Built for production-scale apps, beauty brands, and multi-brand platforms.",
     limits: [
       { label: "Monthly calls", value: "10,000 calls", tooltip: "Total API calls allowed per month — resets on the 1st of each month" },
       { label: "Skin analysis", value: "60 req/min", tooltip: "Max /analyze requests per minute — suitable for up to ~60 concurrent users" },
@@ -65,7 +65,7 @@ const tiers = [
     name: "Enterprise",
     price: "$499",
     period: "/month",
-    description: "For hospital networks, large beauty platforms, and insurers.",
+    description: "For large beauty platforms, retailers, and enterprise integrations.",
     limits: [
       { label: "Monthly calls", value: "Unlimited", tooltip: "No monthly call cap" },
       { label: "Skin analysis", value: "200 req/min", tooltip: "Custom limits available on request" },

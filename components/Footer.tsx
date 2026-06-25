@@ -30,8 +30,8 @@ export default function Footer() {
 
       <div className="max-w-6xl mx-auto mt-6 pt-6 border-t border-white/5">
         <p className="text-xs text-white/20 text-center leading-relaxed">
-          SKINIC is not a medical device. Results are AI-generated screenings for informational purposes only and do not constitute medical diagnosis.
-          Always consult a qualified dermatologist for medical concerns.
+          SKINIC provides AI-powered cosmetic skincare insights for informational and beauty purposes only.
+          It is not a medical device and does not diagnose, treat, or prevent any condition.
         </p>
       </div>
     </footer>

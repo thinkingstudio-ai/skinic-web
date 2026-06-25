@@ -3,10 +3,10 @@ import { useState } from "react";
 import Link from "next/link";
 
 const USE_CASES = [
-  "Clinic / Dermatology Platform",
   "Beauty & Skincare App",
+  "Cosmetics / Skincare Brand",
   "E-commerce / Retail",
-  "Health & Wellness Platform",
+  "Beauty & Wellness Platform",
   "Research / Academia",
   "Other",
 ];

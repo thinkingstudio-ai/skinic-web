@@ -4,8 +4,8 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "SKINIC — AI Skin Intelligence API",
   description:
-    "Enterprise-grade skin analysis API. 3-layer AI stack: cosmetic classifier, medical screening, and Google Derm Foundation embeddings. Built for clinics, beauty platforms, and health apps.",
-  keywords: ["skin AI", "dermatology API", "skin analysis", "B2B skincare API", "SKINIC"],
+    "Enterprise-grade skin analysis API. Multi-layer AI: skin-type analysis, aesthetic concern detection, and deep skin embeddings. Built for beauty platforms, skincare brands, and consumer apps.",
+  keywords: ["skin AI", "skin type API", "cosmetic skin analysis", "skincare API", "B2B beauty API", "SKINIC"],
   openGraph: {
     title: "SKINIC — AI Skin Intelligence API",
     description: "Production-ready skin analysis API for B2B integration.",

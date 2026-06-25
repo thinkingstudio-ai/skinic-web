@@ -1,32 +1,32 @@
 const layers = [
   {
     label: "Layer 1",
-    title: "Cosmetic Classifier",
-    model: "EfficientNetV2B0",
-    accuracy: "~95%",
-    description: "Identifies 20+ cosmetic skin conditions — acne, oiliness, dryness, hyperpigmentation, wrinkles, and more. Returns top-3 conditions with confidence scores.",
-    tags: ["Acne", "Oily Skin", "Hyperpigmentation", "Wrinkles", "Blackheads"],
+    title: "Skin Type Analysis",
+    model: "SKINIC Vision",
+    accuracy: "Dry · Normal · Oily",
+    description: "Classifies your skin type — dry, normal, oily, or combination — with a confidence breakdown across every type for a clear, stable read.",
+    tags: ["Dry", "Normal", "Oily", "Combination"],
     color: "from-violet-600/20 to-violet-600/5",
     border: "border-violet-500/20",
     badge: "bg-violet-500/10 text-violet-300",
   },
   {
     label: "Layer 2",
-    title: "Medical Screening",
-    model: "HAM10000 Dataset",
-    accuracy: "73%",
-    description: "Screens for 7 dermatological conditions including melanoma, basal cell carcinoma, and benign lesions. Returns flags — not diagnoses — with full disclaimers.",
-    tags: ["Melanoma", "BCC", "Actinic Keratosis", "Nevus", "Vascular Lesions"],
+    title: "Aesthetic Concerns",
+    model: "SKINIC Multi-Label",
+    accuracy: "5 concerns",
+    description: "Detects visible cosmetic concerns — acne, dryness, oiliness, dark spots, and wrinkles — each scored independently with Mild/Moderate/Prominent severity bands.",
+    tags: ["Acne", "Dryness", "Oiliness", "Dark Spots", "Wrinkles"],
     color: "from-blue-600/20 to-blue-600/5",
     border: "border-blue-500/20",
     badge: "bg-blue-500/10 text-blue-300",
   },
   {
     label: "Layer 3",
-    title: "Derm Foundation",
-    model: "Google Derm Foundation",
+    title: "Deep Skin Embeddings",
+    model: "SKINIC Deep Vision",
     accuracy: "6144-dim",
-    description: "Google's medical-grade vision model generates deep skin embeddings (6144 dimensions). Extracts texture complexity, feature richness, uniformity, and dominant signals.",
+    description: "Generates deep skin embeddings to read texture complexity, uniformity, and feature richness — purely cosmetic, non-diagnostic appearance signals.",
     tags: ["Texture", "Uniformity", "Feature Density", "Deep Embeddings"],
     color: "from-emerald-600/20 to-emerald-600/5",
     border: "border-emerald-500/20",
@@ -45,7 +45,7 @@ export default function AIStack() {
             <span className="gradient-text">built for skin</span>
           </h2>
           <p className="mt-4 text-white/40 text-lg max-w-2xl mx-auto">
-            Three independent AI layers, cross-validated for higher accuracy and trust scoring.
+            Three independent AI layers working together for a complete, stable read of your skin.
             Powered by RAG with a 500+ ingredient knowledge base.
           </p>
         </div>

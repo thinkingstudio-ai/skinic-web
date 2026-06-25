@@ -7,35 +7,38 @@ const REQUEST_CODE = `curl -X POST https://api.skinic.app/analyze \\
   -F "terms_accepted=true"`;
 
 const RESPONSE_CODE = `{
-  "cosmetic": {
-    "condition": "Acne",
-    "confidence": 87.4,
-    "description": "Active inflammatory acne with visible comedones",
-    "top_conditions": [
-      { "label": "Acne",      "confidence": 87.4 },
-      { "label": "Oily Skin", "confidence": 9.1  },
-      { "label": "Blackheads","confidence": 3.5  }
+  "skin_type": {
+    "type": "Combination",
+    "confidence": 46.6,
+    "description": "Mixed skin — oily T-zone with normal to dry cheeks.",
+    "all_types": [
+      { "type": "Oily",   "confidence": 46.6 },
+      { "type": "Dry",    "confidence": 34.1 },
+      { "type": "Normal", "confidence": 19.3 }
     ]
   },
-  "medical": {
-    "condition": "Actinic Keratoses",
-    "confidence": 23.1,
-    "flagged": false
-  },
+  "concerns": [
+    { "name": "Oily Skin",  "score": 84.2, "level": "Prominent" },
+    { "name": "Dark Spots", "score": 41.0, "level": "Moderate"  }
+  ],
+  "all_concerns": [
+    { "name": "Oily Skin",  "score": 84.2, "level": "Prominent" },
+    { "name": "Dark Spots", "score": 41.0, "level": "Moderate"  },
+    { "name": "Acne",       "score": 12.5, "level": "Mild"      },
+    { "name": "Dry Skin",   "score": 8.0,  "level": "Mild"      },
+    { "name": "Wrinkles",   "score": 4.1,  "level": "Mild"      }
+  ],
   "derm": {
+    "available": true,
     "quality_score": 81.2,
     "embedding_dim": 6144,
     "skin_features": {
-      "texture_complexity": 0.72,
-      "feature_richness": 0.68,
-      "uniformity": 0.41
+      "texture_complexity": 72.0,
+      "feature_richness": 68.0,
+      "uniformity": 41.0
     }
   },
-  "cross_validation": {
-    "combined_trust_score": 84.2,
-    "agrees_with_medical": true
-  },
-  "disclaimer": "Results are AI-generated screenings only..."
+  "disclaimer": "Cosmetic skincare insights only — not a medical device."
 }`;
 
 export default function CodeDemo() {

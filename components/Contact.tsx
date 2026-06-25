@@ -43,7 +43,7 @@ export default function Contact() {
             <svg className="w-3.5 h-3.5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
             </svg>
-            Full 3-layer AI access
+            Full multi-layer AI access
           </span>
         </div>
       </div>
