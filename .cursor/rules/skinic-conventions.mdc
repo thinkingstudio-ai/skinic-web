@@ -1,0 +1,52 @@
+---
+description: SKINIC project conventions and critical rules for all agents
+alwaysApply: true
+---
+
+# SKINIC Project Conventions
+
+Read `SKINIC-ecosystem/HANDOFF.md` for full context before starting any task.
+
+## Repo Map
+
+| Folder | Purpose | Deploy |
+|---|---|---|
+| `SKINIC/` | FastAPI backend — `main.py` is the single entry point | Railway → `api.skinic.app` |
+| `skinic-web/` | Next.js — landing page + user dashboard | Vercel → `skinic.app` |
+| `skinic-mobile/` | React Native Expo — consumer app | EAS → App Store/Play Store |
+
+## AI Branding — Critical
+
+- ❌ NEVER mention "DeepSeek", "HuggingFace model IDs", or any underlying AI provider in public UI, API responses, docs, or logs
+- ✅ Always use "SKINIC AI", "SKINIC Skin Intelligence Engine", "SKINIC Clinical Guard"
+
+## Backend (`SKINIC/main.py`)
+
+- Single file — all routes, middleware, helpers are in `main.py`
+- JWT verification is LOCAL (cached JWKS) — do not add outbound HTTP calls per request
+- Tier limits live in `TIER_LIMITS` dict — this is the source of truth
+- API key format: `sk-` + `secrets.token_urlsafe(32)`
+- Key stored as SHA-256 hash — never store raw keys in DB
+
+## Frontend (`skinic-web/`)
+
+- Dashboard server pages MUST have:
+  ```typescript
+  export const dynamic = "force-dynamic";
+  export const revalidate = 0;
+  ```
+- Use `createAdminClient()` for server-side Supabase queries (bypasses RLS)
+- Use `createClient()` for client-side Supabase (anon key)
+- Dashboard client components call backend `/dashboard/*` with `Authorization: Bearer <jwt>`
+
+## Deployment
+
+- Backend: push to `main` → Railway auto-deploys
+- Frontend: push to `main` → Vercel auto-deploys
+- Never commit `.env`, `.env.local`, `venv/`, `node_modules/`
+
+## Supabase
+
+- Project ref: `jwenabxcecncybnmeybr`
+- `SUPABASE_URL` must NOT have trailing `/rest/v1/`
+- RLS is enabled — always use service role key for server-side admin queries

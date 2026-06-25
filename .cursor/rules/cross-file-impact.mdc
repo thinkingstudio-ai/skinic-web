@@ -1,0 +1,51 @@
+---
+description: Prevent unintended cross-file side effects when making changes
+alwaysApply: true
+---
+
+# Cross-File Impact Awareness
+
+Before making ANY change, identify all files that depend on or consume the thing you are changing. Never fix one file without checking if other files are affected.
+
+## Before Editing — Always Ask
+
+1. **Who calls this?** — search for function/endpoint/component usages before changing its signature or output
+2. **Who imports this?** — check all importers before renaming or restructuring
+3. **What does this feed?** — if changing a data structure or API response shape, find all consumers
+
+## SKINIC-Specific Sync Rules
+
+These pairs MUST always stay in sync. If you change one, you MUST change the other:
+
+| If you change... | You MUST also check/update... |
+|---|---|
+| `TIER_LIMITS` in `SKINIC/main.py` | `Pricing.tsx` and `plan/page.tsx` in `skinic-web` |
+| API response shape (`/analyze`, `/recommend`) | All frontend components consuming the response |
+| Dashboard endpoint (`/dashboard/keys`, etc.) | `ApiKeysClient.tsx` in `skinic-web` |
+| Supabase table schema (`api_keys` columns) | Backend queries in `main.py` AND frontend `lib/supabase/` |
+| Auth flow or JWT verification | Dashboard middleware and all protected routes |
+| Paddle price IDs | Both `main.py` env vars AND `plan/page.tsx` `PADDLE_PRICES` |
+| `.env` variable names | Railway env vars, Vercel env vars, and all `os.getenv()` calls |
+
+## Required Workflow
+
+```
+1. READ the file you plan to edit first
+2. SEARCH for all usages of the thing you are changing
+3. LIST the files that will be affected before making any edit
+4. MAKE the change in the primary file
+5. UPDATE all affected files in the same response/session
+6. VERIFY: re-read changed files and check for consistency
+```
+
+## Forbidden Patterns
+
+- ❌ Changing a function signature without updating all callers
+- ❌ Renaming an API field without updating the frontend that reads it
+- ❌ Adding a required parameter without providing a default or updating all call sites
+- ❌ Changing tier names/values in one place without syncing the other
+- ❌ Fixing a bug in one file that silently breaks the contract with another file
+
+## When Unsure
+
+If you are not sure what other files may be affected, **search first** using Grep or SemanticSearch before making any change. Do not assume the change is isolated.
