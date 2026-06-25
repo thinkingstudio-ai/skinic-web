@@ -137,7 +137,7 @@ export default async function PlanPage() {
         <div className="flex items-center justify-between">
           <div>
             <p className="text-sm font-semibold text-amber-300 mb-1">Enterprise</p>
-            <p className="text-white/40 text-xs">Unlimited calls, custom rate limits, white-label, HIPAA advisory, dedicated support.</p>
+            <p className="text-white/40 text-xs">Unlimited calls, custom rate limits, white-label, priority compliance support, dedicated support.</p>
           </div>
           <a
             href="mailto:skinic@thinkingstudio.ai?subject=Enterprise%20API%20Inquiry%20%E2%80%94%20Dashboard"

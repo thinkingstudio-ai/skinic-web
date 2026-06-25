@@ -75,7 +75,7 @@ const tiers = [
       "Everything in Pro",
       "Custom rate limits",
       "White-label option",
-      "HIPAA/PDPA advisory",
+      "SOC 2 / PDPA / GDPR advisory",
       "Direct engineer access",
       "Custom contract",
     ],

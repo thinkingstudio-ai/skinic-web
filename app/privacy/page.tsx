@@ -56,7 +56,7 @@ const sections = [
   },
   {
     title: "13. Compliance",
-    body: `SKINIC operates in compliance with:\n\n• Malaysia Personal Data Protection Act 2010 (PDPA)\n• EU General Data Protection Regulation (GDPR) — where applicable\n• UK GDPR — where applicable\n• California Consumer Privacy Act (CCPA) — where applicable\n\nFor enterprise clients requiring compliance documentation for HIPAA, SOC 2, ISO 27001, or other frameworks, contact skinic@thinkingstudio.ai with subject "Compliance Inquiry".`,
+    body: `SKINIC operates in compliance with:\n\n• Malaysia Personal Data Protection Act 2010 (PDPA)\n• EU General Data Protection Regulation (GDPR) — where applicable\n• UK GDPR — where applicable\n• California Consumer Privacy Act (CCPA) — where applicable\n\nFor enterprise clients requiring compliance documentation for SOC 2, ISO 27001, or other frameworks, contact skinic@thinkingstudio.ai with subject "Compliance Inquiry".`,
   },
   {
     title: "14. Changes to This Policy",

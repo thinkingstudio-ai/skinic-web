@@ -46,7 +46,7 @@ export default function TermsPage() {
             <p><strong className="text-white/70">How We Use It.</strong> Data is used solely to provide the SKINIC API service, manage your account, and improve our models. We do not sell your data.</p>
             <p><strong className="text-white/70">Data Storage.</strong> Data is stored in Supabase (PostgreSQL) hosted on AWS. We apply encryption at rest and in transit.</p>
             <p><strong className="text-white/70">Retention.</strong> Account data is retained for the duration of your subscription plus 90 days. You may request deletion at any time.</p>
-            <p><strong className="text-white/70">Third Parties.</strong> We use Lemon Squeezy for payment processing. Your payment data is never stored by SKINIC.</p>
+            <p><strong className="text-white/70">Third Parties.</strong> We use Paddle as our Merchant of Record for payment processing. Your payment data is never stored by SKINIC.</p>
             <p><strong className="text-white/70">Contact.</strong> For data requests or privacy concerns, email <a href="mailto:skinic@thinkingstudio.ai" className="text-violet-400">skinic@thinkingstudio.ai</a>.</p>
           </div>
         </div>

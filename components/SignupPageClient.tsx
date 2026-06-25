@@ -5,12 +5,12 @@ const PAID_TIERS = [
   {
     value: "starter",
     label: "Starter — $29/mo",
-    href: "https://skinic.lemonsqueezy.com/checkout/buy/784a9628-967d-4cd5-bec5-47ea5c04f53e?checkout[success_url]=https%3A%2F%2Fskinic.app%2Fdashboard%2Fplan%3Fupgraded%3Dstarter",
+    href: "/dashboard/plan?upgrade=starter",
   },
   {
     value: "pro",
     label: "Pro — $99/mo",
-    href: "https://skinic.lemonsqueezy.com/checkout/buy/da6efa06-373b-44eb-97fa-64eb0feeff45?checkout[success_url]=https%3A%2F%2Fskinic.app%2Fdashboard%2Fplan%3Fupgraded%3Dpro",
+    href: "/dashboard/plan?upgrade=pro",
   },
 ];
 
@@ -181,7 +181,7 @@ export default function SignupPageClient() {
         </div>
         {upgradeTier && (
           <p className="text-center text-amber-400/70 text-xs mb-3">
-            Sign up above first, then click checkout with the same email.
+            Sign up free above first — then upgrade to {upgradeTier.charAt(0).toUpperCase() + upgradeTier.slice(1)} from your dashboard.
           </p>
         )}
         <div className="grid grid-cols-2 gap-3">
@@ -191,8 +191,6 @@ export default function SignupPageClient() {
               <a
                 key={t.value}
                 href={t.href}
-                target="_blank"
-                rel="noopener noreferrer"
                 className={`rounded-xl p-4 text-center border transition-all group ${
                   isHighlighted
                     ? "border-violet-500/50 bg-violet-500/10 shadow-lg shadow-violet-500/10"
@@ -204,7 +202,7 @@ export default function SignupPageClient() {
                 </p>
                 <p className="text-violet-400 text-xs mt-1">{t.label}</p>
                 <p className={`text-xs mt-2 ${isHighlighted ? "text-violet-300" : "text-white/25"}`}>
-                  {isHighlighted ? "Checkout here →" : "Checkout →"}
+                  Upgrade in dashboard →
                 </p>
               </a>
             );
