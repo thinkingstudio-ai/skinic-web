@@ -17,7 +17,7 @@ const TIER_META = [
     name: "Free",
     price: "$0",
     period: "/month",
-    calls: "100 calls/month",
+    calls: "10 trial scans",
     analyze: "5 analyze/min",
     recommend: "10 recommend/min",
     ai: false,

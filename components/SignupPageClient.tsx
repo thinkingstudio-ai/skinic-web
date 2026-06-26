@@ -102,7 +102,7 @@ export default function SignupPageClient() {
       {/* Free tier signup */}
       <div>
         <div className="text-center mb-6">
-          <p className="text-violet-400 text-xs font-medium tracking-widest uppercase mb-3">Free — 100 calls/month</p>
+          <p className="text-violet-400 text-xs font-medium tracking-widest uppercase mb-3">Free — 10 trial scans</p>
           <h1 className="text-3xl md:text-4xl font-bold mb-3">Get your API key</h1>
           <p className="text-white/40 text-sm">
             Your unique key will be shown once — save it immediately.

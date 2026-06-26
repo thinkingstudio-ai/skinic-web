@@ -18,7 +18,7 @@ export default async function UsagePage() {
   const totalAll = keys?.reduce((s, k) => s + (k.total_calls || 0), 0) || 0;
 
   const TIER_LIMITS: Record<string, number | null> = {
-    free: 100, starter: 2000, pro: 10000, enterprise: null,
+    free: 10, starter: 2000, pro: 10000, enterprise: null,
   };
   const tier = keys?.[0]?.tier || "free";
   const limit = TIER_LIMITS[tier];

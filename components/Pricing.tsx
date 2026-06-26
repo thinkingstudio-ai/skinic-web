@@ -3,9 +3,9 @@ const tiers = [
     name: "Free",
     price: "$0",
     period: "/month",
-    description: "Explore the full skin analysis engine — no credit card required.",
+    description: "Try the full skin analysis engine — no credit card required.",
     limits: [
-      { label: "Monthly calls", value: "100 calls", tooltip: "Total API calls allowed per month across all endpoints" },
+      { label: "Trial scans", value: "10 scans", tooltip: "10 free scans to evaluate the UI and data quality — upgrade to unlock monthly volume" },
       { label: "Skin analysis", value: "5 req/min", tooltip: "Max /analyze requests per minute — each call processes one skin image" },
       { label: "AI ingredient guide", value: "—", tooltip: "Not available on Free. Upgrade to Starter to unlock the full AI-powered ingredient guide." },
     ],

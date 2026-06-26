@@ -124,7 +124,7 @@ paddle.Checkout.open({
 
 | Tier | Price | Monthly Calls | Analyze/min | Recommend/min |
 |---|---|---|---|---|
-| Free | $0 | 100 | 5 | — (not included) |
+| Free | $0 | 10 (trial) | 5 | — (not included) |
 | Starter | $29 | 2,000 | 20 | 30 |
 | Pro | $99 | 10,000 | 60 | 100 |
 | Enterprise | Hidden | Unlimited | 200 | 500 |
