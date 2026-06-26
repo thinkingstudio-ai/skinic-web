@@ -309,6 +309,7 @@ function ARPricing() {
       price: "$0",
       looks: "100 looks/mo",
       rpm: "5 req/min",
+      aiTips: false,
       cta: "Request Access",
       href: "/enterprise",
       highlight: false,
@@ -318,6 +319,7 @@ function ARPricing() {
       price: "$29",
       looks: "2,000 looks/mo",
       rpm: "20 req/min",
+      aiTips: true,
       cta: "Request Access",
       href: "/enterprise",
       highlight: false,
@@ -327,18 +329,10 @@ function ARPricing() {
       price: "$99",
       looks: "10,000 looks/mo",
       rpm: "60 req/min",
+      aiTips: true,
       cta: "Request Access",
       href: "/enterprise",
       highlight: true,
-    },
-    {
-      name: "Enterprise",
-      price: "Custom",
-      looks: "Unlimited",
-      rpm: "Custom",
-      cta: "Contact Sales",
-      href: "/enterprise",
-      highlight: false,
     },
   ];
 
@@ -387,10 +381,16 @@ function ARPricing() {
                   {tier.rpm}
                 </li>
                 <li className="flex items-center gap-2">
-                  <svg className="w-3.5 h-3.5 text-emerald-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                  </svg>
-                  AI styling tips
+                  {tier.aiTips ? (
+                    <svg className="w-3.5 h-3.5 text-emerald-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                    </svg>
+                  ) : (
+                    <svg className="w-3.5 h-3.5 text-white/20 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  )}
+                  <span className={tier.aiTips ? "" : "text-white/25 line-through"}>AI styling tips</span>
                 </li>
               </ul>
               <a
