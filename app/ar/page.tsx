@@ -345,7 +345,7 @@ function ARPricing() {
           <p className="text-white/40 mt-4">Usage-based. Scale as your app grows.</p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
           {tiers.map((tier) => (
             <div
               key={tier.name}
@@ -406,6 +406,13 @@ function ARPricing() {
             </div>
           ))}
         </div>
+
+        <p className="text-center text-white/30 text-sm mt-10">
+          Need unlimited looks, white-label, or custom rate limits?{" "}
+          <a href="/enterprise" className="text-rose-400 hover:text-rose-300 transition-colors">
+            Contact us for Enterprise →
+          </a>
+        </p>
       </div>
     </section>
   );
