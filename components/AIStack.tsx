@@ -14,9 +14,9 @@ const layers = [
     label: "Layer 2",
     title: "Aesthetic Concerns",
     model: "SKINIC Multi-Label",
-    accuracy: "5 concerns",
-    description: "Detects visible cosmetic concerns — acne, dryness, oiliness, dark spots, and wrinkles — each scored independently with Mild/Moderate/Prominent severity bands.",
-    tags: ["Acne", "Dryness", "Oiliness", "Dark Spots", "Wrinkles"],
+    accuracy: "8 concerns",
+    description: "Detects 8 visible cosmetic concerns — acne, dryness, oiliness, dark spots, wrinkles, redness, visible pores, and uneven pigmentation — each scored independently with Mild/Moderate/Prominent severity bands.",
+    tags: ["Acne", "Dryness", "Oiliness", "Dark Spots", "Wrinkles", "Redness", "Visible Pores", "Uneven Pigmentation"],
     color: "from-blue-600/20 to-blue-600/5",
     border: "border-blue-500/20",
     badge: "bg-blue-500/10 text-blue-300",
@@ -26,11 +26,22 @@ const layers = [
     title: "Deep Skin Embeddings",
     model: "SKINIC Deep Vision",
     accuracy: "6144-dim",
-    description: "Generates deep skin embeddings to read texture complexity, uniformity, and feature richness — purely cosmetic, non-diagnostic appearance signals.",
-    tags: ["Texture", "Uniformity", "Feature Density", "Deep Embeddings"],
+    description: "Produces a high-dimensional visual embedding trained on millions of dermatology images — used to derive texture complexity, skin uniformity, and feature balance as relative cosmetic trend indicators, not clinical measurements.",
+    tags: ["Texture Complexity", "Uniformity", "Feature Balance", "Skin Entropy"],
     color: "from-emerald-600/20 to-emerald-600/5",
     border: "border-emerald-500/20",
     badge: "bg-emerald-500/10 text-emerald-300",
+  },
+  {
+    label: "Layer 4",
+    title: "Acne Lesion Detector",
+    model: "SKINIC Lesion Guard",
+    accuracy: "YOLOv8 ONNX",
+    description: "Object-detection model that localises and counts individual acne lesions — comedones, papules, pustules, and nodules — and classifies overall acne severity for trend tracking over time.",
+    tags: ["Comedones", "Papules", "Pustules", "Nodules", "Severity"],
+    color: "from-amber-600/20 to-amber-600/5",
+    border: "border-amber-500/20",
+    badge: "bg-amber-500/10 text-amber-300",
   },
 ];
 
@@ -45,8 +56,7 @@ export default function AIStack() {
             <span className="gradient-text">built for skin</span>
           </h2>
           <p className="mt-4 text-white/40 text-lg max-w-2xl mx-auto">
-            Three independent AI layers working together for a complete, stable read of your skin.
-            Powered by RAG with a 500+ ingredient knowledge base.
+            Four independent AI layers working together — skin type, 8 cosmetic concerns, deep texture embeddings, and acne lesion detection. Enriched by a 500+ ingredient knowledge base.
           </p>
         </div>
 

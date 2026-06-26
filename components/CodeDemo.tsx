@@ -18,25 +18,37 @@ const RESPONSE_CODE = `{
     ]
   },
   "concerns": [
-    { "name": "Oily Skin",  "score": 84.2, "level": "Prominent" },
-    { "name": "Dark Spots", "score": 41.0, "level": "Moderate"  }
+    { "name": "Oily Skin",           "score": 84.2, "level": "Prominent" },
+    { "name": "Visible Pores",       "score": 72.0, "level": "Prominent" },
+    { "name": "Dark Spots",          "score": 41.0, "level": "Moderate"  },
+    { "name": "Uneven Pigmentation", "score": 59.0, "level": "Moderate"  }
   ],
   "all_concerns": [
-    { "name": "Oily Skin",  "score": 84.2, "level": "Prominent" },
-    { "name": "Dark Spots", "score": 41.0, "level": "Moderate"  },
-    { "name": "Acne",       "score": 12.5, "level": "Mild"      },
-    { "name": "Dry Skin",   "score": 8.0,  "level": "Mild"      },
-    { "name": "Wrinkles",   "score": 4.1,  "level": "Mild"      }
+    { "name": "Oily Skin",           "score": 84.2, "level": "Prominent" },
+    { "name": "Visible Pores",       "score": 72.0, "level": "Prominent" },
+    { "name": "Uneven Pigmentation", "score": 59.0, "level": "Moderate"  },
+    { "name": "Dark Spots",          "score": 41.0, "level": "Moderate"  },
+    { "name": "Redness",             "score": 38.0, "level": "Mild"      },
+    { "name": "Acne",                "score": 12.5, "level": "Mild"      },
+    { "name": "Dry Skin",            "score": 8.0,  "level": "Mild"      },
+    { "name": "Wrinkles",            "score": 4.1,  "level": "Mild"      }
   ],
-  "derm": {
-    "available": true,
-    "quality_score": 81.2,
-    "embedding_dim": 6144,
-    "skin_features": {
+  "measurements": {
+    "skin_texture": {
+      "uniformity": 41.0,
       "texture_complexity": 72.0,
-      "feature_richness": 68.0,
-      "uniformity": 41.0
-    }
+      "skin_entropy": 63.4,
+      "feature_balance": 58.1
+    },
+    "health_score": 62,
+    "health_label": "Fair"
+  },
+  "skin_tone": {
+    "fitzpatrick": 3,
+    "fitzpatrick_label": "Type III",
+    "undertone": "warm",
+    "season": "Autumn",
+    "hex_avg": "#C8956C"
   },
   "disclaimer": "Cosmetic skincare insights only — not a medical device."
 }`;
