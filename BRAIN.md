@@ -111,8 +111,10 @@ paddle.Checkout.open({
 ```
 
 **Paddle Price IDs:**
-- Starter: `pri_01kvxcyj7skk9we9tpbzecfhnh`
-- Pro: `pri_01kvxd35mqf8eqkgrv8sw1cj5n`
+- Starter (API $29): `pri_01kvxcyj7skk9we9tpbzecfhnh`
+- Pro (API $99): `pri_01kvxd35mqf8eqkgrv8sw1cj5n`
+- Starter App ($39): set `PADDLE_PRICE_STARTER_APP` env var (create product in Paddle dashboard)
+- Pro App ($129): set `PADDLE_PRICE_PRO_APP` env var (create product in Paddle dashboard)
 
 **Status: Pending Paddle account approval**
 
@@ -120,14 +122,27 @@ paddle.Checkout.open({
 
 ## 6. Pricing Tier Data
 
-`components/Pricing.tsx` — must stay aligned with `TIER_LIMITS` in `main.py`:
+`components/Pricing.tsx` — must stay aligned with `TIER_LIMITS` in `main.py`.
 
-| Tier | Price | Monthly Calls | Analyze/min | Recommend/min |
+SKINIC has **two product lines**: API (developer-facing) and App (white-label mobile, B2B).
+
+### API — for Developers
+
+| Tier | Price | Monthly Scans | Analyze/min | Recommend/min | App Included |
+|---|---|---|---|---|---|
+| Free | $0 | 10 (trial) | 5 | — | ✗ |
+| Starter | $29/mo | 2,000 | 20 | 30 · 500/mo | ✗ |
+| Pro | $99/mo | 10,000 | 60 | 100 · 2,000/mo | ✗ |
+| Enterprise | Custom | Unlimited | 200 | 500 · 10k/mo | ✓ |
+
+### App — for Businesses (white-label mobile)
+
+| Tier | Price | Monthly Scans | QR Distribution | Remove SKINIC Branding |
 |---|---|---|---|---|
-| Free | $0 | 10 (trial) | 5 | — (not included) |
-| Starter | $29 | 2,000 | 20 | 30 |
-| Pro | $99 | 10,000 | 60 | 100 |
-| Enterprise | Hidden | Unlimited | 200 | 500 |
+| Free Preview | $0 | 10 (trial) | ✗ | ✗ |
+| Starter App | $39/mo | 2,000 | ✓ | ✗ |
+| Pro App | $129/mo | 10,000 | ✓ | ✓ |
+| Enterprise App | Custom | Unlimited | ✓ | ✓ + App Store |
 
 ---
 
