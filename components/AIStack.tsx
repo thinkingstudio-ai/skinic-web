@@ -26,7 +26,7 @@ const layers = [
     title: "Deep Skin Embeddings",
     model: "SKINIC Deep Vision",
     accuracy: "6144-dim",
-    description: "Produces a high-dimensional visual embedding trained on millions of dermatology images — used to derive texture complexity, skin uniformity, and feature balance as relative cosmetic trend indicators, not clinical measurements.",
+    description: "Produces a high-dimensional visual embedding trained on millions of skin images — used to derive texture complexity, skin uniformity, and feature balance as relative cosmetic trend indicators, not absolute benchmarks.",
     tags: ["Texture Complexity", "Uniformity", "Feature Balance", "Skin Entropy"],
     color: "from-emerald-600/20 to-emerald-600/5",
     border: "border-emerald-500/20",

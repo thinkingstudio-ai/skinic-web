@@ -40,8 +40,8 @@ const RESPONSE_CODE = `{
       "skin_entropy": 63.4,
       "feature_balance": 58.1
     },
-    "health_score": 62,
-    "health_label": "Fair"
+    "skin_score": 62,
+    "skin_label": "Fair"
   },
   "skin_tone": {
     "fitzpatrick": 3,
@@ -50,7 +50,7 @@ const RESPONSE_CODE = `{
     "season": "Autumn",
     "hex_avg": "#C8956C"
   },
-  "disclaimer": "Cosmetic skincare insights only — not a medical device."
+  "disclaimer": "Cosmetic skincare insights only — for beauty and informational purposes."
 }`;
 
 export default function CodeDemo() {

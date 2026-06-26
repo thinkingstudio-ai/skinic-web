@@ -5,7 +5,7 @@ import { useState } from "react";
 const USE_CASES = [
   "Beauty brand / DTC skincare",
   "E-commerce platform",
-  "Clinic or dermatology practice",
+  "Aesthetic clinic or beauty centre",
   "Mobile app / consumer product",
   "In-store / kiosk deployment",
   "B2B SaaS / reseller",

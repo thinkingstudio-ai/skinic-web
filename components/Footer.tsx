@@ -31,7 +31,7 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto mt-6 pt-6 border-t border-white/5">
         <p className="text-xs text-white/20 text-center leading-relaxed">
           SKINIC provides AI-powered cosmetic skincare insights for informational and beauty purposes only.
-          It is not a medical device and does not diagnose, treat, or prevent any condition.
+          It is a cosmetic beauty AI tool — not a substitute for professional skincare advice.
         </p>
       </div>
     </footer>
