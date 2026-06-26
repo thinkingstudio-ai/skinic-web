@@ -125,6 +125,10 @@ export default function MobileSetupClient() {
 
   const deepLink = rawKey.trim() ? `skinic://setup?key=${encodeURIComponent(rawKey.trim())}` : "";
 
+  // QR distribution is a paid feature — the free tier is an evaluation trial only.
+  const selectedTier = keys.find((k) => k.id === selectedKeyId)?.tier ?? "free";
+  const canDistribute = selectedTier !== "free";
+
   function downloadQR() {
     const canvas = document.querySelector<HTMLCanvasElement>("#skinic-qr canvas");
     if (!canvas) return;
@@ -301,35 +305,67 @@ export default function MobileSetupClient() {
             </div>
           </div>
 
-          {/* QR generator */}
+          {/* QR generator — paid feature */}
           <div className="card-glass rounded-2xl p-5">
-            <p className="text-sm font-semibold text-white mb-1">Customer QR code</p>
-            <p className="text-white/40 text-xs mb-4">
-              Paste this key&apos;s secret (saved when you created it) to generate a QR. Your customers scan it in the SKINIC app to instantly load your brand.
-            </p>
-            <input
-              type="text"
-              value={rawKey}
-              onChange={(e) => setRawKey(e.target.value)}
-              placeholder="Paste API key — sk-..."
-              className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/25 text-sm font-mono focus:outline-none focus:border-violet-500/50 transition-colors mb-4"
-            />
-            {deepLink ? (
-              <div className="flex flex-col items-center gap-3">
-                <div id="skinic-qr" className="p-3 bg-white rounded-2xl">
-                  <QRCodeCanvas value={deepLink} size={180} level="M" includeMargin={false} />
-                </div>
-                <button
-                  onClick={downloadQR}
-                  className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white/70 text-xs font-medium hover:bg-white/10 transition-all"
-                >
-                  Download QR (PNG)
-                </button>
-                <code className="text-[10px] text-white/30 break-all text-center">{deepLink}</code>
-              </div>
+            <div className="flex items-center justify-between mb-1">
+              <p className="text-sm font-semibold text-white">Customer QR code</p>
+              {!canDistribute && (
+                <span className="px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-400 text-[10px] font-semibold uppercase tracking-wider">
+                  Starter+
+                </span>
+              )}
+            </div>
+
+            {canDistribute ? (
+              <>
+                <p className="text-white/40 text-xs mb-4">
+                  Paste this key&apos;s secret (saved when you created it) to generate a QR. Your customers scan it in the SKINIC app to instantly load your brand.
+                </p>
+                <input
+                  type="text"
+                  value={rawKey}
+                  onChange={(e) => setRawKey(e.target.value)}
+                  placeholder="Paste API key — sk-..."
+                  className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/25 text-sm font-mono focus:outline-none focus:border-violet-500/50 transition-colors mb-4"
+                />
+                {deepLink ? (
+                  <div className="flex flex-col items-center gap-3">
+                    <div id="skinic-qr" className="p-3 bg-white rounded-2xl">
+                      <QRCodeCanvas value={deepLink} size={180} level="M" includeMargin={false} />
+                    </div>
+                    <button
+                      onClick={downloadQR}
+                      className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white/70 text-xs font-medium hover:bg-white/10 transition-all"
+                    >
+                      Download QR (PNG)
+                    </button>
+                    <code className="text-[10px] text-white/30 break-all text-center">{deepLink}</code>
+                  </div>
+                ) : (
+                  <div className="py-10 text-center text-white/25 text-xs border border-dashed border-white/10 rounded-2xl">
+                    QR appears here once you paste a key
+                  </div>
+                )}
+              </>
             ) : (
-              <div className="py-10 text-center text-white/25 text-xs border border-dashed border-white/10 rounded-2xl">
-                QR appears here once you paste a key
+              /* Free trial — distribution locked */
+              <div className="text-center py-6 px-2">
+                <div className="w-12 h-12 mx-auto mb-3 rounded-2xl bg-amber-500/10 flex items-center justify-center">
+                  <svg className="w-6 h-6 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
+                </div>
+                <p className="text-sm font-semibold text-white mb-1.5">Sharing is a paid feature</p>
+                <p className="text-white/40 text-xs leading-relaxed mb-4">
+                  Your free trial lets you preview your branding and test the app yourself.
+                  Generate a shareable QR for your customers with Starter or higher.
+                </p>
+                <a
+                  href="/dashboard/plan"
+                  className="inline-block px-4 py-2 rounded-xl bg-violet-600 hover:bg-violet-500 text-white text-sm font-semibold transition-all"
+                >
+                  Upgrade to share →
+                </a>
               </div>
             )}
           </div>
