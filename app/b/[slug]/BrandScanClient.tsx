@@ -22,21 +22,25 @@ type ScanResult = {
 };
 
 type ScanResponse = {
+  scan_id: string | null;
   result: ScanResult;
   matched: CatalogItem[];
 };
 
-type Step = "welcome" | "lead" | "capture" | "processing" | "result";
+// welcome → capture → processing → teaser → result
+type Step = "welcome" | "capture" | "processing" | "teaser" | "result";
 
 export default function BrandScanClient({ brand }: { brand: BrandConfig }) {
-  const [step, setStep] = useState<Step>("welcome");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [step, setStep]               = useState<Step>("welcome");
+  const [name, setName]               = useState("");
+  const [email, setEmail]             = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [scanData, setScanData] = useState<ScanResponse | null>(null);
-  const [error, setError] = useState("");
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [previewUrl, setPreviewUrl]   = useState<string | null>(null);
+  const [scanData, setScanData]       = useState<ScanResponse | null>(null);
+  const [saving, setSaving]           = useState(false);
+  const [error, setError]             = useState("");
+  const fileInputRef                  = useRef<HTMLInputElement>(null);
+
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://api.skinic.app";
   const pc = brand.primary_color;
 
@@ -55,8 +59,6 @@ export default function BrandScanClient({ brand }: { brand: BrandConfig }) {
     const fd = new FormData();
     fd.append("file", selectedFile);
     fd.append("terms_accepted", "true");
-    if (name.trim()) fd.append("customer_name", name.trim());
-    if (email.trim()) fd.append("customer_email", email.trim());
     try {
       const res = await fetch(`${apiUrl}/brand/${brand.slug}/scan`, { method: "POST", body: fd });
       const data = await res.json();
@@ -66,11 +68,47 @@ export default function BrandScanClient({ brand }: { brand: BrandConfig }) {
         return;
       }
       setScanData(data);
-      setStep("result");
+      setStep("teaser");
     } catch {
       setError("Network error. Please check your connection.");
       setStep("capture");
     }
+  }
+
+  async function saveLead(skip = false) {
+    if (!scanData?.scan_id) { setStep("result"); return; }
+    if (skip) { setStep("result"); return; }
+
+    const trimName  = name.trim();
+    const trimEmail = email.trim();
+    if (!trimName && !trimEmail) {
+      setError("Please enter your name or email.");
+      return;
+    }
+
+    setSaving(true);
+    setError("");
+    try {
+      await fetch(`${apiUrl}/brand/${brand.slug}/save-lead`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ scan_id: scanData.scan_id, name: trimName, email: trimEmail }),
+      });
+    } catch {
+      // non-blocking — proceed regardless
+    }
+    setSaving(false);
+    setStep("result");
+  }
+
+  function rescan() {
+    setStep("welcome");
+    setSelectedFile(null);
+    setPreviewUrl(null);
+    setScanData(null);
+    setName("");
+    setEmail("");
+    setError("");
   }
 
   const scoreColor = (s: number) => s >= 65 ? pc : s >= 45 ? "#f59e0b" : "#ef4444";
@@ -101,7 +139,7 @@ export default function BrandScanClient({ brand }: { brand: BrandConfig }) {
         {step === "welcome" && (
           <div className="text-center space-y-6 w-full">
             <div
-              className="w-20 h-20 rounded-3xl mx-auto flex items-center justify-center text-3xl"
+              className="w-20 h-20 rounded-3xl mx-auto flex items-center justify-center"
               style={{ background: `${pc}22`, border: `1px solid ${pc}44` }}
             >
               {brand.logo_url ? (
@@ -121,7 +159,7 @@ export default function BrandScanClient({ brand }: { brand: BrandConfig }) {
               <p>✦ Takes less than 30 seconds</p>
             </div>
             <button
-              onClick={() => setStep(brand.lead_capture_enabled ? "lead" : "capture")}
+              onClick={() => setStep("capture")}
               className="w-full py-4 rounded-2xl font-bold text-white text-base transition-all hover:opacity-90"
               style={{ background: pc }}
             >
@@ -131,51 +169,6 @@ export default function BrandScanClient({ brand }: { brand: BrandConfig }) {
               Cosmetic profiling only — not a medical service.{" "}
               <a href="/terms" className="underline">Terms</a>
             </p>
-          </div>
-        )}
-
-        {/* ── LEAD CAPTURE ── */}
-        {step === "lead" && (
-          <div className="w-full space-y-5">
-            <div className="text-center mb-2">
-              <h2 className="text-xl font-bold text-white mb-1">A little about you</h2>
-              <p className="text-white/40 text-sm">So we can send your personalised skin report.</p>
-            </div>
-            <div>
-              <label className="block text-xs text-white/50 mb-1.5">Your name</label>
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="e.g. Sarah"
-                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/20 text-sm focus:outline-none"
-                style={{ borderColor: name ? `${pc}66` : undefined }}
-              />
-            </div>
-            <div>
-              <label className="block text-xs text-white/50 mb-1.5">Email address</label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@email.com"
-                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/20 text-sm focus:outline-none"
-                style={{ borderColor: email ? `${pc}66` : undefined }}
-              />
-            </div>
-            <button
-              onClick={() => setStep("capture")}
-              className="w-full py-3.5 rounded-2xl font-bold text-white transition-all hover:opacity-90"
-              style={{ background: pc }}
-            >
-              Continue →
-            </button>
-            <button
-              onClick={() => setStep("capture")}
-              className="w-full text-white/30 text-sm hover:text-white/50 transition-colors"
-            >
-              Skip for now
-            </button>
           </div>
         )}
 
@@ -212,7 +205,10 @@ export default function BrandScanClient({ brand }: { brand: BrandConfig }) {
                 onClick={() => fileInputRef.current?.click()}
                 className="w-full h-44 rounded-2xl border-2 border-dashed border-white/15 flex flex-col items-center justify-center gap-3 hover:border-white/30 transition-colors"
               >
-                <span className="text-4xl">📸</span>
+                <svg className="w-10 h-10 text-white/20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
                 <span className="text-white/50 text-sm">Tap to open camera or choose photo</span>
               </button>
             )}
@@ -228,7 +224,7 @@ export default function BrandScanClient({ brand }: { brand: BrandConfig }) {
               Analyse My Skin →
             </button>
             <p className="text-white/20 text-xs text-center">
-              Your photo is processed in real-time and not stored without consent.
+              Your photo is processed in real-time and not stored.
             </p>
           </div>
         )}
@@ -247,6 +243,105 @@ export default function BrandScanClient({ brand }: { brand: BrandConfig }) {
               <p>✦ Deep texture embeddings</p>
               <p>✦ Matching recommendations</p>
             </div>
+          </div>
+        )}
+
+        {/* ── TEASER + GATE ── */}
+        {step === "teaser" && scanData && (
+          <div className="w-full space-y-5">
+            {/* Teaser — partial result */}
+            <div className="text-center mb-1">
+              <p className="text-white/40 text-xs uppercase tracking-widest mb-3">Your Skin Profile</p>
+              <div
+                className="rounded-2xl p-5 border mb-4"
+                style={{ background: `${pc}10`, borderColor: `${pc}30` }}
+              >
+                <div className="flex items-center justify-center gap-4">
+                  {scanData.result.measurements && (
+                    <div
+                      className="w-16 h-16 rounded-full border-2 flex flex-col items-center justify-center shrink-0"
+                      style={{ borderColor: scoreColor(scanData.result.measurements.skin_score) + "88" }}
+                    >
+                      <span className="text-2xl font-black text-white leading-none">
+                        {Math.round(scanData.result.measurements.skin_score)}
+                      </span>
+                      <span className="text-[9px] text-white/30">/100</span>
+                    </div>
+                  )}
+                  <div className="text-left">
+                    <p className="text-white font-bold text-xl">{scanData.result.skin_type.type} Skin</p>
+                    <p className="text-white/40 text-xs mt-0.5">{scanData.result.skin_type.description?.split(".")[0]}.</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Locked content preview */}
+              <div className="rounded-2xl border border-white/8 bg-white/3 p-4 relative overflow-hidden">
+                <div className="absolute inset-0 backdrop-blur-[2px] bg-black/40 flex flex-col items-center justify-center z-10 rounded-2xl">
+                  <svg className="w-5 h-5 text-white/50 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
+                  <p className="text-white/70 text-sm font-semibold">
+                    {scanData.matched.length > 0
+                      ? `${scanData.matched.length} personalised pick${scanData.matched.length > 1 ? "s" : ""} waiting`
+                      : `${scanData.result.concerns.length} skin traits analysed`}
+                  </p>
+                  <p className="text-white/35 text-xs mt-0.5">Enter your details to unlock</p>
+                </div>
+                {/* Blurred content beneath */}
+                <div className="space-y-2 pointer-events-none select-none">
+                  {(scanData.matched.length > 0 ? scanData.matched : scanData.result.concerns).slice(0, 3).map((item, i) => (
+                    <div key={i} className="h-10 rounded-xl bg-white/5 blur-[2px]" />
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Lead capture form */}
+            <div className="space-y-3">
+              <div>
+                <label className="block text-xs text-white/50 mb-1.5">Your name</label>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="e.g. Sarah"
+                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/20 text-sm focus:outline-none focus:border-white/25"
+                />
+              </div>
+              <div>
+                <label className="block text-xs text-white/50 mb-1.5">Email address</label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="you@email.com"
+                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/20 text-sm focus:outline-none focus:border-white/25"
+                />
+              </div>
+            </div>
+
+            {error && <p className="text-red-400 text-sm text-center">{error}</p>}
+
+            <button
+              onClick={() => saveLead(false)}
+              disabled={saving}
+              className="w-full py-4 rounded-2xl font-bold text-white text-base transition-all hover:opacity-90 disabled:opacity-60"
+              style={{ background: pc }}
+            >
+              {saving ? "Saving..." : "Unlock My Full Report →"}
+            </button>
+
+            <button
+              onClick={() => saveLead(true)}
+              className="w-full text-white/25 text-xs hover:text-white/40 transition-colors py-1"
+            >
+              Skip — view without saving
+            </button>
+
+            <p className="text-white/15 text-xs text-center">
+              Your details are only shared with {brand.app_name}. Not stored by SKINIC.
+            </p>
           </div>
         )}
 
@@ -308,14 +403,12 @@ export default function BrandScanClient({ brand }: { brand: BrandConfig }) {
                     >
                       {item.image_url ? (
                         // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={item.image_url}
-                          alt={item.name}
-                          className="w-14 h-14 rounded-xl object-cover shrink-0"
-                        />
+                        <img src={item.image_url} alt={item.name} className="w-14 h-14 rounded-xl object-cover shrink-0" />
                       ) : (
-                        <div className="w-14 h-14 rounded-xl bg-white/5 flex items-center justify-center text-xl shrink-0">
-                          {item.type === "service" ? "✨" : "🧴"}
+                        <div className="w-14 h-14 rounded-xl bg-white/5 flex items-center justify-center shrink-0">
+                          <svg className="w-6 h-6 text-white/20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                          </svg>
                         </div>
                       )}
                       <div className="flex-1 min-w-0">
@@ -323,9 +416,7 @@ export default function BrandScanClient({ brand }: { brand: BrandConfig }) {
                           <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-white/8 text-white/40 uppercase font-semibold tracking-wider">
                             {item.type}
                           </span>
-                          {item.price && (
-                            <span className="text-[10px] text-white/40">{item.price}</span>
-                          )}
+                          {item.price && <span className="text-[10px] text-white/40">{item.price}</span>}
                         </div>
                         <p className="text-sm font-semibold text-white">{item.name}</p>
                         {item.description && (
@@ -351,15 +442,7 @@ export default function BrandScanClient({ brand }: { brand: BrandConfig }) {
 
             {/* Rescan */}
             <button
-              onClick={() => {
-                setStep("welcome");
-                setSelectedFile(null);
-                setPreviewUrl(null);
-                setScanData(null);
-                setName("");
-                setEmail("");
-                setError("");
-              }}
+              onClick={rescan}
               className="w-full py-3 rounded-2xl border border-white/10 text-white/50 text-sm font-medium hover:border-white/20 hover:text-white/70 transition-all"
             >
               Scan Again
