@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 
 type Limit = { label: string; value: string; tooltip: string };
 type Tier = {
@@ -16,166 +15,87 @@ type Tier = {
   badge?: string;
 };
 
-const API_TIERS: Tier[] = [
+const STUDIO_TIERS: Tier[] = [
   {
-    name: "Free",
+    name: "Free Preview",
     price: "$0",
     period: "/month",
-    description: "Try the full skin profiling engine — no credit card required.",
+    description: "Try your branded scan page — no credit card, no code required.",
     limits: [
-      { label: "Trial captures", value: "10 profiles", tooltip: "10 free skin profiles to evaluate the data quality — upgrade to unlock monthly volume." },
-      { label: "Skin profiling", value: "5 req/min", tooltip: "Max /analyze requests per minute." },
-      { label: "AI ingredient guide", value: "—", tooltip: "Not available on Free. Upgrade to Starter to unlock AI-powered ingredient guide." },
+      { label: "Monthly scans", value: "50 scans", tooltip: "50 free AI skin profiles to evaluate the experience." },
+      { label: "Catalog items", value: "5 items", tooltip: "Add up to 5 products or services to your catalog." },
+      { label: "Lead capture", value: "—", tooltip: "Email lead capture is available on Starter and above." },
     ],
     features: [
-      "Full multi-layer AI skin profiling",
-      "Skin tone + depth scale",
-      "Static ingredient matching",
-      "Interactive API docs",
+      "Branded scan page (your slug)",
+      "AI skin type + trait profiling",
+      "Product & service matching",
+      "Customer database (read-only)",
     ],
-    disabledFeatures: ["AI-powered ingredient guide"],
-    cta: "Get Started",
-    ctaHref: "/signup",
+    disabledFeatures: ["Lead capture form", "Remove 'Powered by SKINIC'"],
+    cta: "Get Started Free",
+    ctaHref: "/signup?product=studio",
   },
   {
-    name: "Starter",
-    price: "$29",
+    name: "Starter Studio",
+    price: "$39",
     period: "/month",
-    description: "Ship real products with a full AI ingredient guide and priority support.",
+    description: "Everything you need to launch, capture leads, and grow your customer list.",
     limits: [
-      { label: "Monthly profiles", value: "2,000 calls", tooltip: "Total API calls allowed per month — resets on the 1st." },
-      { label: "Skin profiling", value: "20 req/min", tooltip: "Suitable for up to ~20 concurrent users." },
-      { label: "AI ingredient guide", value: "30 req/min · 500/mo", tooltip: "500 AI ingredient guide calls per month." },
+      { label: "Monthly scans", value: "2,000 scans", tooltip: "Shared across all your branded page visitors." },
+      { label: "Catalog items", value: "Unlimited", tooltip: "Add as many products and services as you like." },
+      { label: "Lead capture", value: "Included", tooltip: "Collect name + email before the scan — every scan grows your list." },
     ],
     features: [
-      "Everything in Free",
-      "Full AI ingredient guide",
-      "4× higher throughput",
+      "Everything in Free Preview",
+      "Lead capture form",
+      "CSV export (customers)",
+      "AI ingredient guide",
       "Email support",
-      "Real-time usage dashboard",
     ],
-    cta: "Get Starter",
-    ctaHref: "/signup?upgrade=starter",
+    disabledFeatures: ["Remove 'Powered by SKINIC'"],
+    cta: "Get Starter Studio",
+    ctaHref: "/signup?product=studio&upgrade=starter_app",
+    badge: "Best for salons & brands",
   },
   {
-    name: "Pro",
-    price: "$99",
+    name: "Pro Studio",
+    price: "$129",
     period: "/month",
-    description: "Built for production-scale apps, beauty brands, and multi-brand platforms.",
+    description: "Fully white-labelled. Remove SKINIC branding and own the experience end to end.",
     limits: [
-      { label: "Monthly profiles", value: "10,000 calls", tooltip: "Total API calls allowed per month." },
-      { label: "Skin profiling", value: "60 req/min", tooltip: "Suitable for ~60 concurrent users." },
-      { label: "AI ingredient guide", value: "100 req/min · 2,000/mo", tooltip: "2,000 AI ingredient calls per month." },
+      { label: "Monthly scans", value: "10,000 scans", tooltip: "Suitable for active beauty chains and high-volume campaigns." },
+      { label: "Analytics", value: "Full dashboard", tooltip: "Scan volume, skin type distribution, top traits, CTA clicks." },
+      { label: "Branding", value: "SKINIC hidden", tooltip: "Remove 'Powered by SKINIC' — your brand only." },
     ],
     features: [
-      "Everything in Starter",
-      "Postman collection included",
+      "Everything in Starter Studio",
+      "Remove 'Powered by SKINIC'",
+      "Analytics dashboard",
+      "Website embed code",
       "Priority email support",
     ],
-    cta: "Get Pro",
-    ctaHref: "/signup?upgrade=pro",
+    cta: "Get Pro Studio",
+    ctaHref: "/signup?product=studio&upgrade=pro_app",
     popular: true,
   },
   {
     name: "Enterprise",
     price: "Custom",
     period: "",
-    description: "For large beauty platforms, retailers, and enterprise integrations.",
+    description: "For beauty chains, large brands, and multi-location businesses. Custom contract & SLA.",
     limits: [
-      { label: "Monthly profiles", value: "Unlimited", tooltip: "No monthly cap." },
-      { label: "Skin profiling", value: "200 req/min", tooltip: "Custom limits available." },
-      { label: "AI ingredient guide", value: "500 req/min · 10k/mo", tooltip: "Custom limits available on request." },
+      { label: "Monthly scans", value: "Unlimited", tooltip: "No monthly cap — custom limits available." },
+      { label: "Custom domain", value: "Available", tooltip: "Host your scan page on your own domain." },
+      { label: "Dedicated support", value: "Engineer access", tooltip: "Direct line to our team for onboarding and integrations." },
     ],
     features: [
-      "Everything in Pro",
-      "Custom rate limits",
-      "SOC 2 / PDPA / GDPR advisory",
-      "Direct engineer access",
-      "Custom contract & SLA",
-    ],
-    cta: "Contact Sales",
-    ctaHref: "/enterprise",
-  },
-];
-
-const APP_TIERS: Tier[] = [
-  {
-    name: "Free Preview",
-    price: "$0",
-    period: "/month",
-    description: "Preview the white-label app experience — configure branding, no QR distribution.",
-    limits: [
-      { label: "Trial captures", value: "10 profiles", tooltip: "10 profiles to evaluate the app experience." },
-      { label: "QR distribution", value: "—", tooltip: "QR code generation is gated to paid App tiers." },
-      { label: "Custom branding", value: "Preview only", tooltip: "You can configure branding but cannot distribute QR codes to clients." },
-    ],
-    features: [
-      "Live branding preview in dashboard",
-      "App name, logo, colour config",
-      "SKINIC skin profiling engine",
-    ],
-    disabledFeatures: ["QR code distribution", "Remove 'Powered by SKINIC'"],
-    cta: "Get Started",
-    ctaHref: "/signup",
-  },
-  {
-    name: "Starter App",
-    price: "$39",
-    period: "/month",
-    description: "Launch your branded skin profiling app and distribute it to clients via QR code.",
-    limits: [
-      { label: "Monthly profiles", value: "2,000 captures", tooltip: "Shared across all your app users." },
-      { label: "QR distribution", value: "Unlimited clients", tooltip: "Generate and share QR codes to onboard any number of clients." },
-      { label: "Custom branding", value: "Full", tooltip: "App name, logo, tagline, primary colour." },
-    ],
-    features: [
-      "Everything in Free Preview",
-      "QR code client distribution",
-      "Full custom branding",
-      "AI ingredient guide",
-      "Email support",
-    ],
-    disabledFeatures: ["Remove 'Powered by SKINIC'"],
-    cta: "Get Starter App",
-    ctaHref: "/signup?upgrade=starter_app",
-    badge: "Best for salons & brands",
-  },
-  {
-    name: "Pro App",
-    price: "$129",
-    period: "/month",
-    description: "Fully white-labelled — remove all SKINIC branding and own the experience end to end.",
-    limits: [
-      { label: "Monthly profiles", value: "10,000 captures", tooltip: "Suitable for medium-scale beauty chains and brands." },
-      { label: "QR distribution", value: "Unlimited clients", tooltip: "No cap on QR code generation or client onboarding." },
-      { label: "Custom branding", value: "Full + no SKINIC", tooltip: "Remove 'Powered by SKINIC' — your brand only." },
-    ],
-    features: [
-      "Everything in Starter App",
-      "Remove 'Powered by SKINIC'",
-      "10,000 captures/month",
-      "Priority email support",
-    ],
-    cta: "Get Pro App",
-    ctaHref: "/signup?upgrade=pro_app",
-    popular: true,
-  },
-  {
-    name: "Enterprise App",
-    price: "Custom",
-    period: "",
-    description: "Managed App Store listing, custom contract, dedicated engineer — your app, your terms.",
-    limits: [
-      { label: "Monthly profiles", value: "Unlimited", tooltip: "No monthly cap." },
-      { label: "QR distribution", value: "Unlimited", tooltip: "Unlimited client onboarding." },
-      { label: "Custom branding", value: "Full + App Store", tooltip: "We manage the App Store listing under your brand." },
-    ],
-    features: [
-      "Everything in Pro App",
-      "Managed App Store listing",
-      "Custom rate limits",
+      "Everything in Pro Studio",
+      "Custom domain",
+      "Unlimited scans",
       "SOC 2 / PDPA / GDPR advisory",
       "Custom contract & SLA",
+      "Dedicated onboarding",
     ],
     cta: "Contact Sales",
     ctaHref: "/enterprise",
@@ -267,72 +187,26 @@ function TierCard({ tier }: { tier: Tier }) {
 }
 
 export default function Pricing() {
-  const [tab, setTab] = useState<"api" | "app">("api");
-
   return (
     <section id="pricing" className="py-28 px-6">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
           <p className="text-amber-400 text-sm font-medium tracking-widest uppercase mb-3">Pricing</p>
-          <h2 className="text-3xl md:text-5xl font-bold">Two products, one platform</h2>
+          <h2 className="text-3xl md:text-5xl font-bold">Simple, scalable plans</h2>
           <p className="mt-4 text-white/60 text-lg max-w-2xl mx-auto">
-            Build your own skin app with the API, or launch a fully branded experience with no code required.
+            Start free. Upgrade when you grow. No code needed to launch your branded skin profiling page.
           </p>
         </div>
 
-        {/* Tab switcher */}
-        <div className="flex justify-center mb-10">
-          <div className="inline-flex bg-white/5 rounded-xl p-1 border border-white/10">
-            <button
-              onClick={() => setTab("api")}
-              className={`px-6 py-2.5 rounded-lg text-sm font-semibold transition-all ${
-                tab === "api"
-                  ? "bg-violet-600 text-white shadow-lg shadow-violet-500/20"
-                  : "text-white/50 hover:text-white/80"
-              }`}
-            >
-              API — for Developers
-            </button>
-            <button
-              onClick={() => setTab("app")}
-              className={`px-6 py-2.5 rounded-lg text-sm font-semibold transition-all ${
-                tab === "app"
-                  ? "bg-violet-600 text-white shadow-lg shadow-violet-500/20"
-                  : "text-white/50 hover:text-white/80"
-              }`}
-            >
-              App — for Businesses
-            </button>
-          </div>
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+          {STUDIO_TIERS.map((tier) => <TierCard key={tier.name} tier={tier} />)}
         </div>
 
-        {tab === "api" && (
-          <>
-            <p className="text-center text-white/60 text-sm mb-8">
-              Raw API access — integrate skin intelligence into any platform using your own UI.
-            </p>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
-              {API_TIERS.map((tier) => <TierCard key={tier.name} tier={tier} />)}
-            </div>
-          </>
-        )}
-
-        {tab === "app" && (
-          <>
-            <p className="text-center text-white/60 text-sm mb-8">
-              White-label mobile app — profile &amp; distribute your branded skin experience. No code needed.
-            </p>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
-              {APP_TIERS.map((tier) => <TierCard key={tier.name} tier={tier} />)}
-            </div>
-          </>
-        )}
-
         <p className="text-center text-white/60 text-sm mt-8">
-          All prices in USD. &nbsp;·&nbsp; Need higher volume or a custom App Store listing?{" "}
-          <a href="/enterprise" className="text-violet-400 hover:text-violet-300 font-medium underline underline-offset-2">
-            Talk to us about Enterprise
-          </a>.
+          All prices in USD. &nbsp;·&nbsp; Building a custom integration or app?{" "}
+          <a href="https://api.skinic.app" target="_blank" rel="noreferrer" className="text-violet-400 hover:text-violet-300 font-medium underline underline-offset-2">
+            See the Developer API →
+          </a>
         </p>
       </div>
     </section>

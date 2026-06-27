@@ -8,6 +8,13 @@ const titles: Record<string, string> = {
   "/dashboard/usage": "Usage & Stats",
   "/dashboard/plan": "Plan & Billing",
   "/dashboard/terms": "Terms & Policy",
+  "/studio": "Studio Overview",
+  "/studio/scanpage": "Scan Page",
+  "/studio/catalog": "Catalog",
+  "/studio/customers": "Customers",
+  "/studio/analytics": "Analytics",
+  "/studio/brand": "Brand Setup",
+  "/studio/plan": "Plan & Billing",
 };
 
 export default function DashboardHeader({ user }: { user: User }) {

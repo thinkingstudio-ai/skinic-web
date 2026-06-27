@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
 
@@ -8,8 +8,11 @@ type Mode = "signup" | "signin";
 
 export default function AuthPageClient({ mode }: { mode: Mode }) {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const supabase = createClient();
   const isSignup = mode === "signup";
+  const isStudio = searchParams.get("product") === "studio";
+  const redirectPath = isStudio ? "/studio" : "/dashboard";
 
   const [form, setForm] = useState({ email: "", password: "", name: "", company: "" });
   const [loading, setLoading] = useState(false);
@@ -30,7 +33,7 @@ export default function AuthPageClient({ mode }: { mode: Mode }) {
         password: form.password,
         options: {
           data: { name: form.name, company: form.company },
-          emailRedirectTo: `${window.location.origin}/dashboard`,
+          emailRedirectTo: `${window.location.origin}${redirectPath}`,
         },
       });
       if (error) {
@@ -46,7 +49,7 @@ export default function AuthPageClient({ mode }: { mode: Mode }) {
       if (error) {
         setError(error.message);
       } else {
-        router.push("/dashboard");
+        router.push(redirectPath);
         router.refresh();
       }
     }
@@ -60,7 +63,7 @@ export default function AuthPageClient({ mode }: { mode: Mode }) {
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center gap-2 mb-6">
             <span className="text-xl font-bold tracking-tight">
-              SKINIC <span className="text-violet-400">API</span>
+              SKINIC <span className="text-violet-400">{isStudio ? "Studio" : "API"}</span>
             </span>
           </Link>
           <h1 className="text-2xl font-bold text-white mb-2">
@@ -68,7 +71,11 @@ export default function AuthPageClient({ mode }: { mode: Mode }) {
           </h1>
           <p className="text-white/40 text-sm">
             {isSignup
-              ? "Sign up to get your API key and manage usage"
+              ? isStudio
+                ? "Sign up to launch your branded skin profiling studio"
+                : "Sign up to get your API key and manage usage"
+              : isStudio
+              ? "Sign in to access your Studio"
               : "Sign in to access your dashboard"}
           </p>
         </div>
@@ -154,9 +161,9 @@ export default function AuthPageClient({ mode }: { mode: Mode }) {
 
         <p className="text-center text-white/30 text-sm mt-5">
           {isSignup ? (
-            <>Already have an account? <Link href="/signin" className="text-violet-400 hover:text-violet-300">Sign in</Link></>
+            <>Already have an account? <Link href={`/signin${isStudio ? "?product=studio" : ""}`} className="text-violet-400 hover:text-violet-300">Sign in</Link></>
           ) : (
-            <>Don&apos;t have an account? <Link href="/signup" className="text-violet-400 hover:text-violet-300">Sign up free</Link></>
+            <>Don&apos;t have an account? <Link href={`/signup${isStudio ? "?product=studio" : ""}`} className="text-violet-400 hover:text-violet-300">Sign up free</Link></>
           )}
         </p>
       </div>

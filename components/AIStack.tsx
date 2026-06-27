@@ -47,16 +47,16 @@ const layers = [
 
 export default function AIStack() {
   return (
-    <section id="ai-stack" className="py-28 px-6">
+    <section id="features" className="py-28 px-6">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
-          <p className="text-emerald-400 text-sm font-medium tracking-widest uppercase mb-3">Technology</p>
+          <p className="text-emerald-400 text-sm font-medium tracking-widest uppercase mb-3">The AI Behind Your Studio</p>
           <h2 className="text-3xl md:text-5xl font-bold">
-            Enterprise AI stack,{" "}
-            <span className="gradient-text">built for skin</span>
+            Deeper insights than any{" "}
+            <span className="gradient-text">quiz or filter</span>
           </h2>
           <p className="mt-4 text-white/60 text-lg max-w-2xl mx-auto">
-            Four independent AI layers working together — skin type profiling, 8 cosmetic trait scoring, deep texture embeddings, and blemish spot mapping. Enriched by a 551+ ingredient knowledge base.
+            SKINIC runs four AI layers on every selfie — profiling skin type, scoring 8 visible traits, reading skin texture depth, and mapping visible blemishes. All in under 3 seconds.
           </p>
         </div>
 

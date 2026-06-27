@@ -11,40 +11,39 @@ export default function Hero() {
       <div className="relative max-w-4xl mx-auto text-center">
         <div className="fade-up inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-violet-500/30 bg-violet-500/10 text-violet-300 text-xs font-medium mb-8">
           <span className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse" />
-          Cosmetic Skin Profiling API
+          AI Skin Studio for Beauty Businesses
         </div>
 
         <h1 className="fade-up-delay-1 text-5xl md:text-7xl font-bold leading-tight tracking-tight mb-6">
-          Cosmetic Skin Intelligence{" "}
-          <span className="gradient-text">for Every Platform</span>
+          Turn Every Visitor Into{" "}
+          <span className="gradient-text">a Paying Customer</span>
         </h1>
 
         <p className="fade-up-delay-2 text-lg md:text-xl text-white/65 max-w-2xl mx-auto mb-10 leading-relaxed">
-          The skin profiling API for beauty brands, apps, and retailers. Analyse skin type,
-          tone, and visible traits — then match users to the right products and ingredients.
+          Give your salon, brand, or aesthetic studio an AI skin profiling experience.
+          Customers scan their skin — SKINIC matches them to your products and services.
+          No app download. No code. Just results.
         </p>
 
         <div className="fade-up-delay-3 flex flex-col sm:flex-row items-center justify-center gap-4">
           <a
-            href="/signup"
+            href="/signup?product=studio"
             className="px-8 py-3.5 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-semibold text-base transition-all hover:shadow-lg hover:shadow-violet-500/25"
           >
-            Get Free API Key
+            Start Free — No Code Needed
           </a>
           <a
-            href="https://api.skinic.app/docs"
-            target="_blank"
-            rel="noreferrer"
+            href="#how-it-works"
             className="px-8 py-3.5 rounded-xl border border-white/10 hover:border-white/20 text-white/70 hover:text-white font-medium text-base transition-all"
           >
-            View API Docs →
+            See How It Works ↓
           </a>
         </div>
 
         <div className="fade-up-delay-3 mt-16 flex flex-wrap items-center justify-center gap-8 text-sm text-white/50">
           <span className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-400" />
-            HTTPS / api.skinic.app
+            No app download required
           </span>
           <span className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-blue-400" />
@@ -52,7 +51,7 @@ export default function Hero() {
           </span>
           <span className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-violet-400" />
-            Deep Skin Embeddings
+            Customer database included
           </span>
           <span className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-amber-400" />
