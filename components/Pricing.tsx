@@ -206,7 +206,7 @@ function TierCard({ tier }: { tier: Tier }) {
           <span className="text-3xl font-bold">{tier.price}</span>
           {tier.period && <span className="text-white/50 text-sm">{tier.period}</span>}
         </div>
-        <p className="text-white/55 text-xs mt-2 leading-relaxed">{tier.description}</p>
+        <p className="text-white/65 text-xs mt-2 leading-relaxed">{tier.description}</p>
       </div>
 
       <div className="mb-5 space-y-1.5">
@@ -219,7 +219,7 @@ function TierCard({ tier }: { tier: Tier }) {
                 isDisabled ? "bg-white/2 opacity-40" : "bg-white/5"
               }`}
             >
-              <span className={`text-xs ${isDisabled ? "text-white/30 line-through" : "text-white/55"}`}>
+              <span className={`text-xs ${isDisabled ? "text-white/35 line-through" : "text-white/70"}`}>
                 {limit.label}
               </span>
               <span className={`text-xs font-mono font-semibold ${isDisabled ? "text-white/25" : "text-white/80"}`}>
@@ -308,7 +308,7 @@ export default function Pricing() {
 
         {tab === "api" && (
           <>
-            <p className="text-center text-white/45 text-sm mb-8">
+            <p className="text-center text-white/60 text-sm mb-8">
               Raw API access — integrate skin intelligence into any platform using your own UI.
             </p>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -319,7 +319,7 @@ export default function Pricing() {
 
         {tab === "app" && (
           <>
-            <p className="text-center text-white/45 text-sm mb-8">
+            <p className="text-center text-white/60 text-sm mb-8">
               White-label mobile app — scan &amp; distribute your branded skin analysis experience. No code needed.
             </p>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -328,7 +328,7 @@ export default function Pricing() {
           </>
         )}
 
-        <p className="text-center text-white/45 text-sm mt-8">
+        <p className="text-center text-white/60 text-sm mt-8">
           All prices in USD. &nbsp;·&nbsp; Need higher volume or a custom App Store listing?{" "}
           <a href="/enterprise" className="text-violet-400 hover:text-violet-300 font-medium underline underline-offset-2">
             Talk to us about Enterprise

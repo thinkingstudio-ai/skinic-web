@@ -32,7 +32,7 @@ export default function HowItWorks() {
         <div className="text-center mb-16">
           <p className="text-violet-400 text-sm font-medium tracking-widest uppercase mb-3">Integration</p>
           <h2 className="text-3xl md:text-5xl font-bold">From image to insight in one request</h2>
-          <p className="mt-4 text-white/40 text-lg max-w-xl mx-auto">
+          <p className="mt-4 text-white/60 text-lg max-w-xl mx-auto">
             Simple REST API. No SDK required. Works with any language or framework.
           </p>
         </div>
@@ -42,7 +42,7 @@ export default function HowItWorks() {
             <div key={step.number} className="card-glass rounded-2xl p-8 hover:border-white/14 transition-colors">
               <div className={`font-mono text-sm font-bold ${step.color} mb-4`}>{step.number}</div>
               <h3 className="text-xl font-semibold mb-3">{step.title}</h3>
-              <p className="text-white/45 leading-relaxed">{step.description}</p>
+              <p className="text-white/65 leading-relaxed">{step.description}</p>
             </div>
           ))}
         </div>

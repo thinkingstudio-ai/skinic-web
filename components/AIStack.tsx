@@ -55,7 +55,7 @@ export default function AIStack() {
             Enterprise AI stack,{" "}
             <span className="gradient-text">built for skin</span>
           </h2>
-          <p className="mt-4 text-white/40 text-lg max-w-2xl mx-auto">
+          <p className="mt-4 text-white/60 text-lg max-w-2xl mx-auto">
             Four independent AI layers working together — skin type, 8 cosmetic concerns, deep texture embeddings, and acne lesion detection. Enriched by a 551+ ingredient knowledge base.
           </p>
         </div>
@@ -72,17 +72,17 @@ export default function AIStack() {
                     <span className={`text-xs font-mono font-bold px-2 py-1 rounded-md ${layer.badge}`}>
                       {layer.label}
                     </span>
-                    <span className="text-xs text-white/30 font-mono">{layer.model}</span>
-                    <span className="text-xs text-white/30">· {layer.accuracy}</span>
+                    <span className="text-xs text-white/50 font-mono">{layer.model}</span>
+                    <span className="text-xs text-white/50">· {layer.accuracy}</span>
                   </div>
                   <h3 className="text-xl font-semibold mb-2">{layer.title}</h3>
-                  <p className="text-white/50 leading-relaxed">{layer.description}</p>
+                  <p className="text-white/65 leading-relaxed">{layer.description}</p>
                 </div>
                 <div className="flex flex-wrap gap-2 md:max-w-xs">
                   {layer.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="text-xs px-2.5 py-1 rounded-full border border-white/10 text-white/40"
+                      className="text-xs px-2.5 py-1 rounded-full border border-white/15 text-white/55"
                     >
                       {tag}
                     </span>
@@ -96,14 +96,14 @@ export default function AIStack() {
         <div className="mt-6 card-glass rounded-2xl p-6 flex flex-col md:flex-row items-start md:items-center gap-4">
           <div className="flex-1">
             <p className="text-sm font-semibold text-white/80 mb-1">RAG — Ingredient Knowledge Base</p>
-            <p className="text-sm text-white/40">
+            <p className="text-sm text-white/60">
               Ingredient guidance is grounded in 551+ ingredients from INCIDecoder, CosDNA, and EWG Skin Deep,
               then enriched by SKINIC AI for natural language output.
             </p>
           </div>
           <div className="shrink-0 text-right">
             <p className="text-2xl font-bold text-white">551</p>
-            <p className="text-xs text-white/30">ingredients indexed</p>
+            <p className="text-xs text-white/50">ingredients indexed</p>
           </div>
         </div>
       </div>

@@ -19,7 +19,7 @@ export default function Hero() {
           <span className="gradient-text">for Every Platform</span>
         </h1>
 
-        <p className="fade-up-delay-2 text-lg md:text-xl text-white/50 max-w-2xl mx-auto mb-10 leading-relaxed">
+        <p className="fade-up-delay-2 text-lg md:text-xl text-white/65 max-w-2xl mx-auto mb-10 leading-relaxed">
           The skin profiling API for beauty brands, apps, and retailers. Analyse skin type,
           tone, and concerns — then match users to the right products and ingredients.
         </p>
@@ -41,7 +41,7 @@ export default function Hero() {
           </a>
         </div>
 
-        <div className="fade-up-delay-3 mt-16 flex flex-wrap items-center justify-center gap-8 text-sm text-white/30">
+        <div className="fade-up-delay-3 mt-16 flex flex-wrap items-center justify-center gap-8 text-sm text-white/50">
           <span className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-400" />
             HTTPS / api.skinic.app

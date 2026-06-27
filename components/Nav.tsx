@@ -27,7 +27,7 @@ export default function Nav() {
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           <span className="text-lg font-bold gradient-text tracking-tight">SKINIC</span>
-          <span className="text-xs text-white/30 font-mono mt-0.5">API</span>
+          <span className="text-xs text-white/50 font-mono mt-0.5">API</span>
         </Link>
 
         <div className="hidden md:flex items-center gap-8 text-sm text-white/60">
