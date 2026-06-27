@@ -3,9 +3,9 @@
 import { useState } from "react";
 
 const USE_CASES = [
-  "Beauty brand / DTC skincare",
+  "Beauty brand / DTC cosmetics",
   "E-commerce platform",
-  "Aesthetic clinic or beauty centre",
+  "Aesthetic salon or beauty studio",
   "Mobile app / consumer product",
   "In-store / kiosk deployment",
   "B2B SaaS / reseller",
@@ -13,10 +13,10 @@ const USE_CASES = [
 ];
 
 const VOLUMES = [
-  "< 10,000 scans/month",
-  "10,000 – 50,000 scans/month",
-  "50,000 – 200,000 scans/month",
-  "> 200,000 scans/month",
+  "< 10,000 profiles/month",
+  "10,000 – 50,000 profiles/month",
+  "50,000 – 200,000 profiles/month",
+  "> 200,000 profiles/month",
   "Not sure yet",
 ];
 

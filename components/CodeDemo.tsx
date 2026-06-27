@@ -29,7 +29,7 @@ const RESPONSE_CODE = `{
     { "name": "Uneven Pigmentation", "score": 59.0, "level": "Moderate"  },
     { "name": "Dark Spots",          "score": 41.0, "level": "Moderate"  },
     { "name": "Redness",             "score": 38.0, "level": "Mild"      },
-    { "name": "Acne",                "score": 12.5, "level": "Mild"      },
+    { "name": "Breakouts",            "score": 12.5, "level": "Mild"      },
     { "name": "Dry Skin",            "score": 8.0,  "level": "Mild"      },
     { "name": "Wrinkles",            "score": 4.1,  "level": "Mild"      }
   ],

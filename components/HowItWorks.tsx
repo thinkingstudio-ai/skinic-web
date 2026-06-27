@@ -7,20 +7,20 @@ const steps = [
   },
   {
     number: "02",
-    title: "Multi-Layer AI Analysis",
-    description: "Our stack runs skin-type classification, aesthetic concern detection, and deep skin embeddings in parallel.",
+    title: "Multi-Layer AI Profiling",
+    description: "Our stack runs skin-type profiling, visible trait scoring, and deep skin embeddings in parallel.",
     color: "text-blue-400",
   },
   {
     number: "03",
     title: "Receive Structured JSON",
-    description: "Get a detailed JSON response with skin type, concern scores, and a tailored ingredient guide.",
+    description: "Get a detailed JSON response with skin type, trait scores, and a tailored ingredient guide.",
     color: "text-emerald-400",
   },
   {
     number: "04",
     title: "Render in Your App",
-    description: "Display insights in your UI. Our response schema is designed for direct rendering — no post-processing needed.",
+    description: "Display results in your UI. Our response schema is designed for direct rendering — no post-processing needed.",
     color: "text-amber-400",
   },
 ];
@@ -31,7 +31,7 @@ export default function HowItWorks() {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <p className="text-violet-400 text-sm font-medium tracking-widest uppercase mb-3">Integration</p>
-          <h2 className="text-3xl md:text-5xl font-bold">From image to insight in one request</h2>
+          <h2 className="text-3xl md:text-5xl font-bold">From image to skin profile in one request</h2>
           <p className="mt-4 text-white/60 text-lg max-w-xl mx-auto">
             Simple REST API. No SDK required. Works with any language or framework.
           </p>

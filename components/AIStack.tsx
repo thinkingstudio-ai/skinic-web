@@ -1,10 +1,10 @@
 const layers = [
   {
     label: "Layer 1",
-    title: "Skin Type Analysis",
+    title: "Skin Type Profiling",
     model: "SKINIC Vision",
     accuracy: "Dry · Normal · Oily",
-    description: "Classifies your skin type — dry, normal, oily, or combination — with a confidence breakdown across every type for a clear, stable read.",
+    description: "Profiles your skin type — dry, normal, oily, or combination — with a confidence breakdown across every type for a clear, stable cosmetic read.",
     tags: ["Dry", "Normal", "Oily", "Combination"],
     color: "from-violet-600/20 to-violet-600/5",
     border: "border-violet-500/20",
@@ -12,11 +12,11 @@ const layers = [
   },
   {
     label: "Layer 2",
-    title: "Aesthetic Concerns",
+    title: "Visible Traits",
     model: "SKINIC Multi-Label",
-    accuracy: "8 concerns",
-    description: "Detects 8 visible cosmetic concerns — acne, dryness, oiliness, dark spots, wrinkles, redness, visible pores, and uneven pigmentation — each scored independently with Mild/Moderate/Prominent severity bands.",
-    tags: ["Acne", "Dryness", "Oiliness", "Dark Spots", "Wrinkles", "Redness", "Visible Pores", "Uneven Pigmentation"],
+    accuracy: "8 traits",
+    description: "Scores 8 visible cosmetic traits — breakouts, dryness, oiliness, dark spots, wrinkles, redness, visible pores, and uneven pigmentation — each rated independently with Light/Moderate/Noticeable visibility bands.",
+    tags: ["Breakouts", "Dryness", "Oiliness", "Dark Spots", "Wrinkles", "Redness", "Visible Pores", "Uneven Pigmentation"],
     color: "from-blue-600/20 to-blue-600/5",
     border: "border-blue-500/20",
     badge: "bg-blue-500/10 text-blue-300",
@@ -34,11 +34,11 @@ const layers = [
   },
   {
     label: "Layer 4",
-    title: "Acne Lesion Detector",
-    model: "SKINIC Lesion Guard",
+    title: "Visible Blemish Mapper",
+    model: "SKINIC Blemish Guard",
     accuracy: "YOLOv8 ONNX",
-    description: "Object-detection model that localises and counts individual acne lesions — comedones, papules, pustules, and nodules — and classifies overall acne severity for trend tracking over time.",
-    tags: ["Comedones", "Papules", "Pustules", "Nodules", "Severity"],
+    description: "Object-detection model that locates and counts visible blemish spots — spots, whiteheads, red bumps, and deep bumps — and rates overall blemish visibility for cosmetic trend tracking over time.",
+    tags: ["Spots", "Whiteheads", "Red Bumps", "Deep Bumps", "Visibility"],
     color: "from-amber-600/20 to-amber-600/5",
     border: "border-amber-500/20",
     badge: "bg-amber-500/10 text-amber-300",
@@ -56,7 +56,7 @@ export default function AIStack() {
             <span className="gradient-text">built for skin</span>
           </h2>
           <p className="mt-4 text-white/60 text-lg max-w-2xl mx-auto">
-            Four independent AI layers working together — skin type, 8 cosmetic concerns, deep texture embeddings, and acne lesion detection. Enriched by a 551+ ingredient knowledge base.
+            Four independent AI layers working together — skin type profiling, 8 cosmetic trait scoring, deep texture embeddings, and blemish spot mapping. Enriched by a 551+ ingredient knowledge base.
           </p>
         </div>
 

@@ -21,15 +21,15 @@ const API_TIERS: Tier[] = [
     name: "Free",
     price: "$0",
     period: "/month",
-    description: "Try the full skin analysis engine — no credit card required.",
+    description: "Try the full skin profiling engine — no credit card required.",
     limits: [
-      { label: "Trial scans", value: "10 scans", tooltip: "10 free scans to evaluate the data quality — upgrade to unlock monthly volume." },
-      { label: "Skin analysis", value: "5 req/min", tooltip: "Max /analyze requests per minute." },
+      { label: "Trial captures", value: "10 profiles", tooltip: "10 free skin profiles to evaluate the data quality — upgrade to unlock monthly volume." },
+      { label: "Skin profiling", value: "5 req/min", tooltip: "Max /analyze requests per minute." },
       { label: "AI ingredient guide", value: "—", tooltip: "Not available on Free. Upgrade to Starter to unlock AI-powered ingredient guide." },
     ],
     features: [
-      "Full multi-layer AI skin analysis",
-      "Skin tone + Fitzpatrick scale",
+      "Full multi-layer AI skin profiling",
+      "Skin tone + depth scale",
       "Static ingredient matching",
       "Interactive API docs",
     ],
@@ -43,8 +43,8 @@ const API_TIERS: Tier[] = [
     period: "/month",
     description: "Ship real products with a full AI ingredient guide and priority support.",
     limits: [
-      { label: "Monthly scans", value: "2,000 calls", tooltip: "Total API calls allowed per month — resets on the 1st." },
-      { label: "Skin analysis", value: "20 req/min", tooltip: "Suitable for up to ~20 concurrent users." },
+      { label: "Monthly profiles", value: "2,000 calls", tooltip: "Total API calls allowed per month — resets on the 1st." },
+      { label: "Skin profiling", value: "20 req/min", tooltip: "Suitable for up to ~20 concurrent users." },
       { label: "AI ingredient guide", value: "30 req/min · 500/mo", tooltip: "500 AI ingredient guide calls per month." },
     ],
     features: [
@@ -63,8 +63,8 @@ const API_TIERS: Tier[] = [
     period: "/month",
     description: "Built for production-scale apps, beauty brands, and multi-brand platforms.",
     limits: [
-      { label: "Monthly scans", value: "10,000 calls", tooltip: "Total API calls allowed per month." },
-      { label: "Skin analysis", value: "60 req/min", tooltip: "Suitable for ~60 concurrent users." },
+      { label: "Monthly profiles", value: "10,000 calls", tooltip: "Total API calls allowed per month." },
+      { label: "Skin profiling", value: "60 req/min", tooltip: "Suitable for ~60 concurrent users." },
       { label: "AI ingredient guide", value: "100 req/min · 2,000/mo", tooltip: "2,000 AI ingredient calls per month." },
     ],
     features: [
@@ -82,8 +82,8 @@ const API_TIERS: Tier[] = [
     period: "",
     description: "For large beauty platforms, retailers, and enterprise integrations.",
     limits: [
-      { label: "Monthly scans", value: "Unlimited", tooltip: "No monthly cap." },
-      { label: "Skin analysis", value: "200 req/min", tooltip: "Custom limits available." },
+      { label: "Monthly profiles", value: "Unlimited", tooltip: "No monthly cap." },
+      { label: "Skin profiling", value: "200 req/min", tooltip: "Custom limits available." },
       { label: "AI ingredient guide", value: "500 req/min · 10k/mo", tooltip: "Custom limits available on request." },
     ],
     features: [
@@ -105,14 +105,14 @@ const APP_TIERS: Tier[] = [
     period: "/month",
     description: "Preview the white-label app experience — configure branding, no QR distribution.",
     limits: [
-      { label: "Trial scans", value: "10 scans", tooltip: "10 scans to evaluate the app experience." },
+      { label: "Trial captures", value: "10 profiles", tooltip: "10 profiles to evaluate the app experience." },
       { label: "QR distribution", value: "—", tooltip: "QR code generation is gated to paid App tiers." },
       { label: "Custom branding", value: "Preview only", tooltip: "You can configure branding but cannot distribute QR codes to clients." },
     ],
     features: [
       "Live branding preview in dashboard",
       "App name, logo, colour config",
-      "SKINIC skin analysis engine",
+      "SKINIC skin profiling engine",
     ],
     disabledFeatures: ["QR code distribution", "Remove 'Powered by SKINIC'"],
     cta: "Get Started",
@@ -122,9 +122,9 @@ const APP_TIERS: Tier[] = [
     name: "Starter App",
     price: "$39",
     period: "/month",
-    description: "Launch your branded skin analysis app and distribute it to clients via QR code.",
+    description: "Launch your branded skin profiling app and distribute it to clients via QR code.",
     limits: [
-      { label: "Monthly scans", value: "2,000 scans", tooltip: "Shared across all your app users." },
+      { label: "Monthly profiles", value: "2,000 captures", tooltip: "Shared across all your app users." },
       { label: "QR distribution", value: "Unlimited clients", tooltip: "Generate and share QR codes to onboard any number of clients." },
       { label: "Custom branding", value: "Full", tooltip: "App name, logo, tagline, primary colour." },
     ],
@@ -146,14 +146,14 @@ const APP_TIERS: Tier[] = [
     period: "/month",
     description: "Fully white-labelled — remove all SKINIC branding and own the experience end to end.",
     limits: [
-      { label: "Monthly scans", value: "10,000 scans", tooltip: "Suitable for medium-scale clinic chains and brands." },
+      { label: "Monthly profiles", value: "10,000 captures", tooltip: "Suitable for medium-scale beauty chains and brands." },
       { label: "QR distribution", value: "Unlimited clients", tooltip: "No cap on QR code generation or client onboarding." },
       { label: "Custom branding", value: "Full + no SKINIC", tooltip: "Remove 'Powered by SKINIC' — your brand only." },
     ],
     features: [
       "Everything in Starter App",
       "Remove 'Powered by SKINIC'",
-      "10,000 scans/month",
+      "10,000 captures/month",
       "Priority email support",
     ],
     cta: "Get Pro App",
@@ -166,7 +166,7 @@ const APP_TIERS: Tier[] = [
     period: "",
     description: "Managed App Store listing, custom contract, dedicated engineer — your app, your terms.",
     limits: [
-      { label: "Monthly scans", value: "Unlimited", tooltip: "No monthly cap." },
+      { label: "Monthly profiles", value: "Unlimited", tooltip: "No monthly cap." },
       { label: "QR distribution", value: "Unlimited", tooltip: "Unlimited client onboarding." },
       { label: "Custom branding", value: "Full + App Store", tooltip: "We manage the App Store listing under your brand." },
     ],
@@ -320,7 +320,7 @@ export default function Pricing() {
         {tab === "app" && (
           <>
             <p className="text-center text-white/60 text-sm mb-8">
-              White-label mobile app — scan &amp; distribute your branded skin analysis experience. No code needed.
+              White-label mobile app — profile &amp; distribute your branded skin experience. No code needed.
             </p>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
               {APP_TIERS.map((tier) => <TierCard key={tier.name} tier={tier} />)}

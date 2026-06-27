@@ -21,7 +21,7 @@ export default function Hero() {
 
         <p className="fade-up-delay-2 text-lg md:text-xl text-white/65 max-w-2xl mx-auto mb-10 leading-relaxed">
           The skin profiling API for beauty brands, apps, and retailers. Analyse skin type,
-          tone, and concerns — then match users to the right products and ingredients.
+          tone, and visible traits — then match users to the right products and ingredients.
         </p>
 
         <div className="fade-up-delay-3 flex flex-col sm:flex-row items-center justify-center gap-4">
