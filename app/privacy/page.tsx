@@ -2,17 +2,17 @@ import Link from "next/link";
 
 export const metadata = {
   title: "Privacy Policy — SKINIC",
-  description: "Privacy Policy for the SKINIC AI Skin Intelligence API.",
+  description: "Privacy Policy for SKINIC AI Skin Intelligence — Studio and API products.",
 };
 
 const sections = [
   {
     title: "1. Introduction & Controller Identity",
-    body: `This Privacy Policy describes how Thinking Studio LLC ("Company", "we", "us", "our"), operator of the SKINIC AI Skin Intelligence API at skinic.app, collects, uses, stores, and protects personal data when you use our services.\n\nThinking Studio LLC acts as the Data Controller for account and usage data. Where you integrate SKINIC into your own product, you act as a separate Data Controller for your end users' data, and we act as a Data Processor on your behalf.\n\nFor privacy enquiries: skinic@thinkingstudio.ai`,
+    body: `This Privacy Policy describes how Thinking Studio LLC ("Company", "we", "us", "our"), operator of skinic.app and api.skinic.app, collects, uses, stores, and protects personal data across our two products:\n\n• SKINIC Studio — a no-code branded skin profiling platform for beauty businesses\n• SKINIC API — a developer API for integrating skin intelligence into third-party applications\n\nController relationships:\n• Thinking Studio LLC is the Data Controller for all account holder data (names, emails, billing).\n• Where Studio Clients collect data from their end users via a branded scan page, the Studio Client acts as Data Controller for those end users' data, and Thinking Studio LLC acts as Data Processor on their behalf.\n• Where API Clients integrate SKINIC into their own product, they act as a separate Data Controller for their end users' data, and we act as Data Processor.\n\nFor privacy enquiries: skinic@thinkingstudio.ai`,
   },
   {
     title: "2. Data We Collect",
-    body: `We collect the following categories of data:\n\n2.1 Account Data (provided by you at signup):\n• Full name\n• Email address\n• Company or organisation name\n• Country / billing region\n\n2.2 Usage & Technical Data (collected automatically):\n• API call counts per endpoint and per time period\n• Request timestamps and response times\n• HTTP status codes and error types\n• API key identifiers (hashed — plaintext never stored)\n• IP addresses for rate limiting and abuse prevention\n• Browser/device type for dashboard sessions\n\n2.3 Billing Data:\n• Subscription tier and status\n• Payment transaction IDs (provided by Paddle)\n• We do NOT store full card numbers, CVV, or bank account details\n\n2.4 Submitted Content:\n• Skin images submitted to /analyze endpoints are processed in-memory and are NOT stored after the API response is returned. We retain no copies of user images.\n• Text inputs to /recommend are not stored beyond the API session.`,
+    body: `We collect the following categories of data:\n\n2.1 Account Data (provided by you at signup):\n• Full name\n• Email address\n• Company or organisation name\n• Country / billing region\n\n2.2 Usage & Technical Data (collected automatically):\n• API call counts per endpoint and per time period\n• Request timestamps and response times\n• HTTP status codes and error types\n• API key identifiers (hashed — plaintext never stored)\n• IP addresses for rate limiting and abuse prevention\n• Browser/device type for dashboard and Studio sessions\n\n2.3 Billing Data:\n• Subscription tier and status\n• Payment transaction IDs (provided by Paddle)\n• We do NOT store full card numbers, CVV, or bank account details\n\n2.4 API Submitted Content:\n• Skin images submitted to /analyze endpoints via the API are processed in-memory and are NOT stored after the API response is returned. We retain no copies of API-submitted images.\n• Text inputs to /recommend are not stored beyond the API session.\n\n2.5 Studio End User Data (collected on behalf of Studio Clients):\nWhen a Studio End User (i.e., a customer of a beauty business using SKINIC Studio) scans their skin via a branded scan page, the following data may be collected and stored in that Studio Client's database:\n• Name and email address (if lead capture is enabled by the Studio Client)\n• Skin type profile, visible trait scores, and ingredient suggestions (scan results)\n• Timestamp and scan metadata\n• Which catalog items were matched and whether any CTA was clicked\n\nIMPORTANT: This data is collected on behalf of and under the instruction of the Studio Client (the beauty business). Thinking Studio LLC stores it as Data Processor. The Studio Client, as Data Controller, is responsible for informing their end users and handling data rights requests.`,
   },
   {
     title: "3. Legal Basis for Processing (GDPR)",
@@ -20,7 +20,7 @@ const sections = [
   },
   {
     title: "4. How We Use Your Data",
-    body: `We use collected data for the following purposes:\n\n• Providing, operating, and maintaining the SKINIC API and dashboard\n• Account management, authentication, and API key management\n• Processing payments and managing subscriptions\n• Enforcing rate limits and detecting abuse or security threats\n• Sending transactional emails (account creation, API key notifications, billing receipts)\n• Improving the accuracy and performance of our AI models using aggregated, anonymised usage patterns\n• Responding to support requests and legal enquiries\n• Complying with legal obligations and regulatory requirements\n\nWe do NOT use your data for targeted advertising or sell it to data brokers or third parties.`,
+    body: `We use collected data for the following purposes:\n\n• Providing, operating, and maintaining SKINIC Studio and the SKINIC API\n• Account management, authentication, and API key management\n• Processing payments and managing subscriptions\n• Enforcing rate limits and scan quotas, and detecting abuse or security threats\n• Sending transactional emails (account creation, API key notifications, billing receipts)\n• Improving the accuracy and performance of our AI models using aggregated, anonymised usage patterns\n• Responding to support requests and legal enquiries\n• Complying with legal obligations and regulatory requirements\n\nFor Studio End User data specifically:\n• We store and serve it back to the Studio Client via their dashboard and API\n• We do not use Studio End User data for any purpose beyond providing the Studio service to the relevant Studio Client\n• We do not cross-reference Studio End User data between different Studio Client accounts\n\nWe do NOT use any data for targeted advertising or sell it to data brokers or third parties.`,
   },
   {
     title: "5. Data Sharing & Third-Party Processors",
@@ -28,11 +28,15 @@ const sections = [
   },
   {
     title: "6. Biometric & Sensitive Data",
-    body: `Skin images submitted through the SKINIC API may constitute biometric or sensitive personal data under applicable law (including GDPR Article 9 and Malaysia PDPA Section 40).\n\nOur commitments regarding image data:\n• Images are transmitted over encrypted TLS connections\n• Images are processed in-memory only and deleted immediately after the API response is generated\n• No copies, thumbnails, or embeddings derived from individual images are stored or retained\n• We do not use submitted images to train or fine-tune AI models without explicit written consent\n\nAs a SKINIC API client, you are responsible for obtaining valid consent from your end users before submitting their biometric data.`,
+    body: `Skin images and derived skin profiles may constitute biometric or sensitive personal data under applicable law (including GDPR Article 9 and Malaysia PDPA Section 40).\n\n6.1 SKINIC API — Image Processing:\n• Images submitted to /analyze are transmitted over encrypted TLS connections\n• Images are processed in-memory only and deleted immediately after the API response is generated\n• No copies, thumbnails, or raw image embeddings from individual images are stored or retained\n• We do not use API-submitted images to train or fine-tune AI models without explicit written consent\n\n6.2 SKINIC Studio — Scan Result Storage:\n• When a Studio End User scans via a branded page, the skin profile result (skin type, trait scores, matched recommendations) is stored in the Studio Client's database. The original image is NOT stored — only the derived profiling results.\n• Studio scan results are stored until the Studio Client's account is terminated (see Data Retention)\n• Studio End Users may request deletion of their scan data by contacting the Studio Client (the beauty business) directly\n\nAs a SKINIC client (API or Studio), you are responsible for obtaining valid, informed consent from your end users before submitting their biometric data or directing them to a scan page.`,
   },
   {
     title: "7. Data Retention",
-    body: `We retain different categories of data for different periods:\n\n• Account data: Retained for the duration of your account plus 90 days after deletion or cancellation\n• Usage metadata: Retained for 12 months on a rolling basis\n• Billing records: Retained for 7 years to comply with tax and accounting obligations\n• Security logs (IP addresses, access logs): Retained for 90 days\n• Submitted images: Not retained — deleted immediately after processing\n\nYou may request early deletion of your account data at any time (subject to legal retention obligations).`,
+    body: `We retain different categories of data for different periods:\n\n• Account data: Retained for the duration of your account plus 90 days after deletion or cancellation\n• Usage metadata: Retained for 12 months on a rolling basis\n• Billing records: Retained for 7 years to comply with tax and accounting obligations\n• Security logs (IP addresses, access logs): Retained for 90 days\n• API-submitted images: Not retained — deleted immediately after processing\n• Studio End User data (names, emails, scan results): Retained for as long as the Studio Client's account is active. Upon account cancellation, Studio End User data is retained for 30 days to allow CSV export, then permanently deleted.\n\nYou may request early deletion of your account data at any time (subject to legal retention obligations). Studio Clients should export their customer data before cancelling.`,
+  },
+  {
+    title: "7A. Studio End User Rights",
+    body: `If you are a Studio End User — meaning a customer of a beauty business that uses SKINIC Studio — the beauty business (Studio Client) is the Data Controller of your data, not Thinking Studio LLC.\n\nTo exercise your data rights (access, correction, deletion), you should contact the beauty business directly. They are responsible for handling your requests.\n\nIf you are unable to contact the Studio Client or believe your data is being misused, you may also contact us at skinic@thinkingstudio.ai and we will assist within our capacity as Data Processor. We will relay verified deletion requests to the Studio Client and, where the Studio Client is unresponsive, may delete the data directly upon reasonable verification.`,
   },
   {
     title: "8. Data Security",
@@ -85,16 +89,17 @@ export default function PrivacyPage() {
             ← Back to skinic.app
           </Link>
           <h1 className="text-3xl font-bold text-white mb-2">Privacy Policy</h1>
-          <p className="text-white/40 text-sm">Last updated: June 2026 · Thinking Studio LLC · Effective immediately</p>
+          <p className="text-white/40 text-sm">Last updated: June 2026 · Thinking Studio LLC · Covers SKINIC Studio &amp; SKINIC API</p>
         </div>
 
         {/* Quick summary */}
         <div className="card-glass rounded-2xl p-6 border border-violet-500/20 bg-violet-500/5 mb-6">
           <p className="text-violet-300 font-semibold text-sm mb-3">Summary (Plain English)</p>
           <ul className="space-y-1.5 text-white/50 text-sm">
-            <li>✓ We collect your name, email, and API usage stats — nothing more</li>
-            <li>✓ Skin images are processed in-memory and <strong className="text-white/70">never stored</strong></li>
-            <li>✓ We do not sell your data to anyone</li>
+            <li>✓ We collect your name, email, and usage stats — nothing more</li>
+            <li>✓ API: Skin images are processed in-memory and <strong className="text-white/70">never stored</strong></li>
+            <li>✓ Studio: Scan <em>results</em> (not images) are stored in your customer database on your behalf</li>
+            <li>✓ We do not sell your data or your customers&apos; data to anyone</li>
             <li>✓ Payments handled by Paddle — we never see your card details</li>
             <li>✓ You can request deletion of your data at any time</li>
           </ul>
