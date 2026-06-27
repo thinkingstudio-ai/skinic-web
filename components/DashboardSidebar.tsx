@@ -110,7 +110,7 @@ function NavGroup({ label, children }: { label: string; children: React.ReactNod
   );
 }
 
-export default function DashboardSidebar({ intent = "studio" }: { intent?: "studio" | "api" }) {
+export default function DashboardSidebar({ intent }: { intent?: "studio" | "api" }) {
   const pathname = usePathname();
   const router = useRouter();
   const supabase = createClient();
@@ -147,6 +147,7 @@ export default function DashboardSidebar({ intent = "studio" }: { intent?: "stud
           Overview
         </Link>
 
+        {/* Studio group — visible for studio users and existing users (no intent) */}
         {intent !== "api" && (
           <NavGroup label="Studio">
             {studioNav.map((item) => (
@@ -155,6 +156,7 @@ export default function DashboardSidebar({ intent = "studio" }: { intent?: "stud
           </NavGroup>
         )}
 
+        {/* Developer group — visible for api users and existing users (no intent); hidden for studio users */}
         {intent !== "studio" && (
           <NavGroup label="Developer">
             {devNav.map((item) => (

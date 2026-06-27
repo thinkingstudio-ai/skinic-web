@@ -137,7 +137,7 @@ export default async function PlanPage() {
     .limit(1);
 
   const currentTier = keys?.[0]?.tier || "free";
-  const intent = (user!.user_metadata?.product_intent as "studio" | "api" | undefined) ?? "studio";
+  const intent = (user!.user_metadata?.product_intent as "studio" | "api" | null) ?? null;
   const tiers: readonly TierItem[] = intent === "api" ? API_TIERS : STUDIO_TIERS;
 
   return (
@@ -145,7 +145,7 @@ export default async function PlanPage() {
       <div>
         <h2 className="text-lg font-semibold text-white">Plan &amp; Billing</h2>
         <p className="text-white/40 text-sm mt-0.5">
-          {intent === "api" ? "API Developer plans" : "SKINIC Studio plans"}
+          {intent === "api" ? "API Developer plans" : intent === "studio" ? "SKINIC Studio plans" : "Choose the plan that fits your needs"}
         </p>
       </div>
 
