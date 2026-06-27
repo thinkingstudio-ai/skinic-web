@@ -110,7 +110,7 @@ function NavGroup({ label, children }: { label: string; children: React.ReactNod
   );
 }
 
-export default function DashboardSidebar() {
+export default function DashboardSidebar({ intent = "studio" }: { intent?: "studio" | "api" }) {
   const pathname = usePathname();
   const router = useRouter();
   const supabase = createClient();
@@ -147,17 +147,21 @@ export default function DashboardSidebar() {
           Overview
         </Link>
 
-        <NavGroup label="Studio">
-          {studioNav.map((item) => (
-            <NavItem key={item.href} {...item} active={pathname === item.href} />
-          ))}
-        </NavGroup>
+        {intent !== "api" && (
+          <NavGroup label="Studio">
+            {studioNav.map((item) => (
+              <NavItem key={item.href} {...item} active={pathname === item.href} />
+            ))}
+          </NavGroup>
+        )}
 
-        <NavGroup label="Developer">
-          {devNav.map((item) => (
-            <NavItem key={item.href} {...item} active={pathname === item.href} />
-          ))}
-        </NavGroup>
+        {intent !== "studio" && (
+          <NavGroup label="Developer">
+            {devNav.map((item) => (
+              <NavItem key={item.href} {...item} active={pathname === item.href} />
+            ))}
+          </NavGroup>
+        )}
 
         <NavGroup label="Account">
           {accountNav.map((item) => (
