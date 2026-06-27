@@ -11,17 +11,17 @@ export default function Hero() {
       <div className="relative max-w-4xl mx-auto text-center">
         <div className="fade-up inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-violet-500/30 bg-violet-500/10 text-violet-300 text-xs font-medium mb-8">
           <span className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse" />
-          API v1.9 — Production Ready
+          Cosmetic Skin Profiling API
         </div>
 
         <h1 className="fade-up-delay-1 text-5xl md:text-7xl font-bold leading-tight tracking-tight mb-6">
-          AI Skin Intelligence{" "}
+          Cosmetic Skin Intelligence{" "}
           <span className="gradient-text">for Every Platform</span>
         </h1>
 
         <p className="fade-up-delay-2 text-lg md:text-xl text-white/50 max-w-2xl mx-auto mb-10 leading-relaxed">
-          Enterprise-grade skin analysis API. Integrate multi-layer AI — skin-type analysis,
-          aesthetic concern detection, and deep skin embeddings — into your app in minutes.
+          The skin profiling API for beauty brands, apps, and retailers. Analyse skin type,
+          tone, and concerns — then match users to the right products and ingredients.
         </p>
 
         <div className="fade-up-delay-3 flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -48,7 +48,7 @@ export default function Hero() {
           </span>
           <span className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-blue-400" />
-            500+ Ingredient Knowledge Base
+            551+ Ingredient Knowledge Base
           </span>
           <span className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-violet-400" />

@@ -56,7 +56,7 @@ export default function AIStack() {
             <span className="gradient-text">built for skin</span>
           </h2>
           <p className="mt-4 text-white/40 text-lg max-w-2xl mx-auto">
-            Four independent AI layers working together — skin type, 8 cosmetic concerns, deep texture embeddings, and acne lesion detection. Enriched by a 500+ ingredient knowledge base.
+            Four independent AI layers working together — skin type, 8 cosmetic concerns, deep texture embeddings, and acne lesion detection. Enriched by a 551+ ingredient knowledge base.
           </p>
         </div>
 
@@ -97,12 +97,12 @@ export default function AIStack() {
           <div className="flex-1">
             <p className="text-sm font-semibold text-white/80 mb-1">RAG — Ingredient Knowledge Base</p>
             <p className="text-sm text-white/40">
-              Ingredient guidance is grounded in 500+ ingredients from INCIDecoder, CosDNA, and EWG Skin Deep,
+              Ingredient guidance is grounded in 551+ ingredients from INCIDecoder, CosDNA, and EWG Skin Deep,
               then enriched by SKINIC AI for natural language output.
             </p>
           </div>
           <div className="shrink-0 text-right">
-            <p className="text-2xl font-bold text-white">502</p>
+            <p className="text-2xl font-bold text-white">551</p>
             <p className="text-xs text-white/30">ingredients indexed</p>
           </div>
         </div>

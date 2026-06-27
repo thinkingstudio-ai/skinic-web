@@ -35,10 +35,6 @@ export default function Nav() {
           <a href="#ai-stack" className="hover:text-white transition-colors">AI Stack</a>
           <a href="#pricing" className="hover:text-white transition-colors">Pricing</a>
           <a href="https://api.skinic.app/docs" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">Docs</a>
-          <Link href="/ar" className="hover:text-white transition-colors flex items-center gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-rose-400" />
-            AR Try-On
-          </Link>
         </div>
 
         <div className="hidden md:flex items-center gap-3">
@@ -94,10 +90,6 @@ export default function Nav() {
           <a href="#ai-stack" onClick={() => setOpen(false)} className="hover:text-white">AI Stack</a>
           <a href="#pricing" onClick={() => setOpen(false)} className="hover:text-white">Pricing</a>
           <a href="https://api.skinic.app/docs" target="_blank" rel="noreferrer" className="hover:text-white">Docs</a>
-          <Link href="/ar" onClick={() => setOpen(false)} className="hover:text-white flex items-center gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-rose-400" />
-            AR Try-On
-          </Link>
           {user ? (
             <Link href="/dashboard" onClick={() => setOpen(false)} className="px-4 py-2 rounded-lg bg-white/10 text-white text-center font-medium">
               Dashboard

@@ -138,7 +138,7 @@ const APP_TIERS: Tier[] = [
     disabledFeatures: ["Remove 'Powered by SKINIC'"],
     cta: "Get Starter App",
     ctaHref: "/signup?upgrade=starter_app",
-    badge: "Best for clinics",
+    badge: "Best for salons & brands",
   },
   {
     name: "Pro App",
