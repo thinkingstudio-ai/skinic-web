@@ -4,16 +4,7 @@ import { usePathname } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 
-const nav = [
-  {
-    label: "Overview",
-    href: "/dashboard",
-    icon: (
-      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-      </svg>
-    ),
-  },
+const studioNav = [
   {
     label: "Scan Page",
     href: "/dashboard/funnel",
@@ -50,6 +41,9 @@ const nav = [
       </svg>
     ),
   },
+];
+
+const devNav = [
   {
     label: "API Keys",
     href: "/dashboard/keys",
@@ -68,6 +62,9 @@ const nav = [
       </svg>
     ),
   },
+];
+
+const accountNav = [
   {
     label: "Plan & Billing",
     href: "/dashboard/plan",
@@ -87,6 +84,31 @@ const nav = [
     ),
   },
 ];
+
+function NavItem({ href, label, icon, active }: { href: string; label: string; icon: React.ReactNode; active: boolean }) {
+  return (
+    <Link
+      href={href}
+      className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
+        active
+          ? "bg-violet-500/15 text-violet-300 border border-violet-500/20"
+          : "text-white/40 hover:text-white/70 hover:bg-white/5"
+      }`}
+    >
+      {icon}
+      {label}
+    </Link>
+  );
+}
+
+function NavGroup({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div className="mb-1">
+      <p className="px-3 pt-3 pb-1 text-[10px] font-semibold tracking-widest uppercase text-white/20">{label}</p>
+      {children}
+    </div>
+  );
+}
 
 export default function DashboardSidebar() {
   const pathname = usePathname();
@@ -109,24 +131,39 @@ export default function DashboardSidebar() {
         </Link>
       </div>
 
-      <nav className="flex-1 px-3 py-4 space-y-0.5">
-        {nav.map((item) => {
-          const active = pathname === item.href;
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
-                active
-                  ? "bg-violet-500/15 text-violet-300 border border-violet-500/20"
-                  : "text-white/40 hover:text-white/70 hover:bg-white/5"
-              }`}
-            >
-              {item.icon}
-              {item.label}
-            </Link>
-          );
-        })}
+      <nav className="flex-1 px-3 py-2 overflow-y-auto">
+        {/* Overview */}
+        <Link
+          href="/dashboard"
+          className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all mb-1 ${
+            pathname === "/dashboard"
+              ? "bg-violet-500/15 text-violet-300 border border-violet-500/20"
+              : "text-white/40 hover:text-white/70 hover:bg-white/5"
+          }`}
+        >
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+          </svg>
+          Overview
+        </Link>
+
+        <NavGroup label="Studio">
+          {studioNav.map((item) => (
+            <NavItem key={item.href} {...item} active={pathname === item.href} />
+          ))}
+        </NavGroup>
+
+        <NavGroup label="Developer">
+          {devNav.map((item) => (
+            <NavItem key={item.href} {...item} active={pathname === item.href} />
+          ))}
+        </NavGroup>
+
+        <NavGroup label="Account">
+          {accountNav.map((item) => (
+            <NavItem key={item.href} {...item} active={pathname === item.href} />
+          ))}
+        </NavGroup>
       </nav>
 
       <div className="px-3 py-4 border-t border-white/5">
