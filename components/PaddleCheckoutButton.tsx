@@ -4,7 +4,7 @@ import type { Paddle } from "@paddle/paddle-js";
 
 type Props = {
   priceId: string;
-  tier: "starter" | "pro" | "starter_app" | "pro_app" | "enterprise";
+  tier: string;
   userId: string;
   userEmail: string;
   label: string;
