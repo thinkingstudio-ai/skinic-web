@@ -15,24 +15,6 @@ const nav = [
     ),
   },
   {
-    label: "API Keys",
-    href: "/dashboard/keys",
-    icon: (
-      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
-      </svg>
-    ),
-  },
-  {
-    label: "Usage & Stats",
-    href: "/dashboard/usage",
-    icon: (
-      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-      </svg>
-    ),
-  },
-  {
     label: "Scan Page",
     href: "/dashboard/funnel",
     icon: (
@@ -69,11 +51,20 @@ const nav = [
     ),
   },
   {
-    label: "Mobile App",
-    href: "/dashboard/mobile",
+    label: "API Keys",
+    href: "/dashboard/keys",
     icon: (
       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+      </svg>
+    ),
+  },
+  {
+    label: "Usage & Stats",
+    href: "/dashboard/usage",
+    icon: (
+      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
       </svg>
     ),
   },
@@ -110,16 +101,14 @@ export default function DashboardSidebar() {
 
   return (
     <aside className="hidden md:flex w-56 flex-col border-r border-white/5 bg-white/[0.02] shrink-0">
-      {/* Logo */}
       <div className="px-5 py-5 border-b border-white/5">
         <Link href="/" className="flex items-center gap-2">
           <span className="text-base font-bold tracking-tight">
-            SKINIC <span className="text-violet-400">API</span>
+            SKINIC <span className="text-violet-400">Studio</span>
           </span>
         </Link>
       </div>
 
-      {/* Nav items */}
       <nav className="flex-1 px-3 py-4 space-y-0.5">
         {nav.map((item) => {
           const active = pathname === item.href;
@@ -140,7 +129,6 @@ export default function DashboardSidebar() {
         })}
       </nav>
 
-      {/* Sign out */}
       <div className="px-3 py-4 border-t border-white/5">
         <button
           onClick={signOut}
