@@ -9,6 +9,8 @@ type CatalogItem = {
   description: string | null;
   image_url: string | null;
   price: string | null;
+  duration: string | null;
+  availability: string | null;
   cta_url: string | null;
   cta_label: string;
   skin_type_tags: string[];
@@ -26,6 +28,8 @@ const EMPTY_ITEM = {
   description: "",
   image_url: "",
   price: "",
+  duration: "",
+  availability: "",
   cta_url: "",
   cta_label: "Learn More",
   skin_type_tags: [] as string[],
@@ -118,6 +122,8 @@ export default function CatalogClient() {
       description: item.description || "",
       image_url: item.image_url || "",
       price: item.price || "",
+      duration: item.duration || "",
+      availability: item.availability || "",
       cta_url: item.cta_url || "",
       cta_label: item.cta_label,
       skin_type_tags: item.skin_type_tags,
@@ -125,7 +131,16 @@ export default function CatalogClient() {
       sort_order: item.sort_order,
     });
     setShowForm(true);
+    setUploadError("");
     setError("");
+  }
+
+  function switchType(t: "product" | "service") {
+    setForm((prev) => ({
+      ...prev,
+      type: t,
+      cta_label: t === "service" ? "Book Now" : "Learn More",
+    }));
   }
 
   function toggleTag(arr: string[], val: string): string[] {
@@ -205,19 +220,35 @@ export default function CatalogClient() {
         <div className="card-glass rounded-2xl p-5 border border-violet-500/20 space-y-4">
           <p className="text-sm font-semibold text-white">{editingId ? "Edit item" : "New item"}</p>
 
-          {/* Type */}
-          <div className="flex gap-3">
-            {(["product", "service"] as const).map((t) => (
-              <button
-                key={t}
-                onClick={() => setForm({ ...form, type: t })}
-                className={`px-4 py-2 rounded-xl text-sm font-medium transition-all capitalize ${form.type === t ? "bg-violet-600 text-white" : "bg-white/5 text-white/50 hover:text-white/70"}`}
-              >
-                {t === "product" ? "🧴 Product" : "✨ Service"}
-              </button>
-            ))}
+          {/* Type toggle */}
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={() => switchType("product")}
+              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all ${form.type === "product" ? "bg-blue-600 text-white" : "bg-white/5 text-white/50 hover:text-white/70"}`}
+            >
+              🧴 Product
+            </button>
+            <button
+              type="button"
+              onClick={() => switchType("service")}
+              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all ${form.type === "service" ? "bg-emerald-600 text-white" : "bg-white/5 text-white/50 hover:text-white/70"}`}
+            >
+              ✨ Service Package
+            </button>
           </div>
 
+          {/* Context hint */}
+          {form.type === "service" && (
+            <div className="flex items-start gap-2 px-3 py-2.5 rounded-xl bg-emerald-500/8 border border-emerald-500/15">
+              <span className="text-emerald-400 text-xs mt-0.5">✦</span>
+              <p className="text-emerald-300/80 text-xs leading-relaxed">
+                Service packages appear on the customer result page with a <strong>Book Now</strong> button. Add duration and availability so customers know what to expect.
+              </p>
+            </div>
+          )}
+
+          {/* Name + Price row */}
           <div className="grid md:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs text-white/50 mb-1">Name *</label>
@@ -225,29 +256,58 @@ export default function CatalogClient() {
                 type="text"
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
-                placeholder="e.g. Glow Serum / Deep Hydration Facial"
+                placeholder={form.type === "service" ? "e.g. Hydra Facial Treatment" : "e.g. Glow Serum"}
                 className="w-full px-3 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/20 text-sm focus:outline-none focus:border-violet-500/50 transition-colors"
               />
             </div>
             <div>
-              <label className="block text-xs text-white/50 mb-1">Price (display only)</label>
+              <label className="block text-xs text-white/50 mb-1">
+                {form.type === "service" ? "Rate / Package price" : "Price (display only)"}
+              </label>
               <input
                 type="text"
                 value={form.price}
                 onChange={(e) => setForm({ ...form, price: e.target.value })}
-                placeholder="e.g. RM 89 / From $29"
+                placeholder={form.type === "service" ? "e.g. From RM 180" : "e.g. RM 89"}
                 className="w-full px-3 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/20 text-sm focus:outline-none focus:border-violet-500/50 transition-colors"
               />
             </div>
           </div>
 
+          {/* Service-only: Duration + Availability */}
+          {form.type === "service" && (
+            <div className="grid md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs text-white/50 mb-1">Duration</label>
+                <input
+                  type="text"
+                  value={form.duration}
+                  onChange={(e) => setForm({ ...form, duration: e.target.value })}
+                  placeholder="e.g. 60 min / 1.5 hours"
+                  className="w-full px-3 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/20 text-sm focus:outline-none focus:border-emerald-500/40 transition-colors"
+                />
+              </div>
+              <div>
+                <label className="block text-xs text-white/50 mb-1">Availability</label>
+                <input
+                  type="text"
+                  value={form.availability}
+                  onChange={(e) => setForm({ ...form, availability: e.target.value })}
+                  placeholder="e.g. Mon–Sat, 10am–7pm"
+                  className="w-full px-3 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/20 text-sm focus:outline-none focus:border-emerald-500/40 transition-colors"
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Description */}
           <div>
             <label className="block text-xs text-white/50 mb-1">Description</label>
             <textarea
               rows={2}
               value={form.description}
               onChange={(e) => setForm({ ...form, description: e.target.value })}
-              placeholder="Short description shown on the result page"
+              placeholder={form.type === "service" ? "What's included in this treatment?" : "Short description shown on the result page"}
               className="w-full px-3 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/20 text-sm focus:outline-none focus:border-violet-500/50 transition-colors resize-none"
             />
           </div>
@@ -304,12 +364,14 @@ export default function CatalogClient() {
               )}
             </div>
             <div>
-              <label className="block text-xs text-white/50 mb-1">Link (Buy / Book / Learn More)</label>
+              <label className="block text-xs text-white/50 mb-1">
+                {form.type === "service" ? "Booking link" : "Link (Buy / Learn More)"}
+              </label>
               <input
                 type="url"
                 value={form.cta_url}
                 onChange={(e) => setForm({ ...form, cta_url: e.target.value })}
-                placeholder="https://..."
+                placeholder={form.type === "service" ? "https://your-booking-page.com" : "https://..."}
                 className="w-full px-3 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/20 text-sm focus:outline-none focus:border-violet-500/50 transition-colors"
               />
             </div>
@@ -322,7 +384,10 @@ export default function CatalogClient() {
               onChange={(e) => setForm({ ...form, cta_label: e.target.value })}
               className="px-3 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm focus:outline-none"
             >
-              {["Learn More", "Shop Now", "Buy Now", "Book Now", "View Details", "Get Offer"].map((l) => (
+              {(form.type === "service"
+                ? ["Book Now", "Book a Session", "Reserve a Slot", "Get Consultation", "Learn More"]
+                : ["Learn More", "Shop Now", "Buy Now", "View Details", "Get Offer"]
+              ).map((l) => (
                 <option key={l} value={l} className="bg-[#0a0a0f]">{l}</option>
               ))}
             </select>
@@ -416,6 +481,12 @@ export default function CatalogClient() {
                 </div>
                 <p className="text-sm font-semibold text-white">{item.name}</p>
                 {item.description && <p className="text-xs text-white/35 mt-0.5 truncate">{item.description}</p>}
+                {item.type === "service" && (item.duration || item.availability) && (
+                  <div className="flex items-center gap-3 mt-1">
+                    {item.duration && <span className="text-[10px] text-emerald-400/70">⏱ {item.duration}</span>}
+                    {item.availability && <span className="text-[10px] text-emerald-400/70">🗓 {item.availability}</span>}
+                  </div>
+                )}
                 <div className="flex flex-wrap gap-1 mt-2">
                   {item.skin_type_tags.map((t) => (
                     <span key={t} className="text-[10px] px-1.5 py-0.5 rounded-full bg-violet-500/10 text-violet-400">{t}</span>
