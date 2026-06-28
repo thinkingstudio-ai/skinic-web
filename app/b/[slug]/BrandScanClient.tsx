@@ -1,5 +1,6 @@
 "use client";
 import { useState, useRef } from "react";
+import { useRouter } from "next/navigation";
 import type { CatalogItem } from "./page";
 
 type BrandConfig = {
@@ -14,16 +15,16 @@ type BrandConfig = {
   catalog: CatalogItem[];
 };
 
-// welcome → capture → email → processing → sent
-type Step = "welcome" | "capture" | "email" | "processing" | "sent";
+// welcome → capture → email → processing → (redirect to result page)
+type Step = "welcome" | "capture" | "email" | "processing";
 
 export default function BrandScanClient({ brand }: { brand: BrandConfig }) {
+  const router                        = useRouter();
   const [step, setStep]               = useState<Step>("welcome");
   const [name, setName]               = useState("");
   const [email, setEmail]             = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl]   = useState<string | null>(null);
-  const [skinType, setSkinType]       = useState<string | null>(null);
   const [error, setError]             = useState("");
   const fileInputRef                  = useRef<HTMLInputElement>(null);
 
@@ -42,8 +43,8 @@ export default function BrandScanClient({ brand }: { brand: BrandConfig }) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
   }
 
-  // Email is collected BEFORE the scan runs. The AI only proceeds once the
-  // customer submits a valid email — the report is delivered only by email.
+  // Email is collected BEFORE the scan runs (lead capture). Once the AI finishes,
+  // we redirect the customer to their own report page.
   async function submitEmailAndScan() {
     if (!isValidEmail(email)) { setError("Please enter a valid email."); return; }
     if (!selectedFile) { setError("Please take your photo first."); setStep("capture"); return; }
@@ -58,29 +59,18 @@ export default function BrandScanClient({ brand }: { brand: BrandConfig }) {
 
     try {
       const res = await fetch(`${apiUrl}/brand/${brand.slug}/scan`, { method: "POST", body: fd });
-      let data: { detail?: string; skin_type?: string; email_sent?: boolean } = {};
+      let data: { detail?: string; skin_type?: string; customer_id?: string } = {};
       try { data = await res.json(); } catch { /* non-JSON */ }
-      if (!res.ok) {
+      if (!res.ok || !data.customer_id) {
         setError(data.detail || `Something went wrong (${res.status}). Please try again.`);
         setStep("email");
         return;
       }
-      setSkinType(data.skin_type || null);
-      setStep("sent");
+      router.push(`/b/${brand.slug}/r/${data.customer_id}`);
     } catch {
       setError("Network error. Please check your connection and try again.");
       setStep("email");
     }
-  }
-
-  function rescan() {
-    setStep("welcome");
-    setSelectedFile(null);
-    setPreviewUrl(null);
-    setSkinType(null);
-    setName("");
-    setEmail("");
-    setError("");
   }
 
   return (
@@ -126,7 +116,7 @@ export default function BrandScanClient({ brand }: { brand: BrandConfig }) {
             <div className="space-y-2 text-sm text-white/40">
               <p>✦ AI skin type profiling</p>
               <p>✦ Personalised product &amp; service matching</p>
-              <p>✦ Full report delivered to your email</p>
+              <p>✦ Instant personalised report</p>
             </div>
             <button
               onClick={() => setStep("capture")}
@@ -211,9 +201,9 @@ export default function BrandScanClient({ brand }: { brand: BrandConfig }) {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </div>
-              <h2 className="text-xl font-bold text-white mb-1">Where should we send your report?</h2>
+              <h2 className="text-xl font-bold text-white mb-1">Almost there — enter your email</h2>
               <p className="text-white/40 text-sm leading-relaxed">
-                Your personalised skin profile &amp; product recommendations will be sent straight to your inbox.
+                We&apos;ll use this to prepare your personalised skin profile &amp; product recommendations.
               </p>
             </div>
 
@@ -249,7 +239,7 @@ export default function BrandScanClient({ brand }: { brand: BrandConfig }) {
               className="w-full py-4 rounded-2xl font-bold text-white text-base transition-all hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed"
               style={{ background: pc }}
             >
-              Get My Skin Report →
+              See My Skin Report →
             </button>
             <p className="text-white/15 text-xs text-center">
               Your details are shared only with {brand.app_name}. Not stored by SKINIC.
@@ -269,54 +259,11 @@ export default function BrandScanClient({ brand }: { brand: BrandConfig }) {
               <p>✦ Skin type profiling</p>
               <p>✦ Visible trait scoring</p>
               <p>✦ Matching recommendations</p>
-              <p>✦ Sending to your email</p>
+              <p>✦ Building your report</p>
             </div>
           </div>
         )}
 
-        {/* ── SENT (confirmation, no result on screen) ── */}
-        {step === "sent" && (
-          <div className="w-full text-center space-y-6">
-            <div
-              className="w-20 h-20 rounded-full mx-auto flex items-center justify-center"
-              style={{ background: `${pc}1a`, border: `1px solid ${pc}44` }}
-            >
-              <svg className="w-9 h-9" style={{ color: pc }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
-            <div>
-              <h2 className="text-2xl font-bold text-white mb-2">Your report is on its way!</h2>
-              <p className="text-white/50 text-sm leading-relaxed">
-                We&apos;ve sent your personalised skin profile to<br />
-                <span className="text-white font-medium">{email.trim()}</span>
-              </p>
-              {skinType && (
-                <p className="mt-4 inline-block px-4 py-2 rounded-full text-sm" style={{ background: `${pc}1a`, color: pc }}>
-                  Your skin type: <span className="font-bold">{skinType}</span>
-                </p>
-              )}
-            </div>
-            <div className="rounded-2xl border border-white/8 bg-white/3 p-4 text-left">
-              <p className="text-white/60 text-sm font-medium mb-1">Check your inbox</p>
-              <p className="text-white/35 text-xs leading-relaxed">
-                Your full report with recommendations is in your email. If you don&apos;t see it within a few minutes, check your spam folder.
-              </p>
-            </div>
-            <button
-              onClick={rescan}
-              className="w-full py-3 rounded-2xl border border-white/10 text-white/50 text-sm font-medium hover:border-white/20 hover:text-white/70 transition-all"
-            >
-              Scan Again
-            </button>
-            {!brand.remove_powered_by && (
-              <p className="text-center text-white/15 text-[10px] tracking-wider">POWERED BY SKINIC AI</p>
-            )}
-            <p className="text-center text-white/20 text-xs">
-              Cosmetic profiling only — not medical advice.
-            </p>
-          </div>
-        )}
       </main>
     </div>
   );

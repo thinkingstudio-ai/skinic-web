@@ -124,12 +124,12 @@ export default function FunnelSetupClient() {
           </svg>
           <div>
             <p className="text-sm text-white/70 font-medium">Email-gated reports</p>
-            <p className="text-xs text-white/35 mt-0.5">Every customer enters their email before scanning. The full skin report is delivered to their inbox — and the lead is saved to your customer list automatically.</p>
+            <p className="text-xs text-white/35 mt-0.5">Every customer enters their email before scanning, then sees their personalised report instantly on their own page. The lead is saved to your customer list automatically — follow up by email anytime.</p>
           </div>
         </div>
 
         <div>
-          <label className="block text-xs text-white/50 mb-1.5">Reply-to email</label>
+          <label className="block text-xs text-white/50 mb-1.5">Your contact email</label>
           <input
             type="email"
             value={replyToEmail}
@@ -137,7 +137,7 @@ export default function FunnelSetupClient() {
             placeholder="you@yourbrand.com"
             className="w-full px-3 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/20 text-sm focus:outline-none focus:border-violet-500/50 transition-colors"
           />
-          <p className="text-white/25 text-xs mt-1">Reports are sent under your brand name. When a customer replies, it goes to this address.</p>
+          <p className="text-white/25 text-xs mt-1">Used when you email a report to a customer from your Customers list.</p>
         </div>
 
         <div className="flex items-center gap-3">
@@ -208,9 +208,9 @@ export default function FunnelSetupClient() {
         <ol className="text-white/40 text-sm space-y-2 list-decimal list-inside">
           <li>Set your slug above and click <span className="text-white/60">Save &amp; Publish</span>.</li>
           <li>Share the link — post it on Instagram, WhatsApp, your website, or print as a QR.</li>
-          <li>Customers take a selfie and enter their email to receive their report.</li>
+          <li>Customers take a selfie and enter their email to unlock their report.</li>
           <li>The AI runs only after the email is given — so every scan captures a lead.</li>
-          <li>The full skin profile &amp; product recommendations are emailed to the customer, and the lead is saved to your Customer DB.</li>
+          <li>The customer instantly sees their skin profile &amp; product recommendations on their own report page, and the lead is saved to your Customer DB.</li>
         </ol>
       </div>
     </div>

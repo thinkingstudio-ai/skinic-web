@@ -25,9 +25,11 @@ export default function CustomersClient() {
 
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [total, setTotal] = useState(0);
+  const [slug, setSlug] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [filterType, setFilterType] = useState("");
   const [offset, setOffset] = useState(0);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
   const limit = 25;
 
   const fetchCustomers = useCallback(async (st: string, off: number) => {
@@ -43,11 +45,32 @@ export default function CustomersClient() {
       const data = await res.json();
       setCustomers(data.customers || []);
       setTotal(data.total || 0);
+      setSlug(data.slug || null);
     }
     setLoading(false);
   }, [supabase, apiUrl]);
 
   useEffect(() => { fetchCustomers(filterType, offset); }, [fetchCustomers, filterType, offset]);
+
+  function reportLink(c: Customer) {
+    return slug ? `https://skinic.app/b/${slug}/r/${c.id}` : "";
+  }
+
+  function copyLink(c: Customer) {
+    const link = reportLink(c);
+    if (!link) return;
+    navigator.clipboard.writeText(link);
+    setCopiedId(c.id);
+    setTimeout(() => setCopiedId(null), 1800);
+  }
+
+  function emailReport(c: Customer) {
+    const link = reportLink(c);
+    if (!link || !c.email) return;
+    const subject = "Your personalised skin report";
+    const body = `Hi ${c.name || "there"},\n\nThank you for taking the skin profiling! Here is your personalised skin report and product recommendations:\n\n${link}\n\nFeel free to reply if you have any questions.`;
+    window.location.href = `mailto:${c.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  }
 
   function exportCSV() {
     const headers = ["Name", "Email", "Skin Type", "Top Traits", "Date"];
@@ -72,7 +95,7 @@ export default function CustomersClient() {
         <div>
           <h2 className="text-lg font-semibold text-white">Customer Database</h2>
           <p className="text-white/40 text-sm mt-0.5">
-            End users who scanned via your brand page. Lead capture must be enabled to collect email/name.
+            End users who scanned via your brand page. Every scan captures the customer&apos;s email. Use the report link to follow up.
           </p>
         </div>
         {customers.length > 0 && (
@@ -110,7 +133,7 @@ export default function CustomersClient() {
           <p className="text-2xl mb-3">👥</p>
           <p className="text-white/60 text-sm font-medium">No customers yet</p>
           <p className="text-white/30 text-xs mt-1">
-            Enable lead capture on your scan page to collect customer details.
+            Share your scan page link — every customer who scans appears here automatically.
           </p>
         </div>
       ) : (
@@ -124,6 +147,7 @@ export default function CustomersClient() {
                   <th className="text-left px-5 py-3 text-white/40 text-xs font-semibold uppercase tracking-wider">Skin Type</th>
                   <th className="text-left px-5 py-3 text-white/40 text-xs font-semibold uppercase tracking-wider hidden md:table-cell">Top Traits</th>
                   <th className="text-left px-5 py-3 text-white/40 text-xs font-semibold uppercase tracking-wider">Date</th>
+                  <th className="text-right px-5 py-3 text-white/40 text-xs font-semibold uppercase tracking-wider">Report</th>
                 </tr>
               </thead>
               <tbody>
@@ -146,6 +170,26 @@ export default function CustomersClient() {
                       </div>
                     </td>
                     <td className="px-5 py-3 text-white/35 text-xs">{formatDate(c.created_at)}</td>
+                    <td className="px-5 py-3">
+                      <div className="flex items-center justify-end gap-2">
+                        <button
+                          onClick={() => copyLink(c)}
+                          disabled={!slug}
+                          title="Copy the customer's report link"
+                          className="px-2.5 py-1.5 rounded-lg bg-white/5 border border-white/10 text-white/55 text-xs font-medium hover:bg-white/10 disabled:opacity-30 transition-all"
+                        >
+                          {copiedId === c.id ? "✓ Copied" : "Copy link"}
+                        </button>
+                        <button
+                          onClick={() => emailReport(c)}
+                          disabled={!slug || !c.email}
+                          title="Email this report from your own email"
+                          className="px-2.5 py-1.5 rounded-lg bg-violet-500/15 border border-violet-500/20 text-violet-300 text-xs font-medium hover:bg-violet-500/25 disabled:opacity-30 transition-all"
+                        >
+                          Email
+                        </button>
+                      </div>
+                    </td>
                   </tr>
                 ))}
               </tbody>
