@@ -113,17 +113,14 @@ export default function FunnelSetupClient() {
           <p className="text-white/25 text-xs mt-1">3-40 characters: lowercase letters, numbers, hyphens.</p>
         </div>
 
-        <div className="flex items-center justify-between p-3 rounded-xl bg-white/3 border border-white/8">
+        <div className="flex items-start gap-3 p-3 rounded-xl bg-white/3 border border-white/8">
+          <svg className="w-4 h-4 text-violet-400 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
           <div>
-            <p className="text-sm text-white/70 font-medium">Require email to unlock results</p>
-            <p className="text-xs text-white/35 mt-0.5">If on, customers must enter name or email before seeing full report. If off, they can skip.</p>
+            <p className="text-sm text-white/70 font-medium">Email-gated reports</p>
+            <p className="text-xs text-white/35 mt-0.5">Every customer enters their email before scanning. The full skin report is delivered to their inbox — and the lead is saved to your customer list automatically.</p>
           </div>
-          <button
-            onClick={() => setLeadCapture(!leadCapture)}
-            className={`relative w-11 h-6 rounded-full transition-colors ${leadCapture ? "bg-violet-600" : "bg-white/10"}`}
-          >
-            <span className={`absolute top-0.5 w-5 h-5 rounded-full bg-white transition-all shadow-sm ${leadCapture ? "left-[22px]" : "left-0.5"}`} />
-          </button>
         </div>
 
         <div className="flex items-center gap-3">
@@ -194,9 +191,9 @@ export default function FunnelSetupClient() {
         <ol className="text-white/40 text-sm space-y-2 list-decimal list-inside">
           <li>Set your slug above and click <span className="text-white/60">Save &amp; Publish</span>.</li>
           <li>Share the link — post it on Instagram, WhatsApp, your website, or print as a QR.</li>
-          <li>Customers visit the page, take a selfie, and get an instant AI skin profile.</li>
-          <li>Their skin type and recommended items from your catalog are shown.</li>
-          <li>After the scan, customers see a teaser and are asked for their name + email to unlock the full report. If "Require email" is on, they cannot skip — their details are saved to your Customer DB.</li>
+          <li>Customers take a selfie and enter their email to receive their report.</li>
+          <li>The AI runs only after the email is given — so every scan captures a lead.</li>
+          <li>The full skin profile &amp; product recommendations are emailed to the customer, and the lead is saved to your Customer DB.</li>
         </ol>
       </div>
     </div>
