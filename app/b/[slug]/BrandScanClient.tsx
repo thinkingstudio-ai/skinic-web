@@ -63,7 +63,14 @@ export default function BrandScanClient({ brand }: { brand: BrandConfig }) {
       try { data = await res.json(); } catch { /* non-JSON */ }
       if (!res.ok || !data.customer_id) {
         setError(data.detail || `Something went wrong (${res.status}). Please try again.`);
-        setStep("email");
+        // Photo-quality rejections (422) — send them back to retake the photo.
+        if (res.status === 422) {
+          setSelectedFile(null);
+          setPreviewUrl(null);
+          setStep("capture");
+        } else {
+          setStep("email");
+        }
         return;
       }
       router.push(`/b/${brand.slug}/r/${data.customer_id}`);
