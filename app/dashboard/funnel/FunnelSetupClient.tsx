@@ -59,15 +59,18 @@ export default function FunnelSetupClient() {
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${session.access_token}` },
         body: JSON.stringify({ slug: slug.trim().toLowerCase(), lead_capture_enabled: leadCapture }),
       });
-      const data = await res.json();
+      let data: Record<string, string> = {};
+      try { data = await res.json(); } catch { /* non-JSON body */ }
       if (!res.ok) {
-        setError(data.detail || "Failed to save.");
+        setError(data.detail || `Server error (${res.status})`);
       } else {
         setFunnel((prev) => prev ? { ...prev, ...data } : data);
         setSaved(true);
         setTimeout(() => setSaved(false), 2500);
       }
-    } catch { setError("Network error."); }
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Network error.");
+    }
     setSaving(false);
   }
 
