@@ -132,20 +132,49 @@ export default function CatalogClient() {
     return arr.includes(val) ? arr.filter((t) => t !== val) : [...arr, val];
   }
 
+  async function resizeToBlob(file: File, maxPx = 900, quality = 0.82): Promise<Blob> {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      const url = URL.createObjectURL(file);
+      img.onload = () => {
+        URL.revokeObjectURL(url);
+        let { width, height } = img;
+        if (width > maxPx || height > maxPx) {
+          if (width > height) { height = Math.round((height / width) * maxPx); width = maxPx; }
+          else { width = Math.round((width / height) * maxPx); height = maxPx; }
+        }
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d")!;
+        ctx.drawImage(img, 0, 0, width, height);
+        canvas.toBlob((blob) => blob ? resolve(blob) : reject(new Error("Resize failed")), "image/jpeg", quality);
+      };
+      img.onerror = reject;
+      img.src = url;
+    });
+  }
+
   async function uploadProductImage(file: File) {
     setUploadError("");
-    if (file.size > 5 * 1024 * 1024) { setUploadError("File too large. Max 5 MB."); return; }
     const allowed = ["image/png", "image/jpeg", "image/gif", "image/webp"];
     if (!allowed.includes(file.type)) { setUploadError("Only PNG, JPG, GIF, WebP allowed."); return; }
     setUploading(true);
     const { data: { session } } = await supabase.auth.getSession();
     if (!session) { setUploadError("Session expired."); setUploading(false); return; }
-    const ext = file.name.split(".").pop() ?? "jpg";
+    let blob: Blob;
+    try {
+      blob = await resizeToBlob(file);
+    } catch {
+      setUploadError("Could not process image. Please try another file.");
+      setUploading(false);
+      return;
+    }
     const uid = session.user.id;
-    const filename = `${uid}/catalog/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+    const filename = `${uid}/catalog/${Date.now()}-${Math.random().toString(36).slice(2)}.jpg`;
     const { error: upErr } = await supabase.storage
       .from("brand-assets")
-      .upload(filename, file, { upsert: false, contentType: file.type });
+      .upload(filename, blob, { upsert: false, contentType: "image/jpeg" });
     if (upErr) { setUploadError(upErr.message || "Upload failed."); setUploading(false); return; }
     const { data: urlData } = supabase.storage.from("brand-assets").getPublicUrl(filename);
     setForm((prev) => ({ ...prev, image_url: `${urlData.publicUrl}?t=${Date.now()}` }));
@@ -259,9 +288,19 @@ export default function CatalogClient() {
               </div>
               {uploadError && <p className="text-red-400 text-xs mt-1">{uploadError}</p>}
               {form.image_url && (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={form.image_url} alt="" className="mt-2 w-16 h-16 rounded-xl object-cover border border-white/10"
-                  onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }} />
+                <div className="relative inline-block mt-2">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={form.image_url} alt="" className="w-16 h-16 rounded-xl object-cover border border-white/10"
+                    onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }} />
+                  <button
+                    type="button"
+                    onClick={() => setForm((prev) => ({ ...prev, image_url: "" }))}
+                    title="Remove image"
+                    className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-red-500 hover:bg-red-400 text-white text-[10px] flex items-center justify-center leading-none transition-all"
+                  >
+                    ✕
+                  </button>
+                </div>
               )}
             </div>
             <div>

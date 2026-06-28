@@ -117,12 +117,36 @@ export default function StudioBrandSetupClient() {
     }
   }
 
+  async function resizeToBlob(file: File, maxPx = 400, quality = 0.88): Promise<{ blob: Blob; isSvg: boolean }> {
+    if (file.type === "image/svg+xml") {
+      return { blob: file, isSvg: true };
+    }
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      const url = URL.createObjectURL(file);
+      img.onload = () => {
+        URL.revokeObjectURL(url);
+        let { width, height } = img;
+        if (width > maxPx || height > maxPx) {
+          if (width > height) { height = Math.round((height / width) * maxPx); width = maxPx; }
+          else { width = Math.round((width / height) * maxPx); height = maxPx; }
+        }
+        const canvas = document.createElement("canvas");
+        canvas.width = width; canvas.height = height;
+        const ctx = canvas.getContext("2d")!;
+        ctx.drawImage(img, 0, 0, width, height);
+        canvas.toBlob(
+          (blob) => blob ? resolve({ blob, isSvg: false }) : reject(new Error("Resize failed")),
+          "image/png"
+        );
+      };
+      img.onerror = reject;
+      img.src = url;
+    });
+  }
+
   async function uploadLogo(file: File) {
     setUploadError("");
-    if (file.size > 2 * 1024 * 1024) {
-      setUploadError("File too large. Max 2 MB.");
-      return;
-    }
     const allowed = ["image/png", "image/jpeg", "image/gif", "image/webp", "image/svg+xml"];
     if (!allowed.includes(file.type)) {
       setUploadError("Only PNG, JPG, GIF, WebP, or SVG allowed.");
@@ -135,22 +159,29 @@ export default function StudioBrandSetupClient() {
       setUploading(false);
       return;
     }
-    const ext = file.name.split(".").pop() ?? "png";
+    let blob: Blob;
+    let ext: string;
+    try {
+      const result = await resizeToBlob(file);
+      blob = result.blob;
+      ext = result.isSvg ? "svg" : "png";
+    } catch {
+      setUploadError("Could not process image. Please try another file.");
+      setUploading(false);
+      return;
+    }
     const path = `${session.user.id}/logo.${ext}`;
+    const contentType = ext === "svg" ? "image/svg+xml" : "image/png";
     const { error: upErr } = await supabase.storage
       .from("brand-assets")
-      .upload(path, file, { upsert: true, contentType: file.type });
+      .upload(path, blob, { upsert: true, contentType });
     if (upErr) {
       setUploadError(upErr.message || "Upload failed.");
       setUploading(false);
       return;
     }
-    const { data: urlData } = supabase.storage
-      .from("brand-assets")
-      .getPublicUrl(path);
-    // Bust cache so preview refreshes immediately
-    const publicUrl = `${urlData.publicUrl}?t=${Date.now()}`;
-    setBrand((prev) => ({ ...prev, logo_url: publicUrl }));
+    const { data: urlData } = supabase.storage.from("brand-assets").getPublicUrl(path);
+    setBrand((prev) => ({ ...prev, logo_url: `${urlData.publicUrl}?t=${Date.now()}` }));
     setUploading(false);
   }
 
