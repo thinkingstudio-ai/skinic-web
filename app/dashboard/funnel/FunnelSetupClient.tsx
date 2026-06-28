@@ -7,6 +7,7 @@ type FunnelData = {
     id?: string;
     slug?: string;
     lead_capture_enabled?: boolean;
+    reply_to_email?: string | null;
   } | null;
   tier: string;
   scan_page_url: string | null;
@@ -23,6 +24,7 @@ export default function FunnelSetupClient() {
   const [loading, setLoading] = useState(true);
   const [slug, setSlug] = useState("");
   const [leadCapture, setLeadCapture] = useState(false);
+  const [replyToEmail, setReplyToEmail] = useState("");
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState("");
@@ -40,6 +42,9 @@ export default function FunnelSetupClient() {
         setFunnel(data);
         setSlug(data.brand?.slug || "");
         setLeadCapture(data.brand?.lead_capture_enabled || false);
+        // Prefill reply-to with the saved value, or the owner's account email
+        // so replies reach them by default without any extra setup.
+        setReplyToEmail(data.brand?.reply_to_email || session.user?.email || "");
       }
     } catch { /* ignore */ }
     setLoading(false);
@@ -57,7 +62,7 @@ export default function FunnelSetupClient() {
       const res = await fetch(`${apiUrl}/dashboard/funnel`, {
         method: "PUT",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${session.access_token}` },
-        body: JSON.stringify({ slug: slug.trim().toLowerCase(), lead_capture_enabled: leadCapture }),
+        body: JSON.stringify({ slug: slug.trim().toLowerCase(), lead_capture_enabled: leadCapture, reply_to_email: replyToEmail.trim() }),
       });
       let data: FunnelData & { detail?: string } = { brand: null, tier: "free", scan_page_url: null, embed_snippet: null };
       try { data = await res.json(); } catch { /* non-JSON body */ }
@@ -121,6 +126,18 @@ export default function FunnelSetupClient() {
             <p className="text-sm text-white/70 font-medium">Email-gated reports</p>
             <p className="text-xs text-white/35 mt-0.5">Every customer enters their email before scanning. The full skin report is delivered to their inbox — and the lead is saved to your customer list automatically.</p>
           </div>
+        </div>
+
+        <div>
+          <label className="block text-xs text-white/50 mb-1.5">Reply-to email</label>
+          <input
+            type="email"
+            value={replyToEmail}
+            onChange={(e) => setReplyToEmail(e.target.value)}
+            placeholder="you@yourbrand.com"
+            className="w-full px-3 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/20 text-sm focus:outline-none focus:border-violet-500/50 transition-colors"
+          />
+          <p className="text-white/25 text-xs mt-1">Reports are sent under your brand name. When a customer replies, it goes to this address.</p>
         </div>
 
         <div className="flex items-center gap-3">
