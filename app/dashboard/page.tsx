@@ -44,7 +44,7 @@ export default async function DashboardOverview() {
   const primaryKey = keys?.[0];
   const tier = primaryKey?.tier || "free";
   const limits = TIER_LIMITS[tier] || TIER_LIMITS.free;
-  const monthlyCalls = primaryKey?.monthly_calls || 0;
+  let monthlyCalls = primaryKey?.monthly_calls || 0;
   const usagePct = limits.monthly ? Math.min(100, Math.round((monthlyCalls / limits.monthly) * 100)) : 0;
 
   // Fetch Studio data if needed
@@ -55,23 +55,32 @@ export default async function DashboardOverview() {
 
   const isStudioUser = intent === "studio" || intent === null;
 
-  if (isStudioUser && primaryKey) {
+  if (isStudioUser && keys && keys.length > 0) {
+    const keyIds = keys.map((k) => k.id);
     const { data: brand } = await admin
       .from("brands")
       .select("id, slug")
-      .eq("api_key_id", primaryKey.id)
+      .in("api_key_id", keyIds)
+      .order("created_at", { ascending: true })
+      .limit(1)
       .maybeSingle();
 
     if (brand) {
       brandSlug = brand.slug;
-      const [scansRes, customersRes, catalogRes] = await Promise.all([
+      const monthStart = new Date();
+      monthStart.setDate(1);
+      monthStart.setHours(0, 0, 0, 0);
+      const [scansRes, scansThisMonthRes, customersRes, catalogRes] = await Promise.all([
         admin.from("brand_scans").select("id", { count: "exact", head: true }).eq("brand_id", brand.id),
+        admin.from("brand_scans").select("id", { count: "exact", head: true }).eq("brand_id", brand.id).gte("created_at", monthStart.toISOString()),
         admin.from("brand_customers").select("id", { count: "exact", head: true }).eq("brand_id", brand.id),
         admin.from("brand_catalog").select("id", { count: "exact", head: true }).eq("brand_id", brand.id),
       ]);
       totalScans = scansRes.count || 0;
       totalCustomers = customersRes.count || 0;
       totalCatalogItems = catalogRes.count || 0;
+      // Override monthlyCalls for Studio users to reflect actual funnel scans
+      if (intent === "studio") monthlyCalls = scansThisMonthRes.count || 0;
     }
   }
 
