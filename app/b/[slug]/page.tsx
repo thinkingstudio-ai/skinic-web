@@ -41,9 +41,31 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const brand = await getBrandConfig(slug);
   if (!brand) return { title: "Not Found" };
+
+  const title = `${brand.app_name} — Free AI Skin Analysis`;
+  const description = brand.tagline || "Discover your skin type and get personalised recommendations in 30 seconds.";
+  const url = `https://skinic.app/b/${slug}`;
+  // White-label: preview shows the brand's own logo, never SKINIC branding.
+  const images = brand.logo_url ? [{ url: brand.logo_url }] : [];
+
   return {
-    title: `${brand.app_name} — Skin Profile`,
-    description: brand.tagline,
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: brand.app_name,
+      type: "website",
+      images,
+    },
+    twitter: {
+      card: brand.logo_url ? "summary" : "summary_large_image",
+      title,
+      description,
+      images,
+    },
   };
 }
 
