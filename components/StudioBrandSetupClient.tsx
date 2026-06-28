@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { createClient } from "@/lib/supabase/client";
 
 type BrandState = {
@@ -42,6 +42,9 @@ export default function StudioBrandSetupClient() {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState("");
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const fetchBrand = useCallback(async () => {
     const {
@@ -114,6 +117,49 @@ export default function StudioBrandSetupClient() {
     }
   }
 
+  async function uploadLogo(file: File) {
+    setUploadError("");
+    if (file.size > 2 * 1024 * 1024) {
+      setUploadError("File too large. Max 2 MB.");
+      return;
+    }
+    const allowed = ["image/png", "image/jpeg", "image/gif", "image/webp", "image/svg+xml"];
+    if (!allowed.includes(file.type)) {
+      setUploadError("Only PNG, JPG, GIF, WebP, or SVG allowed.");
+      return;
+    }
+    setUploading(true);
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) {
+      setUploadError("Session expired.");
+      setUploading(false);
+      return;
+    }
+    const ext = file.name.split(".").pop() ?? "png";
+    const path = `${session.user.id}/logo.${ext}`;
+    const { error: upErr } = await supabase.storage
+      .from("brand-assets")
+      .upload(path, file, { upsert: true, contentType: file.type });
+    if (upErr) {
+      setUploadError(upErr.message || "Upload failed.");
+      setUploading(false);
+      return;
+    }
+    const { data: urlData } = supabase.storage
+      .from("brand-assets")
+      .getPublicUrl(path);
+    // Bust cache so preview refreshes immediately
+    const publicUrl = `${urlData.publicUrl}?t=${Date.now()}`;
+    setBrand((prev) => ({ ...prev, logo_url: publicUrl }));
+    setUploading(false);
+  }
+
+  function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (file) uploadLogo(file);
+    e.target.value = "";
+  }
+
   if (loading)
     return (
       <div className="text-white/30 text-sm py-12 text-center">Loading…</div>
@@ -164,20 +210,52 @@ export default function StudioBrandSetupClient() {
             />
           </div>
 
-          {/* Logo URL */}
+          {/* Logo upload */}
           <div>
-            <label className="block text-xs text-white/50 mb-1.5">
-              Logo URL
-            </label>
+            <label className="block text-xs text-white/50 mb-1.5">Logo</label>
+            {/* Hidden file input */}
             <input
-              type="url"
-              value={brand.logo_url}
-              onChange={(e) => setBrand({ ...brand, logo_url: e.target.value })}
-              placeholder="https://yourdomain.com/logo.png"
-              className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/25 text-sm focus:outline-none focus:border-violet-500/50 transition-colors"
+              ref={fileInputRef}
+              type="file"
+              accept="image/png,image/jpeg,image/gif,image/webp,image/svg+xml"
+              className="hidden"
+              onChange={handleFileChange}
             />
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                disabled={uploading}
+                className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 disabled:opacity-50 text-white/70 text-sm transition-all"
+              >
+                {uploading ? (
+                  <>
+                    <span className="w-3.5 h-3.5 rounded-full border-2 border-white/20 border-t-white animate-spin" />
+                    Uploading…
+                  </>
+                ) : (
+                  <>
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                    </svg>
+                    Upload logo
+                  </>
+                )}
+              </button>
+              <span className="text-white/20 text-xs">or</span>
+              <input
+                type="url"
+                value={brand.logo_url}
+                onChange={(e) => setBrand({ ...brand, logo_url: e.target.value })}
+                placeholder="https://yourdomain.com/logo.png"
+                className="flex-1 px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/25 text-xs focus:outline-none focus:border-violet-500/50 transition-colors"
+              />
+            </div>
+            {uploadError && (
+              <p className="text-red-400 text-xs mt-1">{uploadError}</p>
+            )}
             <p className="text-white/25 text-xs mt-1">
-              Square PNG or SVG with transparent background works best.
+              PNG, JPG, SVG — max 2 MB. Square with transparent background works best.
             </p>
           </div>
 
