@@ -59,7 +59,7 @@ export default function FunnelSetupClient() {
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${session.access_token}` },
         body: JSON.stringify({ slug: slug.trim().toLowerCase(), lead_capture_enabled: leadCapture }),
       });
-      let data: Record<string, string> = {};
+      let data: FunnelData & { detail?: string } = { brand: null, tier: "free", scan_page_url: null, embed_snippet: null };
       try { data = await res.json(); } catch { /* non-JSON body */ }
       if (!res.ok) {
         setError(data.detail || `Server error (${res.status})`);
