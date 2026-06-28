@@ -29,6 +29,8 @@ type ResultData = {
       description?: string;
       characteristics?: string[];
       skin_barrier?: string;
+      all_types?: { type: string; confidence: number }[];
+      quality_warning?: string | null;
     };
     concerns?: { name: string; score: number; level: string }[];
     measurements?: { skin_score?: number; skin_label?: string; insight?: string } | null;
@@ -36,7 +38,10 @@ type ResultData = {
       fitzpatrick_label?: string;
       undertone?: string;
       season?: string;
+      season_detail?: string;
       skin_depth?: string;
+      colors_that_suit?: string[];
+      colors_to_avoid?: string[];
     } | null;
   };
   recommendations: Recommendation[];
@@ -104,6 +109,19 @@ export default async function ResultPage({ params }: { params: Promise<{ slug: s
           </p>
         </div>
 
+        {/* Quality warning */}
+        {st.quality_warning && (
+          <div className="rounded-2xl border border-amber-500/25 bg-amber-500/10 p-4 flex gap-3">
+            <span className="text-amber-400 text-base shrink-0">⚠️</span>
+            <div>
+              <p className="text-amber-200/90 text-sm font-medium">Photo quality note</p>
+              <p className="text-amber-200/50 text-xs mt-0.5 leading-relaxed">
+                {st.quality_warning} For the most accurate result, scan again with a sharp, well-lit, filter-free close-up.
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* Score + skin type */}
         <div className="rounded-3xl p-6 text-center" style={{ background: `${pc}14`, border: `1px solid ${pc}33` }}>
           {typeof score === "number" && (
@@ -116,10 +134,52 @@ export default async function ResultPage({ params }: { params: Promise<{ slug: s
             </div>
           )}
           <h1 className="text-2xl font-bold text-white">{st.type || "—"} Skin</h1>
+          {typeof st.confidence === "number" && (
+            <p className="text-white/30 text-xs mt-1">{Math.round(st.confidence)}% confidence</p>
+          )}
           {st.description && (
             <p className="text-white/50 text-sm mt-2 leading-relaxed">{st.description}</p>
           )}
         </div>
+
+        {/* Skin type breakdown */}
+        {st.all_types && st.all_types.length > 1 && (
+          <div className="space-y-2">
+            {st.all_types.map((t) => (
+              <div key={t.type} className="flex items-center gap-3">
+                <span className="text-white/50 text-xs w-20 shrink-0">{t.type}</span>
+                <div className="flex-1 h-1.5 rounded-full bg-white/8 overflow-hidden">
+                  <div className="h-full rounded-full" style={{ width: `${Math.round(t.confidence)}%`, background: pc }} />
+                </div>
+                <span className="text-white/35 text-xs w-9 text-right">{Math.round(t.confidence)}%</span>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Characteristics + barrier */}
+        {((st.characteristics && st.characteristics.length > 0) || st.skin_barrier) && (
+          <div className="rounded-2xl border border-white/8 bg-white/3 p-4 space-y-3">
+            {st.characteristics && st.characteristics.length > 0 && (
+              <div>
+                <p className="text-white/35 text-xs font-semibold uppercase tracking-wider mb-2">Your skin characteristics</p>
+                <div className="grid grid-cols-1 gap-1.5">
+                  {st.characteristics.map((c) => (
+                    <p key={c} className="text-white/65 text-sm flex items-start gap-2">
+                      <span style={{ color: pc }}>✦</span> {c}
+                    </p>
+                  ))}
+                </div>
+              </div>
+            )}
+            {st.skin_barrier && (
+              <div className="pt-1">
+                <p className="text-white/35 text-xs font-semibold uppercase tracking-wider mb-1">Skin barrier</p>
+                <p className="text-white/65 text-sm leading-relaxed">{st.skin_barrier}</p>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Insight */}
         {result.measurements?.insight && (
@@ -158,7 +218,7 @@ export default async function ResultPage({ params }: { params: Promise<{ slug: s
             {tone.season && (
               <div className="rounded-2xl border border-white/8 bg-white/3 p-4">
                 <p className="text-white/30 text-[10px] uppercase tracking-wider">Colour season</p>
-                <p className="text-white/80 text-sm font-medium mt-0.5">{tone.season}</p>
+                <p className="text-white/80 text-sm font-medium mt-0.5">{tone.season_detail || tone.season}</p>
               </div>
             )}
             {tone.fitzpatrick_label && (
@@ -171,6 +231,37 @@ export default async function ResultPage({ params }: { params: Promise<{ slug: s
               <div className="rounded-2xl border border-white/8 bg-white/3 p-4">
                 <p className="text-white/30 text-[10px] uppercase tracking-wider">Depth</p>
                 <p className="text-white/80 text-sm font-medium capitalize mt-0.5">{tone.skin_depth}</p>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Colours / makeup */}
+        {tone && ((tone.colors_that_suit && tone.colors_that_suit.length > 0) || (tone.colors_to_avoid && tone.colors_to_avoid.length > 0)) && (
+          <div className="rounded-2xl border border-white/8 bg-white/3 p-4 space-y-4">
+            <p className="text-white/35 text-xs font-semibold uppercase tracking-wider">Your colours &amp; makeup</p>
+            {tone.colors_that_suit && tone.colors_that_suit.length > 0 && (
+              <div>
+                <p className="text-white/55 text-xs mb-2">Shades that flatter you</p>
+                <div className="flex flex-wrap gap-2">
+                  {tone.colors_that_suit.map((c) => (
+                    <span key={c} className="px-3 py-1.5 rounded-full text-xs capitalize text-white" style={{ background: `${pc}26`, border: `1px solid ${pc}40` }}>
+                      {c}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+            {tone.colors_to_avoid && tone.colors_to_avoid.length > 0 && (
+              <div>
+                <p className="text-white/55 text-xs mb-2">Shades to avoid</p>
+                <div className="flex flex-wrap gap-2">
+                  {tone.colors_to_avoid.map((c) => (
+                    <span key={c} className="px-3 py-1.5 rounded-full text-xs capitalize text-white/45 border border-white/10 line-through decoration-white/20">
+                      {c}
+                    </span>
+                  ))}
+                </div>
               </div>
             )}
           </div>
