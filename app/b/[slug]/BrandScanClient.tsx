@@ -332,12 +332,14 @@ export default function BrandScanClient({ brand }: { brand: BrandConfig }) {
               {saving ? "Saving..." : "Unlock My Full Report →"}
             </button>
 
-            <button
-              onClick={() => saveLead(true)}
-              className="w-full text-white/25 text-xs hover:text-white/40 transition-colors py-1"
-            >
-              Skip — view without saving
-            </button>
+            {!brand.lead_capture_enabled && (
+              <button
+                onClick={() => saveLead(true)}
+                className="w-full text-white/25 text-xs hover:text-white/40 transition-colors py-1"
+              >
+                Skip — view without saving
+              </button>
+            )}
 
             <p className="text-white/15 text-xs text-center">
               Your details are only shared with {brand.app_name}. Not stored by SKINIC.

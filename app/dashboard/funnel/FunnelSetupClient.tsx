@@ -112,8 +112,8 @@ export default function FunnelSetupClient() {
 
         <div className="flex items-center justify-between p-3 rounded-xl bg-white/3 border border-white/8">
           <div>
-            <p className="text-sm text-white/70 font-medium">Lead capture</p>
-            <p className="text-xs text-white/35 mt-0.5">Ask for name + email before the scan.</p>
+            <p className="text-sm text-white/70 font-medium">Require email to unlock results</p>
+            <p className="text-xs text-white/35 mt-0.5">If on, customers must enter name or email before seeing full report. If off, they can skip.</p>
           </div>
           <button
             onClick={() => setLeadCapture(!leadCapture)}
@@ -193,7 +193,7 @@ export default function FunnelSetupClient() {
           <li>Share the link — post it on Instagram, WhatsApp, your website, or print as a QR.</li>
           <li>Customers visit the page, take a selfie, and get an instant AI skin profile.</li>
           <li>Their skin type and recommended items from your catalog are shown.</li>
-          <li>If lead capture is on, their name and email are saved to your Customer DB.</li>
+          <li>After the scan, customers see a teaser and are asked for their name + email to unlock the full report. If "Require email" is on, they cannot skip — their details are saved to your Customer DB.</li>
         </ol>
       </div>
     </div>
