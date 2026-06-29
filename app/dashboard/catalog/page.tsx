@@ -6,7 +6,7 @@ import CatalogClient from "./CatalogClient";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-const STUDIO_TIERS = ["starter_app", "pro_app", "enterprise", "internal"];
+const STUDIO_TIERS = ["starter", "pro", "starter_app", "pro_app", "enterprise", "internal"];
 
 export default async function CatalogPage() {
   const supabase = await createClient();
@@ -26,7 +26,7 @@ export default async function CatalogPage() {
       <FeatureLock
         feature="Product & Service Catalog"
         description="Add your products and services with skin type tags. SKINIC's AI matches each customer's scan result to the most relevant items in your catalog."
-        requiredTier="starter_app"
+        requiredTier="starter"
         currentTier={tier}
       />
     );

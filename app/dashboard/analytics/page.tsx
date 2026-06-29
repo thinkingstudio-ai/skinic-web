@@ -6,7 +6,7 @@ import AnalyticsClient from "./AnalyticsClient";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-const ANALYTICS_TIERS = ["pro_app", "enterprise", "internal"];
+const ANALYTICS_TIERS = ["pro", "pro_app", "enterprise", "internal"];
 
 export default async function AnalyticsPage() {
   const supabase = await createClient();
@@ -26,7 +26,7 @@ export default async function AnalyticsPage() {
       <FeatureLock
         feature="Analytics"
         description="Track scan volume, skin type distribution, top traits, and CTA click-through rates. Understand your customers better and optimise your catalog."
-        requiredTier="pro_app"
+        requiredTier="pro"
         currentTier={tier}
       />
     );

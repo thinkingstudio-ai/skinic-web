@@ -6,68 +6,58 @@ import PaddleCheckoutButton from "@/components/PaddleCheckoutButton";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
+// Unified pricing — Studio rates, covers both API and Studio features.
+// Paddle price IDs use the Studio products (STARTER_APP / PRO_APP) since those
+// are already approved and priced correctly.
 const PADDLE_PRICES: Record<string, string> = {
-  starter:     process.env.PADDLE_PRICE_STARTER     || "pri_01kvxcyj7skk9we9tpbzecfhnh",
-  pro:         process.env.PADDLE_PRICE_PRO         || "pri_01kvxd35mqf8eqkgrv8sw1cj5n",
-  starter_app: process.env.PADDLE_PRICE_STARTER_APP || "",
-  pro_app:     process.env.PADDLE_PRICE_PRO_APP     || "",
+  starter: process.env.PADDLE_PRICE_STARTER_APP || process.env.PADDLE_PRICE_STARTER || "",
+  pro:     process.env.PADDLE_PRICE_PRO_APP     || process.env.PADDLE_PRICE_PRO     || "",
 };
 
-const API_TIERS = [
+const UNIFIED_TIERS = [
   {
     id: "free",
     name: "Free",
     price: "$0",
     period: "/month",
-    features: ["50 trial API calls", "5 req/min", "API docs access"],
+    features: [
+      "50 scans / API calls per month",
+      "Branded scan page (preview)",
+      "5 catalog items",
+      "API docs access",
+    ],
     color: "border-white/10",
     badge: "text-white/50 bg-white/5",
   },
   {
     id: "starter",
     name: "Starter",
-    price: "$29",
+    price: "$39",
     period: "/month",
-    features: ["2,000 calls/month", "20 req/min", "AI ingredient guide", "Email support"],
+    features: [
+      "2,000 scans / API calls per month",
+      "Studio funnel — full access",
+      "API access (20 req/min)",
+      "Lead capture & Customer DB",
+      "Unlimited catalog items",
+      "CSV export",
+    ],
     color: "border-blue-500/20",
     badge: "text-blue-300 bg-blue-500/10",
   },
   {
     id: "pro",
     name: "Pro",
-    price: "$99",
-    period: "/month",
-    features: ["10,000 calls/month", "60 req/min", "AI ingredient guide", "Priority support"],
-    color: "border-violet-500/30",
-    badge: "text-violet-300 bg-violet-500/10",
-  },
-] as const;
-
-const STUDIO_TIERS = [
-  {
-    id: "free",
-    name: "Free Preview",
-    price: "$0",
-    period: "/month",
-    features: ["50 scans/month", "5 catalog items", "Branded scan page preview"],
-    color: "border-white/10",
-    badge: "text-white/50 bg-white/5",
-  },
-  {
-    id: "starter_app",
-    name: "Starter Studio",
-    price: "$39",
-    period: "/month",
-    features: ["2,000 scans/month", "Unlimited catalog", "Lead capture", "Customer DB", "CSV export"],
-    color: "border-blue-500/20",
-    badge: "text-blue-300 bg-blue-500/10",
-  },
-  {
-    id: "pro_app",
-    name: "Pro Studio",
     price: "$129",
     period: "/month",
-    features: ["10,000 scans/month", "Analytics dashboard", "Embed code", "Remove SKINIC branding", "Priority support"],
+    features: [
+      "10,000 scans / API calls per month",
+      "Everything in Starter",
+      "Analytics dashboard",
+      "Website embed code",
+      "Remove 'Powered by SKINIC'",
+      "Priority support",
+    ],
     color: "border-violet-500/30",
     badge: "text-violet-300 bg-violet-500/10",
   },
@@ -75,7 +65,7 @@ const STUDIO_TIERS = [
 
 const TIER_DISPLAY: Record<string, string> = {
   free: "Free", starter: "Starter", pro: "Pro",
-  starter_app: "Starter Studio", pro_app: "Pro Studio", enterprise: "Enterprise",
+  starter_app: "Starter", pro_app: "Pro", enterprise: "Enterprise",
 };
 
 type TierItem = { id: string; name: string; price: string; period: string; features: readonly string[]; color: string; badge: string };
@@ -134,43 +124,45 @@ export default async function PlanPage() {
     .from("api_keys")
     .select("tier")
     .eq("supabase_user_id", user!.id)
+    .order("created_at", { ascending: true })
     .limit(1);
 
-  const currentTier = keys?.[0]?.tier || "free";
-  const intent = (user!.user_metadata?.product_intent as "studio" | "api" | null) ?? null;
-  const tiers: readonly TierItem[] = intent === "api" ? API_TIERS : STUDIO_TIERS;
+  const rawTier = keys?.[0]?.tier || "free";
+  // Normalise legacy _app tiers to unified names for display
+  const normalisedTier = rawTier === "starter_app" ? "starter" : rawTier === "pro_app" ? "pro" : rawTier;
+  const displayName = TIER_DISPLAY[rawTier] || rawTier;
 
   return (
     <div className="space-y-8 max-w-3xl">
       <div>
         <h2 className="text-lg font-semibold text-white">Plan &amp; Billing</h2>
         <p className="text-white/40 text-sm mt-0.5">
-          {intent === "api" ? "API Developer plans" : intent === "studio" ? "SKINIC Studio plans" : "Choose the plan that fits your needs"}
+          One plan covers both Studio and API — choose the scale that fits your business.
         </p>
       </div>
 
       <Suspense fallback={null}>
-        <PlanUpgradeBanner initialTier={currentTier} />
+        <PlanUpgradeBanner initialTier={rawTier} />
       </Suspense>
 
       <div className="card-glass rounded-2xl p-5 border border-violet-500/20 bg-violet-500/5">
         <div className="flex items-center justify-between">
           <div>
             <p className="text-xs text-white/40 uppercase tracking-wider mb-1">Current Plan</p>
-            <p className="text-xl font-bold text-white">{TIER_DISPLAY[currentTier] || currentTier}</p>
+            <p className="text-xl font-bold text-white">{displayName}</p>
           </div>
-          {currentTier !== "free" && (
+          {rawTier !== "free" && (
             <span className="px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-400 text-xs font-semibold">Active</span>
           )}
         </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        {tiers.map((tier) => (
+        {UNIFIED_TIERS.map((tier) => (
           <TierCard
             key={tier.id}
             tier={tier}
-            isCurrent={currentTier === tier.id}
+            isCurrent={normalisedTier === tier.id}
             priceId={tier.id !== "free" ? (PADDLE_PRICES[tier.id] || null) : null}
             userId={user!.id}
             userEmail={user!.email || ""}
@@ -183,9 +175,7 @@ export default async function PlanPage() {
           <div>
             <p className="text-sm font-semibold text-amber-300 mb-1">Enterprise</p>
             <p className="text-white/40 text-xs">
-              {intent === "api"
-                ? "Unlimited calls, custom rate limits, SLA, dedicated engineer."
-                : "Unlimited scans, custom domain, dedicated onboarding, custom SLA."}
+              Unlimited scans &amp; API calls, custom domain, dedicated onboarding, custom SLA.
             </p>
           </div>
           <a href="/enterprise" className="px-4 py-2 rounded-xl border border-amber-500/30 text-amber-300 text-sm font-medium hover:bg-amber-500/10 transition-all whitespace-nowrap ml-4">
@@ -193,13 +183,6 @@ export default async function PlanPage() {
           </a>
         </div>
       </div>
-
-      {intent === "api" && (
-        <p className="text-white/25 text-xs">
-          Want to add a branded scan page for your clients?{" "}
-          <a href="mailto:skinic@thinkingstudio.ai" className="text-violet-400">Contact us to switch to Studio plan</a>
-        </p>
-      )}
 
       <p className="text-white/20 text-xs">
         After upgrading, your plan updates automatically within seconds.

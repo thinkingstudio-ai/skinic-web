@@ -6,7 +6,7 @@ import FunnelSetupClient from "./FunnelSetupClient";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-const STUDIO_TIERS = ["starter_app", "pro_app", "enterprise", "internal"];
+const STUDIO_TIERS = ["starter", "pro", "starter_app", "pro_app", "enterprise", "internal"];
 
 export default async function FunnelSetupPage() {
   const supabase = await createClient();
@@ -26,7 +26,7 @@ export default async function FunnelSetupPage() {
       <FeatureLock
         feature="Scan Page"
         description="Create a branded AI skin profiling page for your customers. Share the link on Instagram, WhatsApp, or embed it on your website."
-        requiredTier="starter_app"
+        requiredTier="starter"
         currentTier={tier}
       />
     );

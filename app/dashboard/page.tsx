@@ -15,7 +15,7 @@ const TIER_LIMITS: Record<string, { monthly: number | null; analyze_rpm: number;
 
 const TIER_DISPLAY: Record<string, string> = {
   free: "Free", starter: "Starter", pro: "Pro",
-  starter_app: "Starter Studio", pro_app: "Pro Studio", enterprise: "Enterprise",
+  starter_app: "Starter", pro_app: "Pro", enterprise: "Enterprise",
 };
 
 const TIER_COLORS: Record<string, string> = {

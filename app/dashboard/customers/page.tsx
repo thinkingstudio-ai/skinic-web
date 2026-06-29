@@ -6,7 +6,7 @@ import CustomersClient from "./CustomersClient";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-const STUDIO_TIERS = ["starter_app", "pro_app", "enterprise", "internal"];
+const STUDIO_TIERS = ["starter", "pro", "starter_app", "pro_app", "enterprise", "internal"];
 
 export default async function CustomersPage() {
   const supabase = await createClient();
@@ -26,7 +26,7 @@ export default async function CustomersPage() {
       <FeatureLock
         feature="Customer Database"
         description="Every scan builds your customer list automatically. View skin profiles, filter by type, and export to CSV for follow-up campaigns."
-        requiredTier="starter_app"
+        requiredTier="starter"
         currentTier={tier}
       />
     );

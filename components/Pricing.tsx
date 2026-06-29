@@ -55,7 +55,7 @@ const STUDIO_TIERS: Tier[] = [
     ],
     disabledFeatures: ["Remove 'Powered by SKINIC'"],
     cta: "Get Starter Studio",
-    ctaHref: "/signup?product=studio&upgrade=starter_app",
+    ctaHref: "/signup?product=studio&upgrade=starter",
     badge: "Best for salons & brands",
   },
   {
@@ -76,7 +76,7 @@ const STUDIO_TIERS: Tier[] = [
       "Priority email support",
     ],
     cta: "Get Pro Studio",
-    ctaHref: "/signup?product=studio&upgrade=pro_app",
+    ctaHref: "/signup?product=studio&upgrade=pro",
     popular: true,
   },
   {
