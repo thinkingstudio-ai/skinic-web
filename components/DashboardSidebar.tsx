@@ -1,5 +1,4 @@
 "use client";
-import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
@@ -123,13 +122,6 @@ export default function DashboardSidebar() {
   const pathname = usePathname();
   const router = useRouter();
   const supabase = createClient();
-  const [devOpen, setDevOpen] = useState(false);
-
-  const isDevRoute = devNav.some((item) => pathname === item.href);
-
-  useEffect(() => {
-    setDevOpen(isDevRoute);
-  }, [isDevRoute]);
 
   async function signOut() {
     await supabase.auth.signOut();
@@ -137,142 +129,61 @@ export default function DashboardSidebar() {
     router.refresh();
   }
 
-  function closeDevDrawer() {
-    setDevOpen(false);
-  }
-
   return (
-    <>
-      <aside className="hidden md:flex w-56 flex-col border-r border-white/5 bg-white/[0.02] shrink-0">
-        <div className="px-5 py-5 border-b border-white/5">
-          <Link href="/" className="flex items-center gap-2">
-            <span className="text-base font-bold tracking-tight">
-              SKINIC <span className="text-violet-400">Studio</span>
-            </span>
-          </Link>
-        </div>
+    <aside className="hidden md:flex w-56 flex-col border-r border-white/5 bg-white/[0.02] shrink-0">
+      <div className="px-5 py-5 border-b border-white/5">
+        <Link href="/" className="flex items-center gap-2">
+          <span className="text-base font-bold tracking-tight">
+            SKINIC <span className="text-violet-400">Studio</span>
+          </span>
+        </Link>
+      </div>
 
-        <nav className="flex-1 px-3 py-2 overflow-y-auto">
-          <Link
-            href="/dashboard"
-            className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all mb-1 ${
-              pathname === "/dashboard"
-                ? "bg-violet-500/15 text-violet-300 border border-violet-500/20"
-                : "text-white/40 hover:text-white/70 hover:bg-white/5"
-            }`}
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-            </svg>
-            Overview
-          </Link>
+      <nav className="flex-1 px-3 py-2 overflow-y-auto">
+        <Link
+          href="/dashboard"
+          className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all mb-1 ${
+            pathname === "/dashboard"
+              ? "bg-violet-500/15 text-violet-300 border border-violet-500/20"
+              : "text-white/40 hover:text-white/70 hover:bg-white/5"
+          }`}
+        >
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+          </svg>
+          Overview
+        </Link>
 
-          <NavGroup label="Studio">
-            {studioNav.map((item) => (
-              <NavItem key={item.href} {...item} active={pathname === item.href} />
-            ))}
-          </NavGroup>
+        <NavGroup label="Studio">
+          {studioNav.map((item) => (
+            <NavItem key={item.href} {...item} active={pathname === item.href} />
+          ))}
+        </NavGroup>
 
-          <NavGroup label="Account">
-            {accountNav.map((item) => (
-              <NavItem key={item.href} {...item} active={pathname === item.href} />
-            ))}
-          </NavGroup>
-        </nav>
+        <NavGroup label="Developer">
+          {devNav.map((item) => (
+            <NavItem key={item.href} {...item} active={pathname === item.href} />
+          ))}
+        </NavGroup>
 
-        <div className="px-3 py-3 border-t border-white/5 space-y-1">
-          <button
-            type="button"
-            onClick={() => setDevOpen(true)}
-            className={`flex items-center gap-2.5 w-full px-3 py-2 rounded-lg text-xs transition-all ${
-              isDevRoute
-                ? "text-violet-300 bg-violet-500/10 border border-violet-500/20"
-                : "text-white/35 hover:text-violet-300 hover:bg-violet-500/8"
-            }`}
-          >
-            <svg className="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-            </svg>
-            Developer
-            <svg className="w-3 h-3 ml-auto opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
+        <NavGroup label="Account">
+          {accountNav.map((item) => (
+            <NavItem key={item.href} {...item} active={pathname === item.href} />
+          ))}
+        </NavGroup>
+      </nav>
 
-          <button
-            onClick={signOut}
-            className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm text-white/30 hover:text-red-400 hover:bg-red-500/5 transition-all"
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-            </svg>
-            Sign out
-          </button>
-        </div>
-      </aside>
-
-      {/* Developer drawer */}
-      {devOpen && (
-        <div className="fixed inset-0 z-50 flex">
-          <button
-            type="button"
-            aria-label="Close developer menu"
-            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-            onClick={closeDevDrawer}
-          />
-          <div className="relative w-64 h-full bg-[#0d0d14] border-r border-white/10 flex flex-col shadow-2xl">
-            <div className="flex items-center justify-between px-5 py-4 border-b border-white/5">
-              <div>
-                <p className="text-sm font-semibold text-white">Developer</p>
-                <p className="text-[10px] text-white/40 mt-0.5">API keys, usage & docs</p>
-              </div>
-              <button
-                type="button"
-                onClick={closeDevDrawer}
-                className="p-1.5 rounded-lg text-white/40 hover:text-white hover:bg-white/5 transition-all"
-                aria-label="Close"
-              >
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-
-            <nav className="flex-1 px-3 py-3 space-y-1">
-              {devNav.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={closeDevDrawer}
-                  className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
-                    pathname === item.href
-                      ? "bg-violet-500/15 text-violet-300 border border-violet-500/20"
-                      : "text-white/50 hover:text-white/80 hover:bg-white/5"
-                  }`}
-                >
-                  {item.icon}
-                  {item.label}
-                </Link>
-              ))}
-
-              <a
-                href="https://api.skinic.app/docs"
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-white/50 hover:text-white/80 hover:bg-white/5 transition-all"
-              >
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                </svg>
-                API Docs
-                <svg className="w-3 h-3 ml-auto opacity-40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
-              </a>
-            </nav>
-          </div>
-        </div>
-      )}
-    </>
+      <div className="px-3 py-4 border-t border-white/5">
+        <button
+          onClick={signOut}
+          className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm text-white/30 hover:text-red-400 hover:bg-red-500/5 transition-all"
+        >
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+          </svg>
+          Sign out
+        </button>
+      </div>
+    </aside>
   );
 }
