@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
@@ -118,6 +119,46 @@ function NavGroup({ label, children }: { label: string; children: React.ReactNod
   );
 }
 
+function CollapsibleDevGroup({
+  items,
+  pathname,
+}: {
+  items: typeof devNav;
+  pathname: string;
+}) {
+  const onDevPage = items.some((item) => pathname === item.href);
+  const [open, setOpen] = useState(onDevPage);
+
+  return (
+    <div className="mb-1">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        className="flex items-center justify-between w-full px-3 pt-3 pb-1 group"
+      >
+        <span className="text-[10px] font-semibold tracking-widest uppercase text-white/20 group-hover:text-white/35 transition-colors">
+          Developer
+        </span>
+        <svg
+          className={`w-3 h-3 text-white/25 transition-transform ${open ? "rotate-180" : ""}`}
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+      {open && (
+        <div className="space-y-0.5">
+          {items.map((item) => (
+            <NavItem key={item.href} {...item} active={pathname === item.href} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function DashboardSidebar() {
   const pathname = usePathname();
   const router = useRouter();
@@ -160,11 +201,7 @@ export default function DashboardSidebar() {
           ))}
         </NavGroup>
 
-        <NavGroup label="Developer">
-          {devNav.map((item) => (
-            <NavItem key={item.href} {...item} active={pathname === item.href} />
-          ))}
-        </NavGroup>
+        <CollapsibleDevGroup items={devNav} pathname={pathname} />
 
         <NavGroup label="Account">
           {accountNav.map((item) => (
