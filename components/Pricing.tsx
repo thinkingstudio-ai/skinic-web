@@ -17,12 +17,12 @@ type Tier = {
 
 const STUDIO_TIERS: Tier[] = [
   {
-    name: "Free Preview",
+    name: "Free",
     price: "$0",
     period: "/month",
     description: "Try your branded scan page — no credit card, no code required.",
     limits: [
-      { label: "Monthly scans", value: "50 scans", tooltip: "50 free AI skin profiles to evaluate the experience." },
+      { label: "Monthly scans / API calls", value: "50", tooltip: "50 free AI skin profiles to evaluate the experience. Also counts toward API usage." },
       { label: "Catalog items", value: "5 items", tooltip: "Add up to 5 products or services to your catalog." },
       { label: "Lead capture", value: "—", tooltip: "Email lead capture is available on Starter and above." },
     ],
@@ -30,53 +30,54 @@ const STUDIO_TIERS: Tier[] = [
       "Branded scan page (your slug)",
       "AI skin type + trait profiling",
       "Product & service matching",
-      "Customer database (read-only)",
+      "API access (5 req/min)",
     ],
     disabledFeatures: ["Lead capture form", "Remove 'Powered by SKINIC'"],
     cta: "Get Started Free",
-    ctaHref: "/signup?product=studio",
+    ctaHref: "/signup",
   },
   {
-    name: "Starter Studio",
+    name: "Starter",
     price: "$39",
     period: "/month",
-    description: "Everything you need to launch, capture leads, and grow your customer list.",
+    description: "Launch your scan funnel, capture leads, and build your customer list — plus full API access.",
     limits: [
-      { label: "Monthly scans", value: "2,000 scans", tooltip: "Shared across all your branded page visitors." },
-      { label: "Catalog items", value: "Unlimited", tooltip: "Add as many products and services as you like." },
+      { label: "Monthly scans / API calls", value: "2,000", tooltip: "Shared across Studio visitors and API calls." },
+      { label: "API rate limit", value: "20 req/min", tooltip: "20 analyze requests per minute for app integrations." },
       { label: "Lead capture", value: "Included", tooltip: "Collect name + email before the scan — every scan grows your list." },
     ],
     features: [
-      "Everything in Free Preview",
+      "Everything in Free",
       "Lead capture form",
+      "Unlimited catalog items",
       "CSV export (customers)",
       "AI ingredient guide",
       "Email support",
     ],
     disabledFeatures: ["Remove 'Powered by SKINIC'"],
-    cta: "Get Starter Studio",
-    ctaHref: "/signup?product=studio&upgrade=starter",
-    badge: "Best for salons & brands",
+    cta: "Get Started",
+    ctaHref: "/signup?upgrade=starter",
+    badge: "Most popular",
   },
   {
-    name: "Pro Studio",
+    name: "Pro",
     price: "$129",
     period: "/month",
-    description: "Fully white-labelled. Remove SKINIC branding and own the experience end to end.",
+    description: "Fully white-labelled Studio + high-volume API. Remove SKINIC branding and own the experience.",
     limits: [
-      { label: "Monthly scans", value: "10,000 scans", tooltip: "Suitable for active beauty chains and high-volume campaigns." },
-      { label: "Analytics", value: "Full dashboard", tooltip: "Scan volume, skin type distribution, top traits, CTA clicks." },
-      { label: "Branding", value: "SKINIC hidden", tooltip: "Remove 'Powered by SKINIC' — your brand only." },
+      { label: "Monthly scans / API calls", value: "10,000", tooltip: "High-volume — suitable for beauty chains and production apps." },
+      { label: "API rate limit", value: "60 req/min", tooltip: "60 analyze requests per minute for high-traffic integrations." },
+      { label: "Branding", value: "SKINIC hidden", tooltip: "Remove 'Powered by SKINIC' from your scan page and API responses." },
     ],
     features: [
-      "Everything in Starter Studio",
+      "Everything in Starter",
       "Remove 'Powered by SKINIC'",
       "Analytics dashboard",
       "Website embed code",
       "Priority email support",
     ],
-    cta: "Get Pro Studio",
-    ctaHref: "/signup?product=studio&upgrade=pro",
+    cta: "Get Pro",
+    ctaHref: "/signup?upgrade=pro",
     popular: true,
   },
   {
@@ -85,14 +86,14 @@ const STUDIO_TIERS: Tier[] = [
     period: "",
     description: "For beauty chains, large brands, and multi-location businesses. Custom contract & SLA.",
     limits: [
-      { label: "Monthly scans", value: "Unlimited", tooltip: "No monthly cap — custom limits available." },
+      { label: "Monthly scans / API calls", value: "Unlimited", tooltip: "No monthly cap — custom limits available." },
       { label: "Custom domain", value: "Available", tooltip: "Host your scan page on your own domain." },
       { label: "Dedicated support", value: "Engineer access", tooltip: "Direct line to our team for onboarding and integrations." },
     ],
     features: [
-      "Everything in Pro Studio",
+      "Everything in Pro",
       "Custom domain",
-      "Unlimited scans",
+      "Unlimited scans & API calls",
       "SOC 2 / PDPA / GDPR advisory",
       "Custom contract & SLA",
       "Dedicated onboarding",
@@ -192,9 +193,9 @@ export default function Pricing() {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
           <p className="text-amber-400 text-sm font-medium tracking-widest uppercase mb-3">Pricing</p>
-          <h2 className="text-3xl md:text-5xl font-bold">Simple, scalable plans</h2>
+          <h2 className="text-3xl md:text-5xl font-bold">One plan. Studio + API.</h2>
           <p className="mt-4 text-white/60 text-lg max-w-2xl mx-auto">
-            Start free. Upgrade when you grow. No code needed to launch your branded skin profiling page.
+            Every plan includes both the Studio funnel for beauty businesses <em>and</em> full API access for developers — no separate tiers.
           </p>
         </div>
 
@@ -203,9 +204,13 @@ export default function Pricing() {
         </div>
 
         <p className="text-center text-white/60 text-sm mt-8">
-          All prices in USD. &nbsp;·&nbsp; Building a custom integration or app?{" "}
-          <a href="https://api.skinic.app" target="_blank" rel="noreferrer" className="text-violet-400 hover:text-violet-300 font-medium underline underline-offset-2">
-            See the Developer API →
+          All prices in USD. &nbsp;·&nbsp; Running a beauty business?{" "}
+          <a href="/signup?product=studio" className="text-violet-400 hover:text-violet-300 font-medium underline underline-offset-2">
+            Start your Studio funnel →
+          </a>
+          &nbsp;·&nbsp; Building an app?{" "}
+          <a href="https://api.skinic.app/docs" target="_blank" rel="noreferrer" className="text-violet-400 hover:text-violet-300 font-medium underline underline-offset-2">
+            See API docs →
           </a>
         </p>
       </div>
