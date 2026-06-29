@@ -135,8 +135,9 @@ export default function DashboardSidebar({ intent }: { intent?: "studio" | "api"
     const next = intent === "studio" ? "api" : "studio";
     setSwitching(true);
     await supabase.auth.updateUser({ data: { product_intent: next } });
+    // push to overview so the new intent is read fresh from the server
+    router.push("/dashboard");
     router.refresh();
-    setSwitching(false);
   }
 
   const isStudio = intent !== "api";
@@ -206,9 +207,11 @@ export default function DashboardSidebar({ intent }: { intent?: "studio" | "api"
           </svg>
           {switching
             ? "Switching…"
+            : intent === "studio"
+            ? "Switch to Developer"
             : intent === "api"
             ? "Switch to Studio"
-            : "Switch to Developer"}
+            : "Switch to Studio only"}
         </button>
 
         <button
