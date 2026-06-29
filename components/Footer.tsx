@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
     <footer className="border-t border-white/5 py-10 px-6">
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/45">
+      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/60">
         <div className="flex items-center gap-2">
           <span className="font-bold gradient-text">SKINIC</span>
           <span className="text-white/15">·</span>
@@ -29,7 +29,7 @@ export default function Footer() {
       </div>
 
       <div className="max-w-6xl mx-auto mt-6 pt-6 border-t border-white/5">
-        <p className="text-xs text-white/40 text-center leading-relaxed">
+        <p className="text-xs text-white/55 text-center leading-relaxed">
           SKINIC is a cosmetic beauty AI tool for skin profiling and product matching — it is not a medical device, does not provide medical advice, and is not a substitute for professional skincare or dermatological consultation. All outputs are for informational and beauty purposes only.
         </p>
       </div>

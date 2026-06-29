@@ -31,25 +31,25 @@ export default async function UsagePage() {
     <div className="space-y-6 max-w-3xl">
       <div>
         <h2 className="text-lg font-semibold text-white">Usage & Stats</h2>
-        <p className="text-white/40 text-sm mt-0.5">Monitor your API consumption across all keys.</p>
+        <p className="text-white/60 text-sm mt-0.5">Track how your API calls are distributed across all keys this month.</p>
       </div>
 
       {/* Summary cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="card-glass rounded-2xl p-5">
-          <p className="text-white/40 text-xs font-medium uppercase tracking-wider mb-2">This Month</p>
+          <p className="text-white/55 text-xs font-medium uppercase tracking-wider mb-2">This Month</p>
           <p className="text-3xl font-bold text-white">{totalMonthly.toLocaleString()}</p>
-          <p className="text-white/30 text-xs mt-1">of {limit?.toLocaleString() ?? "∞"} calls</p>
+          <p className="text-white/50 text-xs mt-1">of {limit?.toLocaleString() ?? "∞"} calls</p>
         </div>
         <div className="card-glass rounded-2xl p-5">
-          <p className="text-white/40 text-xs font-medium uppercase tracking-wider mb-2">All Time</p>
+          <p className="text-white/55 text-xs font-medium uppercase tracking-wider mb-2">All Time</p>
           <p className="text-3xl font-bold text-white">{totalAll.toLocaleString()}</p>
-          <p className="text-white/30 text-xs mt-1">total API calls</p>
+          <p className="text-white/50 text-xs mt-1">total API calls</p>
         </div>
         <div className="card-glass rounded-2xl p-5">
-          <p className="text-white/40 text-xs font-medium uppercase tracking-wider mb-2">Resets On</p>
+          <p className="text-white/55 text-xs font-medium uppercase tracking-wider mb-2">Resets On</p>
           <p className="text-xl font-bold text-white">{resetDate}</p>
-          <p className="text-white/30 text-xs mt-1">monthly reset</p>
+          <p className="text-white/50 text-xs mt-1">monthly reset</p>
         </div>
       </div>
 
@@ -68,7 +68,7 @@ export default async function UsagePage() {
               style={{ width: `${pct}%` }}
             />
           </div>
-          <div className="flex justify-between mt-2 text-xs text-white/30">
+          <div className="flex justify-between mt-2 text-xs text-white/50">
             <span>{totalMonthly.toLocaleString()} used</span>
             <span>{(limit - totalMonthly).toLocaleString()} remaining</span>
           </div>
@@ -77,25 +77,25 @@ export default async function UsagePage() {
 
       {/* Per-key breakdown */}
       <div>
-        <p className="text-white/40 text-xs font-medium uppercase tracking-wider mb-3">Per Key Breakdown</p>
+        <p className="text-white/55 text-xs font-medium uppercase tracking-wider mb-3">Per Key Breakdown</p>
         <div className="space-y-3">
           {keys && keys.length > 0 ? keys.map((key, i) => (
             <div key={i} className="card-glass rounded-xl p-4 border border-white/5">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-white">{key.name}</p>
-                  <p className="text-xs text-white/30 mt-0.5">
+                  <p className="text-xs text-white/50 mt-0.5">
                     Last used: {key.last_used ? new Date(key.last_used).toLocaleDateString() : "Never"}
                   </p>
                 </div>
                 <div className="text-right">
                   <p className="text-sm font-semibold text-white">{(key.monthly_calls || 0).toLocaleString()}</p>
-                  <p className="text-xs text-white/30">this month</p>
+                  <p className="text-xs text-white/50">this month</p>
                 </div>
               </div>
             </div>
           )) : (
-            <p className="text-white/30 text-sm text-center py-6">No API keys yet.</p>
+            <p className="text-white/50 text-sm text-center py-6">No API keys yet — create one from the API Keys page.</p>
           )}
         </div>
       </div>

@@ -108,9 +108,9 @@ function TierCard({ tier, isCurrent, priceId, userId, userEmail }: {
           label={`Upgrade to ${tier.name}`}
         />
       ) : tier.id === "free" ? (
-        <div className="text-center text-xs text-white/20 py-2">Your starting plan</div>
+        <div className="text-center text-xs text-white/40 py-2">Your current plan</div>
       ) : (
-        <div className="text-center text-xs text-white/25 py-2">Coming soon</div>
+        <div className="text-center text-xs text-white/40 py-2">Contact us to upgrade</div>
       )}
     </div>
   );
@@ -136,7 +136,7 @@ export default async function PlanPage() {
     <div className="space-y-8 max-w-3xl">
       <div>
         <h2 className="text-lg font-semibold text-white">Plan &amp; Billing</h2>
-        <p className="text-white/40 text-sm mt-0.5">
+        <p className="text-white/65 text-sm mt-0.5">
           One plan covers both Studio and API — choose the scale that fits your business.
         </p>
       </div>
@@ -184,7 +184,7 @@ export default async function PlanPage() {
         </div>
       </div>
 
-      <p className="text-white/20 text-xs">
+      <p className="text-white/50 text-xs">
         After upgrading, your plan updates automatically within seconds.
         Need help? <a href="mailto:skinic@thinkingstudio.ai" className="text-violet-400">Contact support</a>
       </p>

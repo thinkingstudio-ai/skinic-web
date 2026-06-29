@@ -90,17 +90,17 @@ export default async function DashboardOverview() {
     <div className="space-y-6 max-w-4xl">
       <div>
         <h2 className="text-lg font-semibold text-white mb-1">Welcome back, {name} 👋</h2>
-        <p className="text-white/40 text-sm">
-          {intent === "studio" ? "Your SKINIC Studio at a glance." :
-           intent === "api"    ? "Your SKINIC API usage at a glance." :
-                                 "Your SKINIC dashboard."}
+        <p className="text-white/60 text-sm">
+          {intent === "studio" ? "Here's what's happening in your Studio." :
+           intent === "api"    ? "Here's your API usage at a glance." :
+                                 "Your Studio and API in one place."}
         </p>
       </div>
 
       {/* Plan + monthly usage */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="card-glass rounded-2xl p-5">
-          <p className="text-white/40 text-xs font-medium uppercase tracking-wider mb-3">Current Plan</p>
+          <p className="text-white/55 text-xs font-medium uppercase tracking-wider mb-3">Current Plan</p>
           <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold border capitalize ${TIER_COLORS[tier] || TIER_COLORS.free}`}>
             {TIER_DISPLAY[tier] || tier}
           </span>
@@ -112,9 +112,9 @@ export default async function DashboardOverview() {
         </div>
 
         <div className="card-glass rounded-2xl p-5">
-          <p className="text-white/40 text-xs font-medium uppercase tracking-wider mb-3">This Month</p>
+          <p className="text-white/55 text-xs font-medium uppercase tracking-wider mb-3">This Month</p>
           <p className="text-2xl font-bold text-white">{monthlyCalls.toLocaleString()}</p>
-          <p className="text-white/30 text-xs mt-1">of {limits.monthly?.toLocaleString() ?? "∞"} {intent === "studio" ? "scans" : "calls"}</p>
+          <p className="text-white/50 text-xs mt-1">of {limits.monthly?.toLocaleString() ?? "∞"} {intent === "studio" ? "scans" : "calls"}</p>
           {limits.monthly && (
             <div className="mt-3 h-1.5 rounded-full bg-white/5 overflow-hidden">
               <div className={`h-full rounded-full transition-all ${usagePct > 80 ? "bg-red-500" : "bg-violet-500"}`} style={{ width: `${usagePct}%` }} />
@@ -124,15 +124,15 @@ export default async function DashboardOverview() {
 
         {intent === "studio" ? (
           <div className="card-glass rounded-2xl p-5">
-            <p className="text-white/40 text-xs font-medium uppercase tracking-wider mb-3">Customers</p>
+            <p className="text-white/55 text-xs font-medium uppercase tracking-wider mb-3">Customers</p>
             <p className="text-2xl font-bold text-white">{totalCustomers.toLocaleString()}</p>
-            <p className="text-white/30 text-xs mt-1">{totalScans} total scans</p>
+            <p className="text-white/50 text-xs mt-1">{totalScans} total scans</p>
           </div>
         ) : (
           <div className="card-glass rounded-2xl p-5">
-            <p className="text-white/40 text-xs font-medium uppercase tracking-wider mb-3">Total Calls</p>
+            <p className="text-white/55 text-xs font-medium uppercase tracking-wider mb-3">Total Calls</p>
             <p className="text-2xl font-bold text-white">{(primaryKey?.total_calls || 0).toLocaleString()}</p>
-            <p className="text-white/30 text-xs mt-1">all time</p>
+            <p className="text-white/50 text-xs mt-1">all time</p>
           </div>
         )}
       </div>
@@ -142,7 +142,7 @@ export default async function DashboardOverview() {
         <>
           {brandSlug ? (
             <div className="card-glass rounded-2xl p-5">
-              <p className="text-white/40 text-xs font-medium uppercase tracking-wider mb-3">Your Scan Page</p>
+              <p className="text-white/55 text-xs font-medium uppercase tracking-wider mb-3">Your Scan Page</p>
               <div className="flex items-center gap-3">
                 <code className="flex-1 text-sm text-violet-300 bg-white/5 rounded-lg px-3 py-2 truncate">
                   skinic.app/b/{brandSlug}
@@ -156,7 +156,7 @@ export default async function DashboardOverview() {
           ) : (
             <div className="card-glass rounded-2xl p-5 border border-amber-500/20 bg-amber-500/5">
               <p className="text-amber-300 text-sm font-semibold mb-1">Set up your scan page</p>
-              <p className="text-white/50 text-xs mb-3">Create your branded link and start profiling customers.</p>
+              <p className="text-white/65 text-xs mb-3">Create your branded link and start profiling customers.</p>
               <Link href="/dashboard/funnel" className="text-xs px-4 py-2 rounded-lg bg-violet-600 hover:bg-violet-500 text-white font-medium transition-colors">
                 Set Up Scan Page →
               </Link>
@@ -173,7 +173,7 @@ export default async function DashboardOverview() {
                 </div>
                 <p className="text-sm font-semibold text-white group-hover:text-blue-300 transition-colors">Catalog</p>
               </div>
-              <p className="text-white/35 text-xs">{totalCatalogItems} item{totalCatalogItems !== 1 ? "s" : ""} · Products &amp; services</p>
+              <p className="text-white/55 text-xs">{totalCatalogItems} item{totalCatalogItems !== 1 ? "s" : ""} · Products &amp; services</p>
             </Link>
 
             <Link href="/dashboard/customers" className="card-glass rounded-2xl p-5 hover:border-violet-500/30 border border-white/5 transition-all group">
@@ -185,7 +185,7 @@ export default async function DashboardOverview() {
                 </div>
                 <p className="text-sm font-semibold text-white group-hover:text-emerald-300 transition-colors">Customers</p>
               </div>
-              <p className="text-white/35 text-xs">{totalCustomers} customer{totalCustomers !== 1 ? "s" : ""} · Filter, export CSV</p>
+              <p className="text-white/55 text-xs">{totalCustomers} customer{totalCustomers !== 1 ? "s" : ""} · Filter, export CSV</p>
             </Link>
           </div>
         </>
@@ -204,7 +204,7 @@ export default async function DashboardOverview() {
                 </div>
                 <p className="text-sm font-semibold text-white group-hover:text-violet-300 transition-colors">API Keys</p>
               </div>
-              <p className="text-white/35 text-xs">{keys?.length || 0} key{keys?.length !== 1 ? "s" : ""} active · Create, copy, delete</p>
+              <p className="text-white/55 text-xs">{keys?.length || 0} key{keys?.length !== 1 ? "s" : ""} active · Create, copy, delete</p>
             </Link>
 
             <Link href="/dashboard/usage" className="card-glass rounded-2xl p-5 hover:border-violet-500/30 border border-white/5 transition-all group">
@@ -216,29 +216,29 @@ export default async function DashboardOverview() {
                 </div>
                 <p className="text-sm font-semibold text-white group-hover:text-amber-300 transition-colors">Usage &amp; Stats</p>
               </div>
-              <p className="text-white/35 text-xs">View detailed breakdown by endpoint</p>
+              <p className="text-white/55 text-xs">View detailed breakdown by endpoint</p>
             </Link>
           </div>
 
           <div className="card-glass rounded-2xl p-5">
-            <p className="text-white/40 text-xs font-medium uppercase tracking-wider mb-4">Your Rate Limits</p>
+            <p className="text-white/55 text-xs font-medium uppercase tracking-wider mb-4">Your Rate Limits</p>
             <div className="grid grid-cols-3 gap-4 text-center">
               <div>
                 <p className="text-lg font-bold text-white">{limits.analyze_rpm}</p>
-                <p className="text-white/35 text-xs mt-0.5">analyze / min</p>
+                <p className="text-white/55 text-xs mt-0.5">analyze / min</p>
               </div>
               <div>
                 <p className="text-lg font-bold text-white">{limits.recommend_rpm}</p>
-                <p className="text-white/35 text-xs mt-0.5">recommend / min</p>
+                <p className="text-white/55 text-xs mt-0.5">recommend / min</p>
               </div>
               <div>
                 <p className="text-lg font-bold text-white">{limits.ai ? "✓" : "✗"}</p>
-                <p className="text-white/35 text-xs mt-0.5">SKINIC AI</p>
+                <p className="text-white/55 text-xs mt-0.5">SKINIC AI</p>
               </div>
             </div>
           </div>
 
-          <div className="flex items-center gap-4 text-sm text-white/30">
+          <div className="flex items-center gap-4 text-sm text-white/50">
             <a href="https://api.skinic.app/docs" target="_blank" rel="noreferrer" className="hover:text-violet-400 transition-colors">API Docs →</a>
             <span>·</span>
             <Link href="/dashboard/terms" className="hover:text-white/50 transition-colors">Terms &amp; Policy</Link>

@@ -19,7 +19,7 @@ export default function Hero() {
           <span className="gradient-text">a Paying Customer</span>
         </h1>
 
-        <p className="fade-up-delay-2 text-lg md:text-xl text-white/65 max-w-2xl mx-auto mb-10 leading-relaxed">
+        <p className="fade-up-delay-2 text-lg md:text-xl text-white/80 max-w-2xl mx-auto mb-10 leading-relaxed">
           Give your salon, brand, or aesthetic studio an AI skin profiling experience.
           Customers scan their skin — SKINIC matches them to your products and services.
           No app download. No code. Just results.
@@ -40,7 +40,7 @@ export default function Hero() {
           </a>
         </div>
 
-        <div className="fade-up-delay-3 mt-16 flex flex-wrap items-center justify-center gap-8 text-sm text-white/50">
+        <div className="fade-up-delay-3 mt-16 flex flex-wrap items-center justify-center gap-8 text-sm text-white/65">
           <span className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-400" />
             No app download required

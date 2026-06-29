@@ -30,7 +30,7 @@ export default function Nav() {
           <span className="text-xs text-white/50 font-mono mt-0.5">Studio</span>
         </Link>
 
-        <div className="hidden md:flex items-center gap-8 text-sm text-white/60">
+        <div className="hidden md:flex items-center gap-8 text-sm text-white/75">
           <a href="#how-it-works" className="hover:text-white transition-colors">How It Works</a>
           <a href="#features" className="hover:text-white transition-colors">Features</a>
           <a href="#pricing" className="hover:text-white transition-colors">Pricing</a>
@@ -56,11 +56,11 @@ export default function Nav() {
               <div className="w-6 h-6 rounded-full bg-violet-600 flex items-center justify-center text-white text-xs font-bold">
                 {initials}
               </div>
-              <span className="text-sm text-white/70 hover:text-white transition-colors">My Studio</span>
+              <span className="text-sm text-white/85 hover:text-white transition-colors">My Studio</span>
             </Link>
           ) : (
             <>
-              <Link href="/signin" className="text-sm text-white/60 hover:text-white transition-colors px-3 py-2">
+              <Link href="/signin" className="text-sm text-white/75 hover:text-white transition-colors px-3 py-2">
                 Sign In
               </Link>
               <Link
@@ -87,7 +87,7 @@ export default function Nav() {
       </div>
 
       {open && (
-        <div className="md:hidden border-t border-white/5 bg-[#0a0a0f] px-6 py-4 flex flex-col gap-4 text-sm text-white/60">
+        <div className="md:hidden border-t border-white/5 bg-[#0a0a0f] px-6 py-4 flex flex-col gap-4 text-sm text-white/75">
           <a href="#how-it-works" onClick={() => setOpen(false)} className="hover:text-white">How It Works</a>
           <a href="#features" onClick={() => setOpen(false)} className="hover:text-white">Features</a>
           <a href="#pricing" onClick={() => setOpen(false)} className="hover:text-white">Pricing</a>
