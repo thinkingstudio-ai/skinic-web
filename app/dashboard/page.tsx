@@ -1,4 +1,5 @@
 import { createClient, createAdminClient } from "@/lib/supabase/server";
+import { effectiveTier } from "@/lib/owner";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
@@ -11,11 +12,13 @@ const TIER_LIMITS: Record<string, { monthly: number | null; analyze_rpm: number;
   starter_app: { monthly: 2000,  analyze_rpm: 20,  recommend_rpm: 30,  ai: true  },
   pro_app:     { monthly: 10000, analyze_rpm: 60,  recommend_rpm: 100, ai: true  },
   enterprise:  { monthly: null,  analyze_rpm: 200, recommend_rpm: 500, ai: true  },
+  internal:    { monthly: null,  analyze_rpm: 999, recommend_rpm: 999, ai: true  },
 };
 
 const TIER_DISPLAY: Record<string, string> = {
   free: "Free", starter: "Starter", pro: "Pro",
   starter_app: "Starter", pro_app: "Pro", enterprise: "Enterprise",
+  internal: "Internal",
 };
 
 const TIER_COLORS: Record<string, string> = {
@@ -25,6 +28,7 @@ const TIER_COLORS: Record<string, string> = {
   starter_app: "text-blue-300 bg-blue-500/10 border-blue-500/20",
   pro_app:     "text-violet-300 bg-violet-500/10 border-violet-500/20",
   enterprise:  "text-amber-300 bg-amber-500/10 border-amber-500/20",
+  internal:    "text-emerald-300 bg-emerald-500/10 border-emerald-500/20",
 };
 
 export default async function DashboardOverview() {
@@ -42,7 +46,8 @@ export default async function DashboardOverview() {
     .order("created_at", { ascending: false });
 
   const primaryKey = keys?.[0];
-  const tier = primaryKey?.tier || "free";
+  const rawTier = primaryKey?.tier || "free";
+  const tier = effectiveTier(rawTier, user!.email);
   const limits = TIER_LIMITS[tier] || TIER_LIMITS.free;
   let monthlyCalls = primaryKey?.monthly_calls || 0;
   const usagePct = limits.monthly ? Math.min(100, Math.round((monthlyCalls / limits.monthly) * 100)) : 0;

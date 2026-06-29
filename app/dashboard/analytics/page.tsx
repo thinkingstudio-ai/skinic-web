@@ -1,12 +1,11 @@
 import { createAdminClient } from "@/lib/supabase/server";
 import { createClient } from "@/lib/supabase/server";
 import FeatureLock from "@/components/FeatureLock";
+import { canAccessAnalytics } from "@/lib/tier-gating";
 import AnalyticsClient from "./AnalyticsClient";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
-
-const ANALYTICS_TIERS = ["pro", "pro_app", "enterprise", "internal"];
 
 export default async function AnalyticsPage() {
   const supabase = await createClient();
@@ -21,7 +20,7 @@ export default async function AnalyticsPage() {
 
   const tier = keys?.[0]?.tier || "free";
 
-  if (!ANALYTICS_TIERS.includes(tier)) {
+  if (!canAccessAnalytics(tier, user!.email)) {
     return (
       <FeatureLock
         feature="Analytics"

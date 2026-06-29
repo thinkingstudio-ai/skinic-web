@@ -1,12 +1,11 @@
 import { createAdminClient } from "@/lib/supabase/server";
 import { createClient } from "@/lib/supabase/server";
 import FeatureLock from "@/components/FeatureLock";
+import { canAccessStudio } from "@/lib/tier-gating";
 import CustomersClient from "./CustomersClient";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
-
-const STUDIO_TIERS = ["starter", "pro", "starter_app", "pro_app", "enterprise", "internal"];
 
 export default async function CustomersPage() {
   const supabase = await createClient();
@@ -21,7 +20,7 @@ export default async function CustomersPage() {
 
   const tier = keys?.[0]?.tier || "free";
 
-  if (!STUDIO_TIERS.includes(tier)) {
+  if (!canAccessStudio(tier, user!.email)) {
     return (
       <FeatureLock
         feature="Customer Database"
