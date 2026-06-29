@@ -151,7 +151,7 @@ function CollapsibleDevGroup({
       {open && (
         <div className="space-y-0.5">
           <p className="px-3 pb-2 text-[11px] text-white/35 italic leading-snug">
-            For developers only — API keys to embed SKINIC in your own app or website. Salon owners can skip this.
+            For developers only — API keys to embed SKINIC in your own app or website. Using Studio only? You can skip this.
           </p>
           {items.map((item) => (
             <NavItem key={item.href} {...item} active={pathname === item.href} />
