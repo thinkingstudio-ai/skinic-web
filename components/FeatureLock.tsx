@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 
 const TIER_LABELS: Record<string, string> = {
