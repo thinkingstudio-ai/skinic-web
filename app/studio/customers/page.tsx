@@ -1,8 +1,2 @@
-import CustomersClient from "@/app/dashboard/customers/CustomersClient";
-
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
-
-export default function StudioCustomersPage() {
-  return <CustomersClient />;
-}
+import { redirect } from "next/navigation";
+export default function StudioCustomersPage() { redirect("/dashboard/customers"); }

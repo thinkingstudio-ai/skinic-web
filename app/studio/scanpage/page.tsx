@@ -1,8 +1,2 @@
-import FunnelSetupClient from "@/app/dashboard/funnel/FunnelSetupClient";
-
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
-
-export default function StudioScanPage() {
-  return <FunnelSetupClient />;
-}
+import { redirect } from "next/navigation";
+export default function StudioScanPage() { redirect("/dashboard/funnel"); }
