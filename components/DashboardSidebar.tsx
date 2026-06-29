@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
@@ -119,11 +118,10 @@ function NavGroup({ label, children }: { label: string; children: React.ReactNod
   );
 }
 
-export default function DashboardSidebar({ intent }: { intent?: "studio" | "api" }) {
+export default function DashboardSidebar() {
   const pathname = usePathname();
   const router = useRouter();
   const supabase = createClient();
-  const [switching, setSwitching] = useState(false);
 
   async function signOut() {
     await supabase.auth.signOut();
@@ -131,33 +129,17 @@ export default function DashboardSidebar({ intent }: { intent?: "studio" | "api"
     router.refresh();
   }
 
-  async function switchMode() {
-    const next = intent === "studio" ? "api" : "studio";
-    setSwitching(true);
-    await supabase.auth.updateUser({ data: { product_intent: next } });
-    // push to overview so the new intent is read fresh from the server
-    router.push("/dashboard");
-    router.refresh();
-  }
-
-  const isStudio = intent !== "api";
-  const isDev = intent !== "studio";
-
   return (
     <aside className="hidden md:flex w-56 flex-col border-r border-white/5 bg-white/[0.02] shrink-0">
       <div className="px-5 py-5 border-b border-white/5">
         <Link href="/" className="flex items-center gap-2">
           <span className="text-base font-bold tracking-tight">
-            SKINIC{" "}
-            <span className="text-violet-400">
-              {intent === "api" ? "API" : "Studio"}
-            </span>
+            SKINIC <span className="text-violet-400">Studio</span>
           </span>
         </Link>
       </div>
 
       <nav className="flex-1 px-3 py-2 overflow-y-auto">
-        {/* Overview */}
         <Link
           href="/dashboard"
           className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all mb-1 ${
@@ -172,21 +154,17 @@ export default function DashboardSidebar({ intent }: { intent?: "studio" | "api"
           Overview
         </Link>
 
-        {isStudio && (
-          <NavGroup label="Studio">
-            {studioNav.map((item) => (
-              <NavItem key={item.href} {...item} active={pathname === item.href} />
-            ))}
-          </NavGroup>
-        )}
+        <NavGroup label="Studio">
+          {studioNav.map((item) => (
+            <NavItem key={item.href} {...item} active={pathname === item.href} />
+          ))}
+        </NavGroup>
 
-        {isDev && (
-          <NavGroup label="Developer">
-            {devNav.map((item) => (
-              <NavItem key={item.href} {...item} active={pathname === item.href} />
-            ))}
-          </NavGroup>
-        )}
+        <NavGroup label="Developer">
+          {devNav.map((item) => (
+            <NavItem key={item.href} {...item} active={pathname === item.href} />
+          ))}
+        </NavGroup>
 
         <NavGroup label="Account">
           {accountNav.map((item) => (
@@ -195,25 +173,7 @@ export default function DashboardSidebar({ intent }: { intent?: "studio" | "api"
         </NavGroup>
       </nav>
 
-      <div className="px-3 py-3 border-t border-white/5 space-y-1">
-        {/* Mode switcher */}
-        <button
-          onClick={switchMode}
-          disabled={switching}
-          className="flex items-center gap-2.5 w-full px-3 py-2 rounded-lg text-xs text-white/35 hover:text-violet-300 hover:bg-violet-500/8 transition-all disabled:opacity-40"
-        >
-          <svg className="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-          </svg>
-          {switching
-            ? "Switching…"
-            : intent === "studio"
-            ? "Switch to Developer"
-            : intent === "api"
-            ? "Switch to Studio"
-            : "Switch to Studio only"}
-        </button>
-
+      <div className="px-3 py-4 border-t border-white/5">
         <button
           onClick={signOut}
           className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm text-white/30 hover:text-red-400 hover:bg-red-500/5 transition-all"
