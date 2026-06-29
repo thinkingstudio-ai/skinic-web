@@ -137,7 +137,7 @@ function CollapsibleDevGroup({
         className="flex items-center justify-between w-full px-3 pt-3 pb-1 group"
       >
         <span className="text-[10px] font-semibold tracking-widest uppercase text-white/20 group-hover:text-white/35 transition-colors">
-          Developer
+          Developer <span className="normal-case tracking-normal font-normal text-white/15">(optional)</span>
         </span>
         <svg
           className={`w-3 h-3 text-white/25 transition-transform ${open ? "rotate-180" : ""}`}
@@ -150,6 +150,9 @@ function CollapsibleDevGroup({
       </button>
       {open && (
         <div className="space-y-0.5">
+          <p className="px-3 pb-2 text-[11px] text-white/35 italic leading-snug">
+            For developers only — API keys to embed SKINIC in your own app or website. Salon owners can skip this.
+          </p>
           {items.map((item) => (
             <NavItem key={item.href} {...item} active={pathname === item.href} />
           ))}
