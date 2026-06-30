@@ -31,8 +31,9 @@ export default function Nav() {
         </Link>
 
         <div className="hidden md:flex items-center gap-8 text-sm text-white/75">
-          <a href="#how-it-works" className="hover:text-white transition-colors">How It Works</a>
-          <a href="#features" className="hover:text-white transition-colors">Features</a>
+          <a href="#how-it-works" className="hover:text-white transition-colors">Studio</a>
+          <a href="#for-developers" className="hover:text-white transition-colors">Developers</a>
+          <a href="#features" className="hover:text-white transition-colors">AI Stack</a>
           <a href="#pricing" className="hover:text-white transition-colors">Pricing</a>
           <a
             href="https://api.skinic.app"
@@ -40,7 +41,7 @@ export default function Nav() {
             rel="noreferrer"
             className="hover:text-white transition-colors flex items-center gap-1"
           >
-            For Developers
+            API Docs
             <svg className="w-3 h-3 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
             </svg>
@@ -88,10 +89,11 @@ export default function Nav() {
 
       {open && (
         <div className="md:hidden border-t border-white/5 bg-[#0a0a0f] px-6 py-4 flex flex-col gap-4 text-sm text-white/75">
-          <a href="#how-it-works" onClick={() => setOpen(false)} className="hover:text-white">How It Works</a>
-          <a href="#features" onClick={() => setOpen(false)} className="hover:text-white">Features</a>
+          <a href="#how-it-works" onClick={() => setOpen(false)} className="hover:text-white">Studio</a>
+          <a href="#for-developers" onClick={() => setOpen(false)} className="hover:text-white">Developers</a>
+          <a href="#features" onClick={() => setOpen(false)} className="hover:text-white">AI Stack</a>
           <a href="#pricing" onClick={() => setOpen(false)} className="hover:text-white">Pricing</a>
-          <a href="https://api.skinic.app" target="_blank" rel="noreferrer" className="hover:text-white">For Developers ↗</a>
+          <a href="https://api.skinic.app" target="_blank" rel="noreferrer" className="hover:text-white">API Docs ↗</a>
           {user ? (
             <Link href="/dashboard" onClick={() => setOpen(false)} className="px-4 py-2 rounded-lg bg-white/10 text-white text-center font-medium">
               Dashboard

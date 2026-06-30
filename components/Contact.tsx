@@ -1,51 +1,61 @@
 export default function Contact() {
   return (
-    <section id="contact" className="py-28 px-6">
-      <div className="max-w-2xl mx-auto text-center">
-        <p className="text-violet-400 text-sm font-medium tracking-widest uppercase mb-3">Get Access</p>
-        <h2 className="text-3xl md:text-5xl font-bold mb-5">
-          Ready to integrate?
-        </h2>
-        <p className="text-white/40 text-lg mb-10 max-w-xl mx-auto">
-          Get a free API key instantly. No credit card required for Free tier.
-          Enterprise clients — contact us for custom onboarding.
+    <section id="contact" className="py-28 px-6 border-t border-white/5">
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center mb-12">
+          <p className="text-violet-400 text-sm font-medium tracking-widest uppercase mb-3">Get Started</p>
+          <h2 className="text-3xl md:text-5xl font-bold mb-4">Pick your path</h2>
+          <p className="text-white/50 text-lg max-w-xl mx-auto">
+            Beauty business or app builder — same platform, same AI. Free to start, no credit card.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-5">
+          <div className="card-glass rounded-2xl p-8 flex flex-col">
+            <p className="text-violet-400 text-xs font-semibold uppercase tracking-wider mb-2">SKINIC Studio</p>
+            <h3 className="text-xl font-bold mb-2">For beauty businesses</h3>
+            <p className="text-white/65 text-sm leading-relaxed mb-6 flex-1">
+              Branded scan page, product matching, lead capture, and customer database. No code, no app store — live in minutes.
+            </p>
+            <a
+              href="/signup?product=studio"
+              className="text-center px-6 py-3 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-semibold text-sm transition-all"
+            >
+              Start Studio Free →
+            </a>
+          </div>
+
+          <div className="card-glass rounded-2xl p-8 flex flex-col border-blue-500/15">
+            <p className="text-blue-400 text-xs font-semibold uppercase tracking-wider mb-2">SKINIC API</p>
+            <h3 className="text-xl font-bold mb-2">For developers</h3>
+            <p className="text-white/65 text-sm leading-relaxed mb-6 flex-1">
+              REST API with full skin profiles, product matching, and ingredient guides. 20 free analyzes/month to evaluate.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <a
+                href="/signup?product=api"
+                className="text-center px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm transition-all"
+              >
+                Get API Key →
+              </a>
+              <a
+                href="https://api.skinic.app"
+                target="_blank"
+                rel="noreferrer"
+                className="text-center px-6 py-3 rounded-xl border border-white/15 hover:border-blue-500/40 text-white/75 hover:text-white font-medium text-sm transition-all"
+              >
+                Docs ↗
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <p className="text-center mt-8 text-sm text-white/35">
+          Enterprise or custom SLA?{" "}
+          <a href="/enterprise" className="text-violet-400 hover:text-violet-300 underline underline-offset-2">
+            Contact sales
+          </a>
         </p>
-
-        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-          <a
-            href="/signup"
-            className="px-8 py-3.5 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-semibold text-base transition-all hover:shadow-lg hover:shadow-violet-500/25"
-          >
-            Get Free API Key →
-          </a>
-          <a
-            href="/enterprise"
-            className="px-8 py-3.5 rounded-xl border border-white/10 hover:border-white/20 text-white/70 hover:text-white font-medium text-base transition-all"
-          >
-            Contact for Enterprise
-          </a>
-        </div>
-
-        <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-white/30">
-          <span className="flex items-center gap-2">
-            <svg className="w-3.5 h-3.5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-            </svg>
-            Free tier — no credit card
-          </span>
-          <span className="flex items-center gap-2">
-            <svg className="w-3.5 h-3.5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-            </svg>
-            Key generated instantly
-          </span>
-          <span className="flex items-center gap-2">
-            <svg className="w-3.5 h-3.5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-            </svg>
-            Full multi-layer AI access
-          </span>
-        </div>
       </div>
     </section>
   );

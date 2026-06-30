@@ -1,5 +1,6 @@
 import Hero from "@/components/Hero";
 import HowItWorks from "@/components/HowItWorks";
+import ForDevelopers from "@/components/ForDevelopers";
 import AIStack from "@/components/AIStack";
 import Pricing from "@/components/Pricing";
 import Contact from "@/components/Contact";
@@ -13,6 +14,7 @@ export default function Home() {
       <Hero />
       <HowItWorks />
       <AIStack />
+      <ForDevelopers />
       <Pricing />
       <Contact />
       <Footer />

@@ -33,12 +33,19 @@ export default function Hero() {
             Start Free — No Code Needed
           </a>
           <a
-            href="#how-it-works"
-            className="px-8 py-3.5 rounded-xl border border-white/10 hover:border-white/20 text-white/70 hover:text-white font-medium text-base transition-all"
+            href="#for-developers"
+            className="px-8 py-3.5 rounded-xl border border-blue-500/30 hover:border-blue-500/50 bg-blue-500/5 text-blue-200 hover:text-white font-medium text-base transition-all"
           >
-            See How It Works ↓
+            Integrate the API →
           </a>
         </div>
+
+        <p className="fade-up-delay-3 mt-5 text-sm text-white/45">
+          Building an app instead?{" "}
+          <a href="#for-developers" className="text-blue-400 hover:text-blue-300 underline underline-offset-2">
+            See the developer API
+          </a>
+        </p>
 
         <div className="fade-up-delay-3 mt-16 flex flex-wrap items-center justify-center gap-8 text-sm text-white/65">
           <span className="flex items-center gap-2">
