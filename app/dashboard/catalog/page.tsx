@@ -1,7 +1,7 @@
 import { createAdminClient } from "@/lib/supabase/server";
 import { createClient } from "@/lib/supabase/server";
 import FeatureLock from "@/components/FeatureLock";
-import { canAccessStudio } from "@/lib/tier-gating";
+import { canAccessScanPage, catalogItemLimit } from "@/lib/tier-gating";
 import CatalogClient from "./CatalogClient";
 
 export const dynamic = "force-dynamic";
@@ -20,7 +20,7 @@ export default async function CatalogPage() {
 
   const tier = keys?.[0]?.tier || "free";
 
-  if (!canAccessStudio(tier, user!.email)) {
+  if (!canAccessScanPage(tier, user!.email)) {
     return (
       <FeatureLock
         feature="Product & Service Catalog"
@@ -31,5 +31,7 @@ export default async function CatalogPage() {
     );
   }
 
-  return <CatalogClient />;
+  const itemLimit = catalogItemLimit(tier, user!.email);
+
+  return <CatalogClient itemLimit={itemLimit} />;
 }

@@ -17,3 +17,11 @@ export function canAccessStudio(tier: string, email?: string | null): boolean {
 export function canAccessAnalytics(tier: string, email?: string | null): boolean {
   return ANALYTICS_TIERS.includes(effectiveTier(tier, email));
 }
+
+// Catalog is open to Free (capped) so they can sample product matching.
+const FREE_CATALOG_LIMIT = 2;
+
+/** Max catalog items allowed. Returns a number for capped tiers, or null for unlimited. */
+export function catalogItemLimit(tier: string, email?: string | null): number | null {
+  return canAccessStudio(tier, email) ? null : FREE_CATALOG_LIMIT;
+}

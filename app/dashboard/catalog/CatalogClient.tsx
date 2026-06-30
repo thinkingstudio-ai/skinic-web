@@ -37,7 +37,7 @@ const EMPTY_ITEM = {
   sort_order: 0,
 };
 
-export default function CatalogClient() {
+export default function CatalogClient({ itemLimit = null }: { itemLimit?: number | null }) {
   const supabase = createClient();
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://api.skinic.app";
 
@@ -198,6 +198,8 @@ export default function CatalogClient() {
 
   if (loading) return <div className="text-white/30 text-sm py-8 text-center">Loading...</div>;
 
+  const atLimit = itemLimit !== null && items.length >= itemLimit;
+
   return (
     <div className="space-y-6 max-w-4xl">
       <div className="flex items-center justify-between">
@@ -209,11 +211,24 @@ export default function CatalogClient() {
         </div>
         <button
           onClick={() => { setShowForm(true); setEditingId(null); setForm({ ...EMPTY_ITEM }); setError(""); }}
-          className="px-4 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-500 text-white text-sm font-semibold transition-all"
+          disabled={atLimit && !showForm}
+          className="px-4 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-500 disabled:opacity-40 disabled:cursor-not-allowed text-white text-sm font-semibold transition-all"
         >
           + Add item
         </button>
       </div>
+
+      {itemLimit !== null && (
+        <div className={`flex items-center justify-between gap-3 px-4 py-3 rounded-xl border text-sm ${atLimit ? "border-amber-500/25 bg-amber-500/8" : "border-white/10 bg-white/[0.03]"}`}>
+          <span className={atLimit ? "text-amber-300/90" : "text-white/55"}>
+            {items.length} / {itemLimit} catalog items used
+            {atLimit && " — Free tier limit reached."}
+          </span>
+          <a href="/dashboard/plan" className="text-violet-400 hover:text-violet-300 font-medium whitespace-nowrap">
+            Upgrade for unlimited →
+          </a>
+        </div>
+      )}
 
       {/* Add / Edit Form */}
       {showForm && (

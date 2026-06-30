@@ -24,6 +24,7 @@ const UNIFIED_TIERS = [
       "20 scans / API calls per month",
       "Branded scan page + brand setup",
       "AI skin type + trait profiling",
+      "2 catalog items",
       "API docs access",
     ],
     color: "border-white/10",
