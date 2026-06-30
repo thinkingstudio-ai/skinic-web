@@ -21,9 +21,9 @@ const UNIFIED_TIERS = [
     price: "$0",
     period: "/month",
     features: [
-      "50 scans / API calls per month",
-      "Branded scan page (preview)",
-      "5 catalog items",
+      "20 scans / API calls per month",
+      "Branded scan page + brand setup",
+      "AI skin type + trait profiling",
       "API docs access",
     ],
     color: "border-white/10",

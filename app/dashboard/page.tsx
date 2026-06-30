@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 const TIER_LIMITS: Record<string, { monthly: number | null; analyze_rpm: number; recommend_rpm: number; ai: boolean }> = {
-  free:        { monthly: 50,    analyze_rpm: 5,   recommend_rpm: 10,  ai: false },
+  free:        { monthly: 20,    analyze_rpm: 5,   recommend_rpm: 10,  ai: false },
   starter:     { monthly: 2000,  analyze_rpm: 20,  recommend_rpm: 30,  ai: true  },
   pro:         { monthly: 10000, analyze_rpm: 60,  recommend_rpm: 100, ai: true  },
   starter_app: { monthly: 2000,  analyze_rpm: 20,  recommend_rpm: 30,  ai: true  },

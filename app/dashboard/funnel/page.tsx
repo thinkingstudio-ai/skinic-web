@@ -1,7 +1,7 @@
 import { createAdminClient } from "@/lib/supabase/server";
 import { createClient } from "@/lib/supabase/server";
 import FeatureLock from "@/components/FeatureLock";
-import { canAccessStudio } from "@/lib/tier-gating";
+import { canAccessScanPage } from "@/lib/tier-gating";
 import FunnelSetupClient from "./FunnelSetupClient";
 
 export const dynamic = "force-dynamic";
@@ -20,7 +20,7 @@ export default async function FunnelSetupPage() {
 
   const tier = keys?.[0]?.tier || "free";
 
-  if (!canAccessStudio(tier, user!.email)) {
+  if (!canAccessScanPage(tier, user!.email)) {
     return (
       <FeatureLock
         feature="Scan Page"
