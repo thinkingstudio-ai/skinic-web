@@ -1,0 +1,232 @@
+{
+  "info": {
+    "_postman_id": "skinic-api-v1",
+    "name": "SKINIC API",
+    "description": "SKINIC Skin Intelligence REST API — api.skinic.app\n\nSetup:\n1. Import this collection\n2. Create environment with `api_key` = your sk-... key from skinic.app/dashboard\n3. Start with GET /health, then POST /analyze\n\nGet a free key: https://skinic.app/signup?product=api\nDocs: https://api.skinic.app",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://api.skinic.app"
+    },
+    {
+      "key": "api_key",
+      "value": "sk-your-key-here"
+    }
+  ],
+  "item": [
+    {
+      "name": "Account",
+      "item": [
+        {
+          "name": "GET /health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/health",
+            "description": "No API key required. Check if the API is online."
+          }
+        },
+        {
+          "name": "GET /usage",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "url": "{{base_url}}/usage",
+            "description": "Your tier, total calls, monthly usage, and rate limits."
+          }
+        },
+        {
+          "name": "GET /brand",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "url": "{{base_url}}/brand",
+            "description": "White-label config for your API key (Pro+ can remove SKINIC branding)."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Skin Analysis",
+      "item": [
+        {
+          "name": "POST /analyze",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": [],
+                  "description": "Selfie JPG/PNG/WEBP — face clearly visible, good lighting"
+                },
+                {
+                  "key": "terms_accepted",
+                  "value": "true",
+                  "type": "text",
+                  "description": "Required — must be true"
+                },
+                {
+                  "key": "consent_to_store",
+                  "value": "false",
+                  "type": "text",
+                  "description": "Optional — set true to store scan summary"
+                },
+                {
+                  "key": "prev_derm_signature",
+                  "value": "",
+                  "type": "text",
+                  "description": "Optional — JSON array of 128 floats from previous scan for progress tracking"
+                }
+              ]
+            },
+            "url": "{{base_url}}/analyze",
+            "description": "Single-frame skin analysis. Returns full AnalyzeResponse — skin type, 8 traits, health score, lesions, colour season, 128-dim fingerprint.\n\nCounts toward monthly analyze quota (Free: 20/mo)."
+          }
+        },
+        {
+          "name": "POST /scan (multi-frame)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "files",
+                  "type": "file",
+                  "src": [],
+                  "description": "Frame 1 — add multiple 'files' fields for 2-5 frames"
+                },
+                {
+                  "key": "files",
+                  "type": "file",
+                  "src": [],
+                  "description": "Frame 2"
+                },
+                {
+                  "key": "terms_accepted",
+                  "value": "true",
+                  "type": "text"
+                },
+                {
+                  "key": "consent_to_store",
+                  "value": "false",
+                  "type": "text"
+                },
+                {
+                  "key": "prev_derm_signature",
+                  "value": "",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": "{{base_url}}/scan",
+            "description": "Multi-frame scan — 2-5 frames aggregated by median for stable results. Counts as ONE analyze call."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Product Matching",
+      "item": [
+        {
+          "name": "POST /match-catalog",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"skin_type\": \"Combination\",\n  \"top_traits\": [\"Acne\", \"Visible Pores\"],\n  \"catalog\": [\n    {\n      \"id\": \"prod-001\",\n      \"type\": \"product\",\n      \"name\": \"Salicylic Acid Cleanser\",\n      \"description\": \"Gentle BHA cleanser for congested skin\",\n      \"price\": \"$24\",\n      \"cta_url\": \"https://yourstore.com/salicylic-cleanser\",\n      \"skin_type_tags\": [\"Oily\", \"Combination\"],\n      \"trait_tags\": [\"Acne\", \"Visible Pores\", \"Oily Skin\"]\n    },\n    {\n      \"id\": \"prod-002\",\n      \"type\": \"product\",\n      \"name\": \"Hydrating Cream\",\n      \"description\": \"Rich moisturizer for dry skin\",\n      \"price\": \"$32\",\n      \"cta_url\": \"https://yourstore.com/hydrating-cream\",\n      \"skin_type_tags\": [\"Dry\"],\n      \"trait_tags\": [\"Dry Skin\", \"Wrinkles\"]\n    },\n    {\n      \"id\": \"svc-001\",\n      \"type\": \"service\",\n      \"name\": \"Deep Cleansing Facial\",\n      \"description\": \"60-min facial for T-zone congestion\",\n      \"price\": \"$89\",\n      \"duration\": \"60 min\",\n      \"cta_url\": \"https://yourstore.com/facial\",\n      \"skin_type_tags\": [\"Combination\", \"Oily\"],\n      \"trait_tags\": [\"Acne\", \"Visible Pores\"]\n    }\n  ],\n  \"limit\": 6\n}"
+            },
+            "url": "{{base_url}}/match-catalog",
+            "description": "Rank YOUR product catalog against a skin profile. Returns match_score + match_reasons per item.\n\nDoes NOT consume analyze quota.\n\nTip: tag products with skin_type_tags and trait_tags for best matches.\n\nAlternative: pass analyze_result from POST /analyze instead of skin_type + top_traits."
+          }
+        },
+        {
+          "name": "POST /match-catalog (with analyze_result)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"analyze_result\": {\n    \"skin_type\": { \"type\": \"Combination\" },\n    \"concerns\": [\n      { \"name\": \"Acne\", \"score\": 42.3 },\n      { \"name\": \"Visible Pores\", \"score\": 38.1 }\n    ]\n  },\n  \"catalog\": [\n    {\n      \"id\": \"prod-001\",\n      \"type\": \"product\",\n      \"name\": \"Your Product Name\",\n      \"skin_type_tags\": [\"Combination\"],\n      \"trait_tags\": [\"Acne\"]\n    }\n  ],\n  \"limit\": 6\n}"
+            },
+            "url": "{{base_url}}/match-catalog",
+            "description": "Pipe POST /analyze output directly — no need to extract skin_type and traits manually."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Ingredients",
+      "item": [
+        {
+          "name": "POST /recommend",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"skin_type\": \"Combination\",\n  \"concerns\": [\"Acne\", \"Visible Pores\"]\n}"
+            },
+            "url": "{{base_url}}/recommend",
+            "description": "Ingredient guide for skin type + concerns.\n\nFree tier: static guide.\nStarter+: SKINIC AI + 551-ingredient knowledge base."
+          }
+        }
+      ]
+    }
+  ]
+}
