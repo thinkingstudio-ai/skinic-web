@@ -126,6 +126,7 @@ export default async function ResultPage({ params }: { params: Promise<{ slug: s
         <div className="rounded-3xl p-6 text-center" style={{ background: `${pc}14`, border: `1px solid ${pc}33` }}>
           {typeof score === "number" && (
             <div className="mb-3">
+              <p className="text-white/35 text-[10px] uppercase tracking-wider mb-1">Skin clarity score</p>
               <span className="text-5xl font-extrabold" style={{ color: pc }}>{Math.round(score)}</span>
               <span className="text-lg text-white/30 font-semibold">/100</span>
               {result.measurements?.skin_label && (

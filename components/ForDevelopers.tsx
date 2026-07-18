@@ -20,7 +20,7 @@ const useCases = [
 ];
 
 const apiFeatures = [
-  "4-layer AI — skin type, 8 traits, blemish map, colour season",
+  "4-layer AI — skin type, 8 traits, visible blemish mapper, colour season",
   "POST /analyze + multi-frame POST /scan",
   "POST /match-catalog — rank your products with match scores",
   "POST /recommend — ingredient guide (AI on Starter+)",
@@ -87,7 +87,7 @@ export default function ForDevelopers() {
             <pre className="text-xs text-white/60 leading-relaxed overflow-x-auto font-mono bg-black/30 rounded-xl p-4 border border-white/5">
 {`# 1. Analyze
 POST /analyze  +  X-API-Key
-→ skin_type, concerns, health score,
+→ skin_type, concerns, skin clarity score,
   colour season (one-time profile)
 
 # 2. Match your catalog

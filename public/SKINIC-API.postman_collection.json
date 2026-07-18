@@ -101,7 +101,7 @@
               ]
             },
             "url": "{{base_url}}/analyze",
-            "description": "Single-frame skin analysis. Returns full AnalyzeResponse — skin type, 8 traits, health score, lesions, colour season. One scan = one independent cosmetic profile.\n\nCounts toward monthly analyze quota (Free: 20/mo)."
+            "description": "Single-frame skin analysis. Returns full AnalyzeResponse — skin type, 8 traits, skin clarity score, visible blemishes, colour season. One scan = one independent cosmetic profile.\n\nCounts toward monthly analyze quota (Free: 20/mo)."
           }
         },
         {
