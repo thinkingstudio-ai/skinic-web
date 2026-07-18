@@ -20,6 +20,9 @@ export default function Footer() {
           <a href="/privacy" className="hover:text-white/60 transition-colors">
             Privacy
           </a>
+          <a href="/cookies" className="hover:text-white/60 transition-colors">
+            Cookies
+          </a>
           <a href="mailto:admin.thinkingstudio@gmail.com?subject=SKINIC%20API%20Inquiry" className="hover:text-white/60 transition-colors">
             Contact
           </a>

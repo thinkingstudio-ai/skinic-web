@@ -162,9 +162,11 @@ export default function SignupPageClient() {
 
             <p className="text-center text-white/20 text-xs">
               By signing up you agree to the{" "}
-              <a href="https://api.skinic.app/terms" target="_blank" rel="noreferrer" className="text-violet-400">
-                SKINIC Terms of Service
-              </a>
+              <a href="/terms" className="text-violet-400">Terms</a>
+              {", "}
+              <a href="/privacy" className="text-violet-400">Privacy Policy</a>
+              {", and "}
+              <a href="/cookies" className="text-violet-400">Cookie Policy</a>
             </p>
           </form>
         </div>

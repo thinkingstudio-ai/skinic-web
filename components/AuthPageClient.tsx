@@ -185,7 +185,11 @@ export default function AuthPageClient({ mode }: { mode: Mode }) {
               {isSignup && (
                 <p className="text-center text-white/20 text-xs">
                   By signing up you agree to the{" "}
-                  <Link href="/terms" className="text-violet-400">Terms of Service</Link>
+                  <Link href="/terms" className="text-violet-400">Terms</Link>
+                  {", "}
+                  <Link href="/privacy" className="text-violet-400">Privacy Policy</Link>
+                  {", and "}
+                  <Link href="/cookies" className="text-violet-400">Cookie Policy</Link>
                 </p>
               )}
             </form>
