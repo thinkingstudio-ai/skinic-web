@@ -236,7 +236,7 @@ export default function StudioBrandSetupClient() {
               maxLength={80}
               value={brand.tagline}
               onChange={(e) => setBrand({ ...brand, tagline: e.target.value })}
-              placeholder="e.g. Your personalised skincare journey"
+              placeholder="e.g. Your personalised skin profile"
               className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/25 text-sm focus:outline-none focus:border-violet-500/50 transition-colors"
             />
           </div>
