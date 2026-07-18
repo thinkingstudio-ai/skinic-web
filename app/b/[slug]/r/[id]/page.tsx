@@ -304,12 +304,24 @@ export default async function ResultPage({ params }: { params: Promise<{ slug: s
           </div>
         )}
 
-        {/* Rescan */}
+        {/* Repeat scan notice */}
+        <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-4">
+          <p className="text-white/45 text-xs leading-relaxed">
+            <span className="text-white/60 font-medium">About repeat scans:</span>{" "}
+            SKINIC provides a one-time cosmetic skin profile based on the photo you submit.
+            Each scan produces an independent result — it is not a progress report.
+            Skin type, trait scores, and percentages reflect conditions at the time of capture
+            and may vary between scans due to lighting, environment, camera angle, and other factors.
+            A higher or lower score on a subsequent scan does not mean your skin has improved,
+            worsened, or that any product or routine is working.
+          </p>
+        </div>
+
         <a
           href={`/b/${brand.slug}`}
           className="block w-full py-3 rounded-2xl border border-white/10 text-white/50 text-sm font-medium text-center hover:border-white/20 hover:text-white/70 transition-all"
         >
-          Scan Again
+          New Scan
         </a>
 
         <p className="text-center text-white/20 text-xs leading-relaxed">

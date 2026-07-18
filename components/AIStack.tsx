@@ -37,7 +37,7 @@ const layers = [
     title: "Visible Blemish Mapper",
     model: "SKINIC Blemish Guard",
     accuracy: "YOLOv8 ONNX",
-    description: "Object-detection model that locates and counts visible blemish spots — spots, whiteheads, red bumps, and deep bumps — and rates overall blemish visibility for cosmetic trend tracking over time.",
+    description: "Object-detection model that locates and counts visible blemish spots — spots, whiteheads, red bumps, and deep bumps — and rates overall blemish visibility for cosmetic awareness at the time of scan.",
     tags: ["Spots", "Whiteheads", "Red Bumps", "Deep Bumps", "Visibility"],
     color: "from-amber-600/20 to-amber-600/5",
     border: "border-amber-500/20",

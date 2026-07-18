@@ -1,8 +1,8 @@
 const useCases = [
   {
     title: "Skincare & beauty apps",
-    description: "Add AI skin profiling to your iOS, Android, or web app. Multi-frame /scan for stable results and 128-dim fingerprints for progress tracking.",
-    tags: ["Mobile", "Progress tracking"],
+    description: "Add AI skin profiling to your iOS, Android, or web app. Multi-frame /scan for stable single-session results and instant skin profiles.",
+    tags: ["Mobile", "Instant profile"],
     color: "text-blue-400",
   },
   {
@@ -24,7 +24,7 @@ const apiFeatures = [
   "POST /analyze + multi-frame POST /scan",
   "POST /match-catalog — rank your products with match scores",
   "POST /recommend — ingredient guide (AI on Starter+)",
-  "128-dim skin fingerprint + cross-scan stability",
+  "128-dim skin fingerprint in response JSON",
   "White-label via GET /brand (Pro+ removes SKINIC branding)",
 ];
 
@@ -88,7 +88,7 @@ export default function ForDevelopers() {
 {`# 1. Analyze
 POST /analyze  +  X-API-Key
 → skin_type, concerns, health score,
-  colour season, skin fingerprint
+  colour season (one-time profile)
 
 # 2. Match your catalog
 POST /match-catalog

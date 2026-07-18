@@ -145,6 +145,9 @@ export default function BrandScanClient({ brand }: { brand: BrandConfig }) {
             <div className="text-center mb-2">
               <h2 className="text-xl font-bold text-white mb-1">Take your skin photo</h2>
               <p className="text-white/40 text-sm">Use good lighting. Face forward. No filter.</p>
+              <p className="text-white/25 text-xs mt-2 leading-relaxed">
+                One photo → one profile. Results reflect this moment only.
+              </p>
             </div>
 
             <input

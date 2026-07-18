@@ -96,12 +96,12 @@
                   "key": "prev_derm_signature",
                   "value": "",
                   "type": "text",
-                  "description": "Optional — JSON array of 128 floats from previous scan for progress tracking"
+                  "description": "Optional — advanced API use only. SKINIC does not interpret repeat scans as progress reports."
                 }
               ]
             },
             "url": "{{base_url}}/analyze",
-            "description": "Single-frame skin analysis. Returns full AnalyzeResponse — skin type, 8 traits, health score, lesions, colour season, 128-dim fingerprint.\n\nCounts toward monthly analyze quota (Free: 20/mo)."
+            "description": "Single-frame skin analysis. Returns full AnalyzeResponse — skin type, 8 traits, health score, lesions, colour season. One scan = one independent cosmetic profile.\n\nCounts toward monthly analyze quota (Free: 20/mo)."
           }
         },
         {
