@@ -14,6 +14,9 @@ export default function Footer() {
           <a href="https://api.skinic.app/docs" target="_blank" rel="noreferrer" className="hover:text-white/60 transition-colors">
             API Docs
           </a>
+          <a href="/how-it-works" className="hover:text-white/60 transition-colors">
+            How It Works
+          </a>
           <a href="/terms" className="hover:text-white/60 transition-colors">
             Terms
           </a>

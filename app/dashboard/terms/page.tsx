@@ -12,6 +12,9 @@ export default function DashboardTermsPage() {
           and must pass equivalent obligations to your end users.
         </p>
         <div className="flex flex-wrap gap-3">
+          <a href="/how-it-works" target="_blank" rel="noreferrer" className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white/60 text-sm font-medium hover:bg-white/10 transition-colors">
+            How It Works →
+          </a>
           <a href="/terms" target="_blank" rel="noreferrer" className="px-4 py-2 rounded-xl bg-violet-600/20 border border-violet-500/30 text-violet-300 text-sm font-medium hover:bg-violet-600/30 transition-colors">
             Terms of Service →
           </a>
