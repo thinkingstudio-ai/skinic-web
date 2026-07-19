@@ -1,7 +1,24 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
+const COMING_SOON = process.env.COMING_SOON !== "false";
+
+/** Paths that stay reachable while COMING_SOON is on (owner access). */
+function isComingSoonAllowed(pathname: string): boolean {
+  return (
+    pathname === "/" ||
+    pathname === "/signin" ||
+    pathname.startsWith("/dashboard")
+  );
+}
+
 export async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+
+  if (COMING_SOON && !isComingSoonAllowed(pathname)) {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
+
   let supabaseResponse = NextResponse.next({ request });
 
   const supabase = createServerClient(
@@ -23,13 +40,11 @@ export async function middleware(request: NextRequest) {
 
   const { data: { user } } = await supabase.auth.getUser();
 
-  // Protect /dashboard routes
-  if (!user && request.nextUrl.pathname.startsWith("/dashboard")) {
+  if (!user && pathname.startsWith("/dashboard")) {
     return NextResponse.redirect(new URL("/signin", request.url));
   }
 
-  // Redirect logged-in users away from auth pages
-  if (user && (request.nextUrl.pathname === "/signin" || request.nextUrl.pathname === "/signup")) {
+  if (user && (pathname === "/signin" || pathname === "/signup")) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
@@ -37,5 +52,7 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/signin", "/signup"],
+  matcher: [
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)",
+  ],
 };
